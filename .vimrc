@@ -35,7 +35,6 @@ Bundle 'airblade/vim-gitgutter'
 "Bundle 'rking/ag.vim'
 "Bundle 'Chun-Yang/vim-action-ag'
 "Bundle 'jparise/vim-graphql'
-"Bundle 'w0rp/ale'
 
 " take in an extra file from the local directory if necessary
 if filereadable(glob(".vimrc.local"))
