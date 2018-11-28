@@ -1,0 +1,43 @@
+startup_message off
+vbell off
+
+# create default screen
+screen -h 50000 -t run
+screen -h 50000 -t log
+screen -h 50000 -t config
+screen -h 50000 -t code
+screen -h 50000 -t build
+screen -h 50000 -t debug
+screen -h 50000 -t extra
+select 0
+
+altscreen on
+term screen-256color
+
+# Key binders
+bindkey "^[[1;6D" prev  # change window with ctrl-right
+bindkey "^[[1;6C" next  # change window with ctrl-left
+
+bindkey "^[[1;5D" prev # change to previous window Ctrl - Up Arrow
+bindkey "^[[1;5C" next # change to next window Ctrl - Down Arrow
+
+# Only S-K to kill
+bind k
+bind ^k
+bind K kill
+
+# Ask title at creation of screen
+bind c  eval screen -h 5000 title
+bind ^c eval screen -h 5000 title
+
+# Show on top of terminal window
+#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#hardstatus string '%{= kG}%{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'
+#hardstatus off
+
+#change the hardstatus settings to give an window list at the bottom of the
+##screen, with the time and date and with the current window highlighted
+hardstatus alwayslastline 
+# showing work status + center align [%= ]
+hardstatus string '%{= kG}[%{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'
+
