@@ -5,23 +5,36 @@ call vundle#rc()
 " vundle packages
 Bundle 'gmarik/vundle'
 Bundle 'ervandew/supertab'
-Bundle 'ctrlp.vim'
-Bundle 'ZoomWin'
-Bundle 'matchit.zip'
-Bundle 'tComment'
 Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 Bundle 'tpope/vim-fugitive'
-Bundle 'flazz/vim-colorschemes'
 Bundle 'jlanzarotta/bufexplorer'
 Bundle 'w0rp/ale'
-Bundle 'fatih/vim-go'
-"Bundle 'vim-syntastic/syntastic'
-Plugin 'vim-scripts/Conque-GDB'
 Plugin 'yegappan/grep'
-Bundle 'mileszs/ack.vim'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'vim-scripts/OmniCppComplete'
+Bundle 'majutsushi/tagbar'
+Bundle 'SirVer/ultisnips'
+Bundle 'kshenoy/vim-signature'
+"Bundle 'ZoomWin'
+"Plugin 'vim-scripts/Conque-GDB'
+"Bundle 'wincent/command-t' // Needs RUBY
 
-"Bundle 'Valloric/YouCompleteMe'
+"Bundle 'LucHermitte/lh-vim-lib'
+"Bundle 'LucHermitte/lh-style'
+"Bundle 'LucHermitte/lh-tags'
+"Bundle 'LucHermitte/lh-dev'
+"Bundle 'LucHermitte/lh-brackets'
+"Bundle 'LucHermitte/searchInRuntime'
+"Bundle 'LucHermitte/mu-template'
+"Bundle 'tomtom/stakeholders_vim'
+"Bundle 'LucHermitte/alternate-lite'
+"Bundle 'LucHermitte/lh-cpp'
+
+"-----------------------"
+"Bundle 'flazz/vim-colorschemes'
+"Bundle 'ctrlp.vim'
 "Bundle 'bronson/vim-trailing-whitespace'
 "Bundle 'mxw/vim-jsx'
 "Bundle 'kballard/vim-swift'
@@ -35,27 +48,46 @@ Bundle 'airblade/vim-gitgutter'
 "Bundle 'rking/ag.vim'
 "Bundle 'Chun-Yang/vim-action-ag'
 "Bundle 'jparise/vim-graphql'
+"Bundle 'matchit.zip'
+"Bundle 'vim-scripts/a.vim'
+"
+"Bundle 'richq/cmake-lint'
+"Bundle 'mrtazz/checkmake'
+"Bundle 'vim-scripts/taglist.vim'
+"Bundle 'scrooloose/nerdtree'
+"Bundle 'vim-syntastic/syntastic'
+"Bundle 'rickhowe/diffchar.vim'
+"Bundle 'mileszs/ack.vim'
+"Bundle 'fatih/vim-go'
+"Bundle 'Valloric/YouCompleteMe'
 
 " take in an extra file from the local directory if necessary
 if filereadable(glob(".vimrc.local"))
   source .vimrc.local
 endif
 
+set tags+=~/tags/cppTags
+
 " vim options
+"set cursorline
+set encoding=utf-8
+filetype on
 filetype plugin indent on
+filetype plugin on
 syntax on
 cabbr te tabedit
 colorscheme xoria256
-set expandtab
+
+" Tab settings
+set autoindent autowrite noexpandtab tabstop=4 shiftwidth=4
 set nocompatible
 set laststatus=2
-set tabstop=4
-set shiftwidth=4
-set showtabline=4
-set softtabstop=4
+"set softtabstop=4
+
 set number
 set wrap
 set backspace=0
+
 set t_Co=256
 "set colorcolumn=80 " red line and over is error
 set textwidth=0
@@ -73,11 +105,12 @@ highlight Normal ctermbg=None
 " Tags setup
 set tags+=~/tags/allTags
 
+" Setup cscope
 if has('cscope')
   set csto=0
   set cst
   set nocsverb
-  set cscopetag cscopeverbose
+  "set cscopetag cscopeverbose
 
   if has('quickfix')
     set cscopequickfix=s-,c-,d-,i-,t-,e-
@@ -95,7 +128,8 @@ if has('cscope')
       cs add cscope.out
       " else add database pointed to by environment
   elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
+      "cs add $CSCOPE_DB
+      cs add ~/tags/cscope.out
   endif
 endif
 
@@ -105,12 +139,6 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 "Grep setup
 nmap <C-n> :cnext <CR>
 nmap <C-p> :cprevious <CR>
-
-"Better window navigation
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
 
 " Hide menu/toolbar
 set guioptions=
@@ -166,6 +194,10 @@ let g:loaded_matchparen=1
 
 " Set line numbers
 set nu
+
+" Show matching brackets
+set showmatch
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -177,20 +209,13 @@ set updatetime=500
 set autochdir 
 
 "Identing
-filetype plugin indent on
 set smartindent
-set autoindent
 
 " If you prefer the Omni-Completion tip window to close when a selection is
 " made, these lines close it on movement in insert mode or when leaving
 " insert mode
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-"let g:miniBufExplMapWindowNavVim = 1 
-"let g:miniBufExplMapWindowNavArrows = 1 
-"let g:miniBufExplMapCTabSwitchBufs = 1 
-"let g:miniBufExplModSelTarget = 1 
 
 " ConqueTerm session support
 let g:ConqueTerm_SessionSupport = 0
@@ -201,11 +226,9 @@ set guioptions+=a
 
 " =========== OMNI COMPLETE FEATURES =================== "
 " configure tags - add additional tags here or comment out not-used ones
-set tags+=~/tags/cppTags
 " build tags of your own project with Ctrl-F12
 "map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
-" OmniCppComplete
+"" OmniCppComplete
 let OmniCpp_GlobalScopeSearch   = 1
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_ShowAccess          = 1 "show access in pop-up
@@ -219,80 +242,14 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD", "_GLIBCXX_STD_A", "_GLIBCXX_STD_C"]
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
+
 " build tags of your own project with Ctrl-F12
 "map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q -I _GLIBCXX_NOEXCEPT .<CR>
 
-" =========== MINI BUFFER SET UP=================== "
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
-" Vim diff settings
-if &diff                             " only for diff mode/vimdiff
-    set diffopt=filler,context:1000000 " filler is default and inserts empty
-    "lines for sync
-endif
-
 "============= Compile directly off vim ======================="
-" For regular compilation of projects
-nmap <F9> :call BuildDbg()<cr>
-function! BuildDbg()
-    set makeprg=make\ -j10\ debug=1
-    make
-endfunction
-
-"nmap <F10> :call BuildRel()<cr>
-"function! BuildRel()
-"    set makeprg=make\ -j10
-"    make
-"endfunction
-
-" Automatically build on save either cpp/h file
-" autocmd BufWritePost *.cpp\|*.h make -j10 debug=1
-
-"For building C++ file
-
-nmap <F4> :call MakeCppDbg() <cr>
-function! MakeCppDbg()
-    set makeprg=g++-8\ -g3\ %\ -o\ %<
-    make
-endfunction
-
-nmap <F6> :call MakeCppPre() <cr>
-function! MakeCppPre()
-    set makeprg=g++-8\ -std=c++11\ -E\ -g3\ %\ -o\ /tmp/out.txt
-    make
-endfunction
-
-"============= Compile directly off vim ======================="
-" set cursorline
-
-"============= Stop searching once it hits end of the file ======================="
-"set nowrapscan
-" Set path for seaching "
-" POWERLINE SETUP 
-"set rtp+=/home/users/ppatel/TOOLS/powerline/powerline-develop/powerline/bindings/vim
-"set laststatus=2
-"set t_Co=256
-"let g:Powerline_symbols = 'fancy'
-"set encoding=utf-8
-"set t_Co=256
-"set fillchars+=stl:\ ,stlnc:\
-"let g:Powerline_mode_V="V·LINE"
-"let g:Powerline_mode_cv="V·BLOCK"
-"let g:Powerline_mode_S="S·LINE"
-"let g:Powerline_mode_cs="S·BLOCK"
-
 "super tab plugin
-"let g:SuperTabDefaultCompletionType = "context"
-
-"Nerd tree setup
-"let g:NERDTreeWinPos = "right"
-"autocmd VimEnter * NERDTree
-"autocmd VimEnter * wincmd p
-nmap <silent> <special> <F2> :NERDTreeToggle<RETURN>
+let g:SuperTabDefaultCompletionType = "context"
 
 """""""""""" SIZE OF VIM """""""""""""""""""""""""""
 " size of vim
@@ -300,27 +257,122 @@ if has("gui_running")
     set lines=65 columns=200
     set guifont=Monospace\ 12
 endif
+    set guifont=Monospace\ 14
 
 map <space> :BufExplorer<RETURN>
-map <F3> :ZoomWin<RETURN>
 
-"""""""""""" GDB """""""""""""""""""""""""""
+"""""""""""" ConqueTerm GDB settings """""""""""""""""""""""""""
 let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
 let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
-nmap <F2> :ConqueGdbVSplit 
-nmap <F10> :copen<RETURN>
-nmap <F11> :lopen<RETURN>
+let g:ConqueGdb_SaveHistory = 1
 
-"""""""""""" VIM-GO  """""""""""""""""""""""""""
-let g:go_highlight_trailing_whitespace_error = 0
+"""""""""""" TAG BAR  """""""""""""""""""""""""""
+let g:tagbar_left = 0
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 55
 
 """""""""""" ALE  """""""""""""""""""""""""""
-"let g:ale_open_list = 1
+let b:ale_linters = ['gcc']
+let g:ale_completion_enabled = 0
+let g:ale_enabled = 1
 let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-nmap <C-n> :lnext <CR>
-nmap <C-p> :lprevious <CR>
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_enter = 1
+let g:ale_cpp_gcc_executable="/usr/bin/g++-7"
+let g:ale_sign_error='XX'
+let g:ale_sign_warning='W'
+let g:ale_cursor_detail=0
+let g:ale_cache_executable_check_failures = 1
+let g:ale_lint_delay = 500
+hi ALEErrorSign ctermfg=red ctermbg=none
+hi ALEWarningSign ctermfg=yellow ctermbg=none
+"highlight link ALEErrorLine error
+"highlight link ALEWarningLine warning
+let g:ale_cpp_gcc_options = '-Wall -I. -I/home/ppatel/git/example/sapphire/sapphire/gateways/router/cme -I/home/ppatel/git/example/sapphire/.  -I/home/ppatel/git/example/sapphire/apps/create_sections -I/home/ppatel/git/example/sapphire/apps/log_reader -I/home/ppatel/git/example/sapphire/e7core -I/home/ppatel/git/example/sapphire/hawk -I/home/ppatel/git/example/sapphire/hawk/.  -I/home/ppatel/git/example/sapphire/messages/generated -I/home/ppatel/git/example/sapphire/messages/generated/Example -I/home/ppatel/git/example/sapphire/messages/generated/feeder -I/home/ppatel/git/example/sapphire/messages/generated/pricefeeders -I/home/ppatel/git/example/sapphire/messages/generated/Sapphire -I/home/ppatel/git/example/sapphire/sapphire -I/home/ppatel/git/example/sapphire/sapphire/gateways/pricefeed/lib -I/home/ppatel/git/example/sapphire/sapphire/nodes -I/home/ppatel/git/example/sapphire/sapphire/p2p/.  -I/home/ppatel/git/example/sapphire/sapphire/sapphirelibs -I/include -I/opt/eagleseven/straits/include -isystem /usr/local/share/drop/Concord.Risk-1.7/Concord.Risk-1.7.44 -isystem /usr/local/share/drop/Concord.Storage-1.4/Concord.Storage-1.4.23 -isystem /usr/local/share/drop/Raptor.Api-3.3/Raptor.Api-3.3.21 -I/usr/include/postgresql -I/usr/include/postgresql/9.5/server -I/usr/include/postgresql/9.5/server -I/usr/local/share/drop -I/usr/local/share/drop/cryptopp-5.6.5/include -I/usr/local/share/drop/cuda-9.2/include -I/usr/local/share/drop/gtest-1.8/include -I/usr/local/share/drop/jgate_omex-2018.05/include -I/usr/local/share/drop/Lime.Citrus-2.2/Lime.Citrus-2.2.9 -I/usr/local/share/drop/openonload/openonload-201710-u1/include -I/usr/local/share/drop/taocpp/1.0.0-beta11/include -I/usr/local/share/drop/websocketpp/0.6.0.2/include -march=haswell -mtune=haswell -mno-avx -mno-avx2 -mpopcnt -msse4.2 -mabm -maes -mbmi -mbmi2 -mcx16 -mf16c -mfma -mfsgsbase -mfxsr -mlzcnt -mmmx -mmovbe -mpclmul -mrdrnd -msahf -mxsaveopt -std=c++17 -ggdb3 -pedantic -Wall -Werror -Wno-comment -Wno-invalid-offsetof -fno-omit-frame-pointer -fno-stack-protector --param=ssp-buffer-size=8 -fno-strict-aliasing -Wl,--copy-dt-needed-entries'
+"let g:ale_echo_cursor = 1
+"let g:ale_echo_msg_error_str = 'Error'
+"let g:ale_echo_msg_format = '%s'
+"let g:ale_echo_msg_warning_str = 'Warning'
+"let g:ale_keep_list_window_open = 0
+"let g:ale_lint_delay = 1
+"let g:ale_linter_aliases = {}
+"let g:ale_open_list = 0
+"let g:ale_set_highlights = 1
+"let g:ale_set_loclist = 1
+"let g:ale_set_quickfix = 0
+"let g:ale_sign_column_always = 0
+"let g:ale_sign_offset = 1000000
+"let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
+"let g:ale_warn_about_trailing_blank_lines = 0
+"let g:ale_warn_about_trailing_whitespace = 1
+"let g:ale_cpp_gcc_executable="/usr/bin/g++-7"
+"let g:ale_cpp_clang_options = '-Wall -I.  -I/home/ppatel/git/example/sapphire/.  -I/home/ppatel/git/example/sapphire/apps/create_sections -I/home/ppatel/git/example/sapphire/apps/log_reader -I/home/ppatel/git/example/sapphire/e7core -I/home/ppatel/git/example/sapphire/hawk -I/home/ppatel/git/example/sapphire/hawk/.  -I/home/ppatel/git/example/sapphire/messages/generated -I/home/ppatel/git/example/sapphire/messages/generated/Example -I/home/ppatel/git/example/sapphire/messages/generated/feeder -I/home/ppatel/git/example/sapphire/messages/generated/pricefeeders -I/home/ppatel/git/example/sapphire/messages/generated/Sapphire -I/home/ppatel/git/example/sapphire/sapphire -I/home/ppatel/git/example/sapphire/sapphire/gateways/pricefeed/lib -I/home/ppatel/git/example/sapphire/sapphire/nodes -I/home/ppatel/git/example/sapphire/sapphire/p2p/.  -I/home/ppatel/git/example/sapphire/sapphire/sapphirelibs -I/include -I/opt/eagleseven/straits/include -isystem /usr/local/share/drop/Concord.Risk-1.7/Concord.Risk-1.7.44 -isystem /usr/local/share/drop/Concord.Storage-1.4/Concord.Storage-1.4.23 -isystem /usr/local/share/drop/Raptor.Api-3.3/Raptor.Api-3.3.21 -I/usr/include/postgresql -I/usr/include/postgresql/9.5/server -I/usr/include/postgresql/9.5/server -I/usr/local/share/drop -I/usr/local/share/drop/cryptopp-5.6.5/include -I/usr/local/share/drop/cuda-9.2/include -I/usr/local/share/drop/gtest-1.8/include -I/usr/local/share/drop/jgate_omex-2018.05/include -I/usr/local/share/drop/Lime.Citrus-2.2/Lime.Citrus-2.2.9 -I/usr/local/share/drop/openonload/openonload-201710-u1/include -I/usr/local/share/drop/taocpp/1.0.0-beta11/include -I/usr/local/share/drop/websocketpp/0.6.0.2/include -march=haswell -mtune=haswell -mno-avx -mno-avx2 -mpopcnt -msse4.2 -mabm -maes -mbmi -mbmi2 -mcx16 -mf16c -mfma -mfsgsbase -mfxsr -mlzcnt -mmmx -mmovbe -mpclmul -mrdrnd -msahf -mxsaveopt -std=c++17 -ggdb3 -pedantic -Wall -Werror -Wno-comment -Wno-invalid-offsetof -fno-omit-frame-pointer -fno-stack-protector --param=ssp-buffer-size=8 -fno-strict-aliasing -Wl,--copy-dt-needed-entries'
+
+"Better window navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Vim diff settings
+if &diff                             " only for diff mode/vimdiff
+    "let g:enable_ycm_at_startup = 0
+    "let g:ycm_show_diagnostics_ui = 0
+    set diffopt=filler,context:1000000 " filler is default and inserts empty
+    "lines for sync
+endif
+
+" Set wildmenu
+set wildmenu
+
+let g:airline_theme='alduin'
+
+"============= FUNCTION KEY MAPPING ======================="
+nmap <F2> :e ~/scratchpad.txt  <cr>
+map <F3> :ZoomWin<RETURN>
+
+" For regular compilation of projects
+nmap <F4> :call MakeCppDbg() <cr>
+function! MakeCppDbg()
+    set makeprg=/usr/bin/g++-7\ -std=c++17\ -pthread\ -lrt\ -g3\ %\ -o\ %<
+    make
+endfunction
+
+nmap <F5> :vertical resize -1  <cr>
+nmap <F6> :vertical resize +1  <cr>
+nmap <F7> :resize -1  <cr>
+nmap <F8> :resize +1  <cr>
+
+nmap <F9> :call BuildDbg()<cr>
+function! BuildDbg()
+    cd /home/ppatel/git/example/sapphire/build/debug/
+    set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
+    make | copen | resize 25
+endfunction
+
+nmap <F10> :copen <cr>
+nmap <F11> :ALEDetail <cr>
+nmap <F12> :cclose <cr>
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+""""""""""""  UNUSED """""""""""""""""""""
+""""""" You complete me """" 
+"let g:ycm_collect_identifiers_from_tags_files=1
+"let g:ycm_global_ycm_extra_conf = '/home/ppatel/git/example/sapphire/.ycm_extra_conf.py'
+"let g:ycm_error_symbol='x'
+"let g:ycm_warning_symbol='w'
+"let g:ycm_cache_omnifunc=1
+"let g:ycm_seed_identifiers_with_syntax=1
+"set completefunc=youcompleteme#OmniComplete
+"set omnifunc=youcompleteme#OmniComplete
 
 """""""""""" Syntastic  """""""""""""""""""""""""""
 "set statusline+=%#warningmsg#
@@ -331,85 +383,6 @@ nmap <C-p> :lprevious <CR>
 "let g:syntastic_auto_loc_list = 1
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_enable_signs=1
-"
-
-"let  g:C_UseTool_cmake    = 'yes'
-" To enable the saving and restoring of screen positions.
-"let g:screen_size_restore_pos = 1
-"
-"" To save and restore screen for each Vim instance.
-"" This is useful if you routinely run more than one Vim instance.
-"" For all Vim to use the same settings, change this to 0.
-"let g:screen_size_by_vim_instance = 1
-""
-"" Enable restoring of gvim size last time used
-"if has("gui_running")
-"    function! ScreenFilename()
-"        if has('amiga')
-"            return "s:.vimsize"
-"        elseif has('win32')
-"            return $HOME.'\_vimsize'
-"        else
-"            return $HOME.'/.vimsize'
-"        endif
-"    endfunction
-"
-"    function! ScreenRestore()
-"        " Restore window size (columns and lines) and position
-"        " from values stored in vimsize file.
-"        " Must set font first so columns and lines are based on font size.
-"        let f = ScreenFilename()
-"        if has("gui_running") && g:screen_size_restore_pos && filereadable(f)
-"            let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
-"            for line in readfile(f)
-"                let sizepos = split(line)
-"                if len(sizepos) == 5 && sizepos[0] == vim_instance
-"                    silent! execute "set columns=".sizepos[1]." lines=".sizepos[2]
-"                    silent! execute "winpos ".sizepos[3]." ".sizepos[4]
-"                    return
-"                endif
-"            endfor
-"        endif
-"    endfunction
-"
-"    function! ScreenSave()
-"        " Save window size and position.
-"        if has("gui_running") && g:screen_size_restore_pos
-"            let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
-"            let data = vim_instance . ' ' . &columns . ' ' . &lines . ' ' .
-"                        \ (getwinposx()<0?0:getwinposx()) . ' ' .
-"                        \ (getwinposy()<0?0:getwinposy())
-"            let f = ScreenFilename()
-"            if filereadable(f)
-"                let lines = readfile(f)
-"                call filter(lines, "v:val !~ '^" . vim_instance . "\\>'")
-"                call add(lines, data)
-"            else
-"                let lines = [data]
-"            endif
-"            call writefile(lines, f)
-"        endif
-"    endfunction
-"
-"    if !exists('g:screen_size_restore_pos')
-"        let g:screen_size_restore_pos = 1
-"    endif
-"    if !exists('g:screen_size_by_vim_instance')
-"        let g:screen_size_by_vim_instance = 1
-"    endif
-"    autocmd VimEnter * if g:screen_size_restore_pos == 1 | call ScreenRestore() | endif
-"    autocmd VimLeavePre * if g:screen_size_restore_pos == 1 | call ScreenSave() | endif
-"endif
-"""""""""""" SIZE OF VIM """""""""""""""""""""""""""
-"" CSCOPE SETUP
-"function! LoadCscope()
-"  let db = findfile("cscope.out", "~/tags/;")
-"  if (!empty(db))
-"    let path = strpart(db, 0, match(db, "/cscope.out$"))
-"    set nocscopeverbose " suppress 'duplicate connection' error
-"    exe "cs add " . db . " " . path
-"    set cscopeverbose
-"  endif
-"endfunction
-"au BufEnter /* call LoadCscope()
+"noremap <F10> :execute "copen \| resize 30"<cr>
+"noremap <F11>  :execute "vertical botright copen \| vertical resize 188"<cr>
 
