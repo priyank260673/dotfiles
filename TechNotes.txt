@@ -1,0 +1,6 @@
+Debugging assembly via gdb:
+--------------------------
+1) Write any c++ program
+2) g++ -S -o assembly.s assembly.cpp // generate assembly output
+3) as --gstabs -o assembly.o assembly.s // genearte object file using assembly
+4) g++ -o assembly assembly.o // Generate executable from object file
