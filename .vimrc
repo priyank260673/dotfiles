@@ -2,9 +2,9 @@
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
+
 " vundle packages
 Bundle 'gmarik/vundle'
-Bundle 'ervandew/supertab'
 Bundle 'vim-airline/vim-airline'
 Bundle 'vim-airline/vim-airline-themes'
 Bundle 'tpope/vim-fugitive'
@@ -13,16 +13,15 @@ Bundle 'w0rp/ale'
 Plugin 'yegappan/grep'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'flazz/vim-colorschemes'
-Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'majutsushi/tagbar'
-Bundle 'SirVer/ultisnips'
-Bundle 'kshenoy/vim-signature'
 Bundle 'vim-scripts/a.vim'
-Bundle 'wincent/command-t'
 Bundle 'tmsvg/pear-tree'
-"Bundle 'ZoomWin'
-"Plugin 'vim-scripts/Conque-GDB'
-
+Bundle 'Valloric/YouCompleteMe'
+"Bundle 'kshenoy/vim-signature'
+"Bundle 'vim-scripts/OmniCppComplete'
+"Bundle 'wincent/command-t'
+"Bundle 'ervandew/supertab'
+"Bundle 'vim-scripts/Conque-GDB'
 "Bundle 'LucHermitte/lh-vim-lib'
 "Bundle 'LucHermitte/lh-style'
 "Bundle 'LucHermitte/lh-tags'
@@ -370,8 +369,24 @@ nmap <C-i> :A <cr>
 nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
 
 let g:airline_theme='alduin'
-""""""""""""  UNUSED """""""""""""""""""""
+
 """"""" You complete me """" 
+let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_error_symbol='YE'
+let g:ycm_warning_symbol='YW'
+let g:ycm_max_diagnostics_to_display = 1000
+let g:ycm_confirm_extra_conf=0
+set completefunc=youcompleteme#OmniComplete
+set omnifunc=youcompleteme#OmniComplete
+"let g:ycm_semantic_triggers =  {
+"  \   'c' : ['->', '.','re![_a-zA-z0-9]'],
+"  \   'cpp,objcpp' : ['->', '.', '::','re![_a-zA-Z0-9]'],
+"  \ }
+"let g:ycm__extra_conf='/home/ppatel/git/example/sapphire/.ycm_extra_conf.py'
+"let g:ycm_cache_omnifunc=1
+"let g:ycm_seed_identifiers_with_syntax=1
+"
+""""""""""""  UNUSED """""""""""""""""""""
 "let g:ycm_collect_identifiers_from_tags_files=1
 "let g:ycm_global_ycm_extra_conf = '/home/ppatel/git/example/sapphire/.ycm_extra_conf.py'
 "let g:ycm_error_symbol='x'
