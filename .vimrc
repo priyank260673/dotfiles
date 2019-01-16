@@ -17,9 +17,11 @@ Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'majutsushi/tagbar'
 Bundle 'SirVer/ultisnips'
 Bundle 'kshenoy/vim-signature'
+Bundle 'vim-scripts/a.vim'
+Bundle 'wincent/command-t'
+Bundle 'tmsvg/pear-tree'
 "Bundle 'ZoomWin'
 "Plugin 'vim-scripts/Conque-GDB'
-"Bundle 'wincent/command-t' // Needs RUBY
 
 "Bundle 'LucHermitte/lh-vim-lib'
 "Bundle 'LucHermitte/lh-style'
@@ -66,10 +68,9 @@ if filereadable(glob(".vimrc.local"))
   source .vimrc.local
 endif
 
-set tags+=~/tags/cppTags
-
+set tags=~/tags/allTags
 " vim options
-"set cursorline
+set cursorline
 set encoding=utf-8
 filetype on
 filetype plugin indent on
@@ -101,9 +102,6 @@ map <Leader>f gagiw
 
 " set nonumber
 highlight Normal ctermbg=None
-
-" Tags setup
-set tags+=~/tags/allTags
 
 " Setup cscope
 if has('cscope')
@@ -326,13 +324,16 @@ endif
 " Set wildmenu
 set wildmenu
 
-let g:airline_theme='alduin'
-
 "============= FUNCTION KEY MAPPING ======================="
 nmap <F2> :e ~/scratchpad.txt  <cr>
-map <F3> :ZoomWin<RETURN>
 
 " For regular compilation of projects
+nmap <F3> :call MakeCppDbg() <cr>
+function! MakeCppDbg()
+    set makeprg=/usr/bin/g++-7\ -std=c++17\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
+    make
+endfunction
+
 nmap <F4> :call MakeCppDbg() <cr>
 function! MakeCppDbg()
     set makeprg=/usr/bin/g++-7\ -std=c++17\ -pthread\ -lrt\ -g3\ %\ -o\ %<
@@ -359,10 +360,16 @@ nmap <F12> :cclose <cr>
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+
+""""""""""""  a.vim """""""""""""""""""""
+nmap <C-i> :A <cr>
+
+nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
+
+let g:airline_theme='alduin'
 """"""""""""  UNUSED """""""""""""""""""""
 """"""" You complete me """" 
 "let g:ycm_collect_identifiers_from_tags_files=1

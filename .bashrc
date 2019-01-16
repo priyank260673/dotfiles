@@ -87,7 +87,7 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
- # some more ls aliases
+# some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -116,17 +116,170 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export CSCOPE_DB=~/tags/cscope.out
-alias btags='~/bin/buildTags.sh'
-alias st='~/bin/scrnTitle.sh $1'
+alias v='vim'
+alias g++='/usr/bin/g++-7'
+
+# Tmux aliases
+alias tmn='tmux -2 new -s $1'
+alias tml='tmux ls'
+alias tmr='tmux attach -d -t $1'
+alias tmk='tmux kill-session -t $1'
+alias tmd='tmux detach'
+alias st='tmux rename-window $1'
+alias tl='tmux last-window'
+
 alias sn='screen -S $1'
 alias sr='screen -d -r $1'
 alias sl='screen -ls'
 alias sd='screen -d $1'
+alias st='~/bin/scrnTitle.sh'
+
+# Set aliases
+alias btags='~/bin/buildTags.sh'
+alias tf='tail -f '
 alias s='source ~/.bashrc'
 
-# Set vi mode on
 set -o vi
 
-alias ctags='/usr/local/bin/ctags'
-alias g++='/usr/local/bin/g++-8'
+# Set editor for SVN
+export EDITOR=vim
+
+# set core limit unlimited
+ulimit -c unlimited 
+
+# functions
+function dtoh() {
+    printf "%X\n" $1
+}
+
+function htod() {
+    printf "%d\n" $1
+}
+
+function grpLoadAll() {
+    vim `grep -ilR $1 *`
+}
+
+function grpLoadInFile() {
+   vim `find . -name $1 | xargs grep -l $2`
+}
+
+
+function vf {
+     vim `find . -iname $1`
+}
+
+function gvf {
+    gvim `find . -iname $1`
+}
+
+function ff {
+     find `pwd` -iname $1
+}
+
+function cdf {
+ local cmd="find `pwd` -iname $1"
+ local fullPath=`eval $cmd`
+ local getPath=${fullPath%/*};
+ cd $getPath
+}
+
+function tag {
+    gvim -t $1 &
+}
+
+function st {
+    changeTitle.sh $1
+}
+
+function qcg { 
+    ~/bin/qcachegrind -c $1
+}
+
+function mgrind {
+    valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-reachable=yes --demangle=yes --log-file=./memcheck.txt --num-callers=20 $@
+}
+
+function cgrind {
+    valgrind --tool=callgrind  --demangle=yes --num-callers=20 --separate-threads=yes  --dump-instr=yes $@
+}
+
+function cgrindnost {
+    valgrind --tool=callgrind  --demangle=yes --num-callers=20 --separate-threads=no  --dump-instr=yes $@
+}
+
+function hgrind {
+    valgrind --tool=helgrind  --read-var-info=yes --demangle=yes --num-callers=20 $@
+}
+
+function list_tests()
+{
+   $1 --gtest_list_tests
+}
+
+function run_test()
+{
+   echo "Running test $1 --gtest_filter=$2"
+   $1 --gtest_filter=$2
+}
+
+alias gobld='cd /home/ppatel/git/example/sapphire/build/debug/'
+function blddv {
+   export E7_BUILD_TYPE=Debug
+   mkdir -p /home/ppatel/git/example/sapphire/build/debug/
+   cd /home/ppatel/git/example/sapphire/build/debug/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/debug/cmake_out.txt
+   make -j3 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/debug/build_out.txt
+}
+
+function bldd {
+   export E7_BUILD_TYPE=Debug
+   mkdir -p /home/ppatel/git/example/sapphire/build/debug/
+   cd /home/ppatel/git/example/sapphire/build/debug/
+   cmake ../.. &> /home/ppatel/git/example/sapphire/build/debug/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/debug/build_out.txt
+}
+
+alias gobldr='cd /home/ppatel/git/example/sapphire/build/release/'
+function bldr {
+   export E7_BUILD_TYPE=Release
+   mkdir -p /home/ppatel/git/example/sapphire/build/release/
+   cd /home/ppatel/git/example/sapphire/build/release/
+   cmake --verbose --trace .. &> /home/ppatel/git/example/sapphire/build/release/cmake_out.txt
+   make -j3 VERBOSE=1 -f CMakeFiles/Makefile2  &>> /home/ppatel/git/example/sapphire/build/release/build_out.txt
+}
+
+function build {
+	cd /home/ppatel/git/example/sapphire/build/debug/
+	make -j3 CMakeFiles/Makefile2 $1
+}
+
+export E7_ARCH=haswell
+#export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/bin/GDB/gdb-8.2.1/gdb:${PATH}:.
+export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.
+export CSCOPE_DB=/home/ppatel/tags/cscsope.out
+
+##----------------------------- ## 
+alias gitd='git d'
+alias gitsubpullmast='git submodule foreach git pull origin master'
+alias gitsubcheckoutmast='git submodule foreach git checkout master'
+alias gitdiff_f='git diff --name-only'
+alias dffos='git d /home/ppatel/git/example/sapphire/sapphire/'
+alias dffm='git d master .'
+##----------------------------- ## 
+
+alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
+alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
+alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
+
+#alias gdb='/home/ppatel/bin/GDB/gdb-8.2.1/gdb/gdb --data-directory=/home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory'
+export TERM=xterm-256color
+
+function debug {
+    emacs --eval "(gdb \"gdb -i=mi ; --args $* \")";
+}
+
+function debugnw {
+    emacs -nw --eval "(gdb \"gdb -i=mi ; --args $* \")";
+}
+
