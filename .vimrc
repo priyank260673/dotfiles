@@ -67,7 +67,7 @@ if filereadable(glob(".vimrc.local"))
   source .vimrc.local
 endif
 
-set tags=~/tags/allTags
+set tags+=~/tags/allTags
 " vim options
 set cursorline
 set encoding=utf-8
@@ -249,13 +249,6 @@ set completeopt=menuone,menu,longest,preview
 let g:SuperTabDefaultCompletionType = "context"
 
 """""""""""" SIZE OF VIM """""""""""""""""""""""""""
-" size of vim
-if has("gui_running")
-    set lines=65 columns=200
-    set guifont=Monospace\ 12
-endif
-    set guifont=Monospace\ 14
-
 map <space> :BufExplorer<RETURN>
 
 """""""""""" ConqueTerm GDB settings """""""""""""""""""""""""""
@@ -362,6 +355,23 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+""""""""""""  AsyncRun  """""""""""""""""""""
+"utomatically open quickfix window when AsyncRun command is executed
+"set the quickfix window 6 lines height.
+let g:asyncrun_open = 6
+" ring the bell to notify you job finished
+let g:asyncrun_bell = 1
+
+" Highlight of AsyncRun exit messages
+hi AsyncRunFail ctermfg=124 guifg=#942f1f
+hi AsyncRunOK ctermfg=LightGreen guifg=#558C00
+" Do not silent AsyncRunEvents
+let g:asyncrun_silent = 0
+" Echo exit status of AsyncRun command
+let g:asyncrun_exit = "if g:asyncrun_code != 0 | echohl AsyncRunFail | echo 'AsyncRun: [FAIL]' |
+			\ else | echohl AsyncRunOK | echo 'AsyncRun: [OK]' | endif | echohl Normal"
+autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail | echo 'AsyncRun: [FAIL]' |
+			\ else | echohl AsyncRunOK | echo 'AsyncRun: [OK]' | endif | echohl Normal
 
 """"""""""""  a.vim """""""""""""""""""""
 nmap <C-i> :A <cr>
@@ -378,6 +388,9 @@ let g:ycm_max_diagnostics_to_display = 1000
 let g:ycm_confirm_extra_conf=0
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
+nnoremap <C-right> :YcmCompleter GoTo<CR>
+nnoremap <C-left> <C-O>
+
 "let g:ycm_semantic_triggers =  {
 "  \   'c' : ['->', '.','re![_a-zA-z0-9]'],
 "  \   'cpp,objcpp' : ['->', '.', '::','re![_a-zA-Z0-9]'],
