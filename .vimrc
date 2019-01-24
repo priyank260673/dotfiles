@@ -8,8 +8,7 @@ Bundle 'vim-airline/vim-airline'
 Bundle 'vim-airline/vim-airline-themes'
 Bundle 'tpope/vim-fugitive'
 Bundle 'jlanzarotta/bufexplorer'
-Bundle 'w0rp/ale'
-Plugin 'yegappan/grep'
+Bundle 'yegappan/grep'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'majutsushi/tagbar'
@@ -17,9 +16,11 @@ Bundle 'vim-scripts/a.vim'
 Bundle 'tmsvg/pear-tree'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'skywind3000/asyncrun.vim'
+"Bundle 'w0rp/ale'
 
 " Colorschemes "
 colorscheme xoria256
+"colorscheme burnttoast256
 let g:airline_theme='alduin'
 
 " take in an extra file from the local directory if necessary
@@ -214,18 +215,15 @@ hi AsyncRunOK ctermfg=LightGreen guifg=#558C00
 " Do not silent AsyncRunEvents
 let g:asyncrun_silent = 0
 " Echo exit status of AsyncRun command
-let g:asyncrun_exit = "if g:asyncrun_code != 0 | echohl AsyncRunFail | echo 'AsyncRun: [FAIL]' |
-			\ else | echohl AsyncRunOK | echo 'AsyncRun: [OK]' | endif | echohl Normal"
-
 autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail |
 			\ echo 'AsyncRun: [FAIL]' |  
 			\ else | echohl AsyncRunOK |
-			\ echo 'AsyncRun: [OK]' | endif | echohl Normal
+			\ echo 'AsyncRun: [OK]' | sleep 2 | cclose | endif | echohl Normal
 
 """""""""""" ALE  """""""""""""""""""""""""""
 let g:ale_linters = {'cpp' : ['gcc'], 'c' : ['gcc']}
 let g:ale_completion_enabled = 0
-let g:ale_enabled = 1
+let g:ale_enabled = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_enter = 1
@@ -306,7 +304,7 @@ nmap <F5> :vertical resize -1  <cr>
 nmap <F6> :vertical resize +1  <cr>
 nmap <F7> :resize -1  <cr>
 nmap <F8> :resize +1  <cr>
-nmap <F9> :AsyncRun -post=copen ~/bin/buildApp.sh btec_drop<cr>
+nmap <F9> :AsyncRun ~/bin/buildApp.sh btec_drop<cr>
 nmap <F10> :cclose <cr>
 nmap <F11> :call BuildDbg()<cr>
 function! BuildDbg()
@@ -412,4 +410,3 @@ nmap <C-c> :qa <cr>
 "Bundle 'vim-syntastic/syntastic'
 "Bundle 'rickhowe/diffchar.vim'
 "Bundle 'mileszs/ack.vim'
-

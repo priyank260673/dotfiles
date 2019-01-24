@@ -170,7 +170,7 @@ function vf {
 }
 
 function gvf {
-    gvim `find . -iname $1`
+    vim `find . -iname $1`
 }
 
 function ff {
@@ -229,7 +229,7 @@ function blddv {
    mkdir -p /home/ppatel/git/example/sapphire/build/debug/
    cd /home/ppatel/git/example/sapphire/build/debug/
    cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/debug/cmake_out.txt
-   make -j3 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/debug/build_out.txt
+   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/debug/build_out_verbose.txt
 }
 
 function bldd {
@@ -255,8 +255,8 @@ function build {
 }
 
 export E7_ARCH=haswell
-#export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/bin/GDB/gdb-8.2.1/gdb:${PATH}:.
-export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.
+export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/bin/GDB/gdb-8.2.1/gdb:${PATH}:.
+#export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
 ##----------------------------- ## 
