@@ -1,0 +1,51 @@
+Hello,
+
+So I have following setup as shown yesterday to Dylan and Martin. It covers most of my IDE 
+needs with very little problems. There is little bit of learning curve but can be easily 
+get command of this in week or so. It will save quite a bit of development time - if 
+you are just using vim without following. In my personal view - I have never lost any 
+time due to problems with vim. I did invest lot of time making it effecient to use.
+
+1) Required software
+   -> vim version > 8.1. Need to open ticket.
+   -> Latest ctags build (exuberent ctags for git, probably need help from support group)
+   -> Lastest cscope build
+   -> Plugins mentioned below
+
+2) Mininum needed plugins: 
+   -> Vundle (Plugin managment - how to keep plugins up-to-date)
+   -> vim-airline (Statusline, gitinfo, filetype, location)
+   -> vim-fugitive (Gdiff, GStatus, GBlame, Gcommit etc...)
+   -> buf-explorer (easier navigation in open buffers)
+   -> grep (Grep facility within open bufferso)
+   -> vim-gitgutter (Git changes on sidebar)
+   -> vim-colorschemes (various color schemes)
+   -> tagbar (uses ctags/cscope database to show tag information)
+   -> asyncrun (Asynchronous run - for example building in vim)
+   -> UltiSnips (Autocompletion snippets)
+   -> YouCompletMe (Intellisense like IDE, completion, linting via gcc)
+      How to build? Setup needed for .ycm_extra_conf.py file
+	  This is the most important part and needs some tweaking,
+	  I have managed to created one and can be reused.
+
+3) Ctags/Cscope integration 
+   -> What command you need to build ctags for C++ 
+      and sapphire codebase?
+	  Use for finding certain string across codebase,
+	  jumping through code where YCM might not work/very rare.
+
+4) Key mappings 
+   -> Function mapping for build in one key stroke
+   -> Jumping around code 
+   -> Some helpful tips, tricks during devlopment
+      Splitting windows, jumping between source and implementation,
+	  finding certain string, use of some method across code base
+
+5) If time permits - debugging through Emacs/Vim.
+   I prefer Emacs with EVIL mode - that simulates vim in Emacs.
+
+6) Any questions? 
+
+Thanks
+Priyank
+
