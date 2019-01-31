@@ -1,6 +1,6 @@
 " Vim color file
 "
-" Name:       xoria256.vim
+" Name:       xoria256_mine.vim
 " Version:    1.5
 " Maintainer:	Dmitriy Y. Zotikov (xio) <xio@ungrund.org>
 "
@@ -32,7 +32,7 @@ if exists("syntax_on")
   syntax reset
 endif
 
-let colors_name = "xoria256"
+let colors_name = "xoria256_mine"
 "}}}
 " Colours {{{1
 "" General {{{2
