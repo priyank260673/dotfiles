@@ -13,15 +13,15 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/a.vim'
-Bundle 'tmsvg/pear-tree'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'skywind3000/asyncrun.vim'
+Bundle 'jiangmiao/auto-pairs'
 "Bundle 'w0rp/ale'
 
 " Colorschemes "
 colorscheme xoria256
-"colorscheme burnttoast256
 let g:airline_theme='alduin'
+"let g:airline_powerline_fonts = 1
 
 " take in an extra file from the local directory if necessary
 if filereadable(glob(".vimrc.local"))
@@ -29,6 +29,7 @@ if filereadable(glob(".vimrc.local"))
 endif
 
 " Add path so that we can find files"
+set path+=/home/ppatel/
 set path+=/home/ppatel/git/example/sapphire/
 set path+=/home/ppatel/git/example/sapphire/hawk/
 
@@ -64,7 +65,7 @@ let g:vim_markdown_folding_disabled=1
 "map <Leader>f gagiw
 
 " set nonumber
-highlight Normal ctermbg=None
+""highlight Normal ctermbg=None
 
 " Setup cscope
 if has('cscope')
@@ -177,11 +178,14 @@ nnoremap <C-l> <C-w>l
 
 " Vim diff settings
 if &diff                             " only for diff mode/vimdiff
+	colorscheme xoria256
     set diffopt=filler,context:1000000 " filler is default and inserts empty
-    "lines for sync
+	set noro
 endif
 
 " Set wildmenu
+""set wildmode=longest,list,full
+set wildmode=longest,full
 set wildmenu
 
 """""""""""" SIZE OF VIM """""""""""""""""""""""""""
@@ -207,7 +211,7 @@ let g:tagbar_width = 55
 
 """""""""""" ASYNCRUN  """""""""""""""""""""""""""
 let g:asyncrun_open = 8
-let g:asyncrun_save = 1
+let g:asyncrun_save = 2
 let g:asyncrun_bell = 1
 " Highlight of AsyncRun exit messages
 hi AsyncRunFail ctermfg=124 guifg=#942f1f
@@ -218,7 +222,7 @@ let g:asyncrun_silent = 0
 autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail |
 			\ echo 'AsyncRun: [FAIL]' |  
 			\ else | echohl AsyncRunOK |
-			\ echo 'AsyncRun: [OK]' | sleep 2 | cclose | endif | echohl Normal
+			\ echo 'AsyncRun: [OK]' | cclose | endif | echohl Normal
 
 """""""""""" ALE  """""""""""""""""""""""""""
 let g:ale_linters = {'cpp' : ['gcc'], 'c' : ['gcc']}
@@ -264,12 +268,14 @@ au BufRead,BufNewFile *.ipp set filetype=cpp
 "let g:ale_cpp_clang_options = '-Wall -I.  -I/home/ppatel/git/example/sapphire/.  -I/home/ppatel/git/example/sapphire/apps/create_sections -I/home/ppatel/git/example/sapphire/apps/log_reader -I/home/ppatel/git/example/sapphire/e7core -I/home/ppatel/git/example/sapphire/hawk -I/home/ppatel/git/example/sapphire/hawk/.  -I/home/ppatel/git/example/sapphire/messages/generated -I/home/ppatel/git/example/sapphire/messages/generated/Example -I/home/ppatel/git/example/sapphire/messages/generated/feeder -I/home/ppatel/git/example/sapphire/messages/generated/pricefeeders -I/home/ppatel/git/example/sapphire/messages/generated/Sapphire -I/home/ppatel/git/example/sapphire/sapphire -I/home/ppatel/git/example/sapphire/sapphire/gateways/pricefeed/lib -I/home/ppatel/git/example/sapphire/sapphire/nodes -I/home/ppatel/git/example/sapphire/sapphire/p2p/.  -I/home/ppatel/git/example/sapphire/sapphire/sapphirelibs -I/include -I/opt/eagleseven/straits/include -isystem /usr/local/share/drop/Concord.Risk-1.7/Concord.Risk-1.7.44 -isystem /usr/local/share/drop/Concord.Storage-1.4/Concord.Storage-1.4.23 -isystem /usr/local/share/drop/Raptor.Api-3.3/Raptor.Api-3.3.21 -I/usr/include/postgresql -I/usr/include/postgresql/9.5/server -I/usr/include/postgresql/9.5/server -I/usr/local/share/drop -I/usr/local/share/drop/cryptopp-5.6.5/include -I/usr/local/share/drop/cuda-9.2/include -I/usr/local/share/drop/gtest-1.8/include -I/usr/local/share/drop/jgate_omex-2018.05/include -I/usr/local/share/drop/Lime.Citrus-2.2/Lime.Citrus-2.2.9 -I/usr/local/share/drop/openonload/openonload-201710-u1/include -I/usr/local/share/drop/taocpp/1.0.0-beta11/include -I/usr/local/share/drop/websocketpp/0.6.0.2/include -march=haswell -mtune=haswell -mno-avx -mno-avx2 -mpopcnt -msse4.2 -mabm -maes -mbmi -mbmi2 -mcx16 -mf16c -mfma -mfsgsbase -mfxsr -mlzcnt -mmmx -mmovbe -mpclmul -mrdrnd -msahf -mxsaveopt -std=c++17 -ggdb3 -pedantic -Wall -Werror -Wno-comment -Wno-invalid-offsetof -fno-omit-frame-pointer -fno-stack-protector --param=ssp-buffer-size=8 -fno-strict-aliasing -Wl,--copy-dt-needed-entries'
 
 """"""" You complete me """" 
+let g:ycm_global_ycm_extra_conf='/home/ppatel/global_extra_conf.py'
 let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_error_symbol='YE'
 let g:ycm_warning_symbol='YW'
 let g:ycm_max_diagnostics_to_display = 1000
 let g:ycm_confirm_extra_conf=0
 let g:ycm_log_level = 'debug'
+let g:ycm_disable_for_files_larger_than_kb=10000
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>
@@ -304,8 +310,9 @@ nmap <F5> :vertical resize -1  <cr>
 nmap <F6> :vertical resize +1  <cr>
 nmap <F7> :resize -1  <cr>
 nmap <F8> :resize +1  <cr>
-nmap <F9> :AsyncRun ~/bin/buildApp.sh btec_drop<cr>
-nmap <F10> :cclose <cr>
+nmap <F9> :AsyncRun -save=2 ~/bin/buildApp.sh btecdrop-test<cr>
+nmap <F10> :AsyncRun -save=2 ~/bin/buildAppRel.sh btecdrop-test<cr>
+""nmap <F9> :AsyncRun -save=2 ~/bin/buildApp.sh instinet_downloader<cr>
 nmap <F11> :call BuildDbg()<cr>
 function! BuildDbg()
     cd /home/ppatel/git/example/sapphire/build/debug/
@@ -313,12 +320,22 @@ function! BuildDbg()
     set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ btec_drop
     make | copen | resize 25
 endfunction
-nmap <F12> :ALEDetail <cr>
+nmap <F12> :call BuildRel()<cr>
+function! BuildRel()
+    cd /home/ppatel/git/example/sapphire/build/debug/
+    "set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
+    set makeprg=make\ -j3\ VERBOSE=1\ btec_drop
+    make | copen | resize 25
+endfunction
 
 """"""""""""  a.vim """""""""""""""""""""
 nmap <C-i> :A <cr>
 nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
 nmap <C-c> :qa <cr>
+
+""""""""""""  word completion """""""""""""""""""""
+set dictionary+=/usr/share/dict/american-english
+set noshowmode
 
 """""""""""""""""""""""""" EXPERIMENTAL  """""""""""""""""
 
@@ -363,7 +380,7 @@ nmap <C-c> :qa <cr>
 
 "============= Compile directly off vim ======================="
 "super tab plugin
-"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "context"
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 "PHP let g:UltiSnipsExpandTrigger="<tab>"

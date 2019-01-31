@@ -185,7 +185,7 @@ function cdf {
 }
 
 function tag {
-    gvim -t $1 &
+    vim -t $1
 }
 
 function st {

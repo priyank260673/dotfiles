@@ -1,3 +1,12 @@
+# setup pretty printing for STL containers
+python
+import sys
+sys.path.insert(0, '/usr/share/gcc-7/python/libstdcxx/v6/')
+from printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+end
+
+# For debugging router
 set follow-fork-mode child
 set detach-on-fork off
 set follow-exec-mode new

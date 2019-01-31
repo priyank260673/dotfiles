@@ -40,8 +40,11 @@
 			 (buffer-name))))
 
 ;; compilation/debuggin setting
+(global-set-key [f3] 'shrink-window)
+(global-set-key [f4] 'enlarge-window)
 (global-set-key [f5] 'shrink-window-horizontally)
 (global-set-key [f6] 'enlarge-window-horizontally)
+
 (global-set-key [f7] 'next-buffer)
 (global-set-key [f8] 'previous-buffer)
 (global-set-key [f9] 'gud-break)
@@ -55,7 +58,6 @@
 ;; (other-window 1)
 ;; (gdb-set-window-buffer
 ;;  (gdb-get-buffer-create 'gdb-some-buffer-type)))
-
 (defun gdb-setup-windows ()
   "Layout the window pattern for `gdb-many-windows'."
   (gdb-display-locals-buffer)
@@ -92,6 +94,11 @@
 							   (gdb-breakpoints-buffer-name))
 							 nil win5))
 	(select-window win0)))
+
+(setq gdb-display-locals-buffer t)
+
+;;(setq gdb-many-windows t)
+;;(setq gdb-setup-windows t)
 
 ;; Highlight current line in source
 (defvar gud-overlay
