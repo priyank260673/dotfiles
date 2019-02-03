@@ -16,6 +16,9 @@ Bundle 'vim-scripts/a.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'skywind3000/asyncrun.vim'
 Bundle 'jiangmiao/auto-pairs'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+Bundle 'andymass/vim-matchup'
 "Bundle 'w0rp/ale'
 
 " Colorschemes "
@@ -35,6 +38,11 @@ set path+=/home/ppatel/git/example/sapphire/hawk/
 
 " Ctags for navigation
 set tags=~/tags/allTags
+
+" Set wildmenu
+""set wildmode=longest,list,full
+set wildmode=longest,full
+set wildmenu
 
 " vim options
 set cursorline
@@ -61,11 +69,6 @@ set hlsearch
 " turn off vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 
-" ag-vim shortcut
-"map <Leader>f gagiw
-
-" set nonumber
-""highlight Normal ctermbg=None
 
 " Setup cscope
 if has('cscope')
@@ -106,7 +109,6 @@ set guioptions=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " " Sets how many lines of history VIM has to remember
 set history=1000
@@ -117,7 +119,7 @@ set so=7
 " "Always show current position
 set ruler
 " " Height of the command bar
-set cmdheight=2
+set cmdheight=1
 " " A buffer becomes hidden when it is abandoned
 set hid
 " " Configure backspace so it acts as it should act
@@ -145,6 +147,7 @@ let g:loaded_matchparen=1
 set nu
 " Show matching brackets
 set showmatch
+set matchpairs+=<:>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -176,6 +179,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+
 " Vim diff settings
 if &diff                             " only for diff mode/vimdiff
 	colorscheme xoria256
@@ -183,18 +187,6 @@ if &diff                             " only for diff mode/vimdiff
 	set noro
 endif
 
-" Set wildmenu
-""set wildmode=longest,list,full
-set wildmode=longest,full
-set wildmenu
-
-"""""""""""" SIZE OF VIM """""""""""""""""""""""""""
-" size of vim
-if has("gui_running")
-    set lines=65 columns=200
-    set guifont=Monospace\ 12
-endif
-    set guifont=Monospace\ 14
 
 map <space> :BufExplorer<RETURN>
 
@@ -283,14 +275,6 @@ map <Leader>ff :YcmCompleter FixIt<CR>
 
 au BufRead,BufNewFile *.ipp set filetype=cpp
 
-"nnoremap <C-down> <C-O>
-"let g:ycm_semantic_triggers =  {
-"  \   'c' : ['->', '.','re![_a-zA-z0-9]'],
-"  \   'cpp,objcpp' : ['->', '.', '::','re![_a-zA-Z0-9]'],
-"  \ }
-"let g:ycm__extra_conf='/home/ppatel/git/example/sapphire/.ycm_extra_conf.py'
-"let g:ycm_cache_omnifunc=1
-"let g:ycm_seed_identifiers_with_syntax=1
 
 "============= FUNCTION KEY MAPPING ======================="
 nmap <F2> :e ~/scratchpad.txt  <cr>
