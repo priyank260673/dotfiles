@@ -106,6 +106,32 @@
 ;;->(setq gdb-many-windows t)
 ;;;;;;;;;
 
+(add-to-list 'display-buffer-alist
+         (cons 'cdb-source-code-buffer-p
+           (cons 'display-source-code-buffer nil)))
+(defun cdb-source-code-buffer-p (bufName action)
+  "Return whether BUFNAME is a source code buffer."
+  (let ((buf (get-buffer bufName)))
+    (and buf
+     (with-current-buffer buf
+       (derived-mode-p buf 'c++-mode 'c-mode 'csharp-mode 'nxml-mode)))))
+
+(defun display-source-code-buffer (sourceBuf alist)
+  "Find a window with source code and set sourceBuf inside it."
+  (let* ((curbuf (current-buffer))
+     (wincurbuf (get-buffer-window curbuf))
+     (win (if (and wincurbuf
+               (derived-mode-p sourceBuf 'c++-mode 'c-mode 'nxml-mode)
+               (derived-mode-p (current-buffer) 'c++-mode 'c-mode 'nxml-mode))
+          wincurbuf
+        (get-window-with-predicate
+         (lambda (window)
+           (let ((bufName (buffer-name (window-buffer window))))
+             (or (cdb-source-code-buffer-p bufName nil)
+             (assoc bufName display-buffer-alist)
+             ))))))) ;; derived-mode-p doesn't work inside this, don't know why...
+    (set-window-buffer win sourceBuf)
+    win))
 
 (require 'gud)
 
