@@ -26,9 +26,6 @@ Bundle 'ludovicchabant/vim-gutentags'
 colorscheme xoria256_mine
 let g:airline_theme='alduin'
 
-" Ctags for navigation
-set tags=~/tags/allTags
-
 " Set wildmenu
 ""set wildmode=longest,list,full
 set wildmode=longest,full

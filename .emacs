@@ -56,82 +56,32 @@
 (global-set-key [f10] 'gud-remove)
 (global-set-key [f11] 'toggle-current-window-dedication)
 
-;; gdb setup windows
-;;(defadvice gdb-setup-windows (around setup-more-gdb-windows activate)
-;;ad-do-it
-;;(split-window-horizontally)
-;;(other-window 1)
-;;(gdb-set-window-buffer
-;; (gdb-get-buffer-create 'gdb-some-buffer-type)))
-
-;;;;;;;;;
-;;->(defun gdb-setup-windows ()
-;;->  "Layout the window pattern for `gdb-many-windows'."
-;;->  (gdb-display-locals-buffer)
-;;->  (gdb-display-stack-buffer)
-;;->  (delete-other-windows)
-;;->  (gdb-display-breakpoints-buffer)
-;;->  (delete-other-windows)
-;;->  ;; Don't dedicate.
-;;->  (switch-to-buffer gud-comint-buffer)
-;;->  (let ((win0 (selected-window))
-;;->		(win1 (split-window nil ( / ( * (window-height) 3) 4)))
-;;->		(win2 (split-window nil ( / (window-height) 3)))
-;;->		(win3 (split-window-right)))
-;;->	(gdb-set-window-buffer (gdb-locals-buffer-name) nil win3)
-;;->	(select-window win2)
-;;->	(set-window-buffer
-;;->	  win2
-;;->	  (if gud-last-last-frame
-;;->		(gud-find-file (car gud-last-last-frame))
-;;->		(if gdb-main-file
-;;->		  (gud-find-file gdb-main-file)
-;;->		  ;; Put buffer list in window if we
-;;->		  ;; can't find a source file.
-;;->		  (list-buffers-noselect))))
-;;->	(setq gdb-source-window (selected-window))
-;;->	(let ((win4 (split-window-right)))
-;;->	  (gdb-set-window-buffer
-;;->		(gdb-get-buffer-create 'gdb-inferior-io) nil win4))
-;;->	(select-window win1)
-;;->	(gdb-set-window-buffer (gdb-stack-buffer-name))
-;;->	(let ((win5 (split-window-right)))
-;;->	  (gdb-set-window-buffer (if gdb-show-threads-by-default
-;;->							   (gdb-threads-buffer-name)
-;;->							   (gdb-breakpoints-buffer-name))
-;;->							 nil win5))
-;;->	(select-window win0)))
-;;->
-;;->;;(gdb-setup-windows)
-;;->(setq gdb-many-windows t)
-;;;;;;;;;
-
 (add-to-list 'display-buffer-alist
-         (cons 'cdb-source-code-buffer-p
-           (cons 'display-source-code-buffer nil)))
+			 (cons 'cdb-source-code-buffer-p
+				   (cons 'display-source-code-buffer nil)))
 (defun cdb-source-code-buffer-p (bufName action)
   "Return whether BUFNAME is a source code buffer."
   (let ((buf (get-buffer bufName)))
-    (and buf
-     (with-current-buffer buf
-       (derived-mode-p buf 'c++-mode 'c-mode 'csharp-mode 'nxml-mode)))))
+	(and buf
+		 (with-current-buffer buf
+							  (derived-mode-p buf 'c++-mode 'c-mode 'csharp-mode 'nxml-mode)))))
 
 (defun display-source-code-buffer (sourceBuf alist)
   "Find a window with source code and set sourceBuf inside it."
   (let* ((curbuf (current-buffer))
-     (wincurbuf (get-buffer-window curbuf))
-     (win (if (and wincurbuf
-               (derived-mode-p sourceBuf 'c++-mode 'c-mode 'nxml-mode)
-               (derived-mode-p (current-buffer) 'c++-mode 'c-mode 'nxml-mode))
-          wincurbuf
-        (get-window-with-predicate
-         (lambda (window)
-           (let ((bufName (buffer-name (window-buffer window))))
-             (or (cdb-source-code-buffer-p bufName nil)
-             (assoc bufName display-buffer-alist)
-             ))))))) ;; derived-mode-p doesn't work inside this, don't know why...
-    (set-window-buffer win sourceBuf)
-    win))
+		 (wincurbuf (get-buffer-window curbuf))
+		 (win (if (and wincurbuf
+					   (derived-mode-p sourceBuf 'c++-mode 'c-mode 'nxml-mode)
+					   (derived-mode-p (current-buffer) 'c++-mode 'c-mode 'nxml-mode))
+				wincurbuf
+				(get-window-with-predicate
+				  (lambda (window)
+					(let ((bufName (buffer-name (window-buffer window))))
+					  (or (cdb-source-code-buffer-p bufName nil)
+						  (assoc bufName display-buffer-alist)
+						  ))))))) ;; derived-mode-p doesn't work inside this, don't know why...
+	(set-window-buffer win sourceBuf)
+	win))
 
 (require 'gud)
 
@@ -140,48 +90,48 @@
 
 ; GDB layout
 (defadvice gdb-setup-windows (after activate)
-  (gdb-setup-my-windows)
-)
+		   (gdb-setup-my-windows)
+		   )
 
 (defun gdb-setup-my-windows ()
   (set-window-dedicated-p (selected-window) nil)
   (switch-to-buffer gud-comint-buffer)
   (delete-other-windows)
   (let
-    ((win0 (selected-window))             ; breakpoints
-     (win1 (split-window-horizontally
-         (floor (* 0.5 (window-width)))))   ; source + i/o
-     (win2 (split-window-vertically
-         (floor (* 0.5 (window-body-height))))) ; gdb
-     (win3 (split-window-vertically
-        (floor (* 0.5 (window-body-height))))) ; locals
-     (win4 (split-window-vertically
-         (floor (* 0.6 (window-body-height))))) ; stack
-    )
-    (select-window win1)
-    ; configurating right window
-    (let
-    ((winSrc (selected-window)) ; source
-     (winIO (split-window-vertically (floor (* 0.9 (window-body-height))))) ; I/O
-     )
-      (set-window-buffer winIO (gdb-get-buffer-create 'gdb-inferior-io))
-      (set-window-buffer
-    winSrc
-    (if gud-last-last-frame
-     (gud-find-file (car gud-last-last-frame))
-      (if gdb-main-file
-       (gud-find-file gdb-main-file)
-     (list-buffers-noselect))))
-      (setq gdb-source-window winSrc)
-      (set-window-dedicated-p winIO t)
-   )
+	((win0 (selected-window))             ; breakpoints
+	 (win1 (split-window-horizontally
+			 (floor (* 0.5 (window-width)))))   ; source + i/o
+	 (win2 (split-window-vertically
+			 (floor (* 0.5 (window-body-height))))) ; gdb
+	 (win3 (split-window-vertically
+			 (floor (* 0.5 (window-body-height))))) ; locals
+	 (win4 (split-window-vertically
+			 (floor (* 0.6 (window-body-height))))) ; stack
+	 )
+	(select-window win1)
+	; configurating right window
+	(let
+	  ((winSrc (selected-window)) ; source
+	   (winIO (split-window-vertically (floor (* 0.9 (window-body-height))))) ; I/O
+	   )
+	  (set-window-buffer winIO (gdb-get-buffer-create 'gdb-inferior-io))
+	  (set-window-buffer
+		winSrc
+		(if gud-last-last-frame
+		  (gud-find-file (car gud-last-last-frame))
+		  (if gdb-main-file
+			(gud-find-file gdb-main-file)
+			(list-buffers-noselect))))
+	  (setq gdb-source-window winSrc)
+	  (set-window-dedicated-p winIO t)
+	  )
 
-    (set-window-buffer win0 (gdb-get-buffer-create 'gdb-breakpoints-buffer))
-    (set-window-buffer win3 (gdb-get-buffer-create 'gdb-locals-buffer))
-    (set-window-buffer win4 (gdb-get-buffer-create 'gdb-stack-buffer))
-    (select-window win2)
+	(set-window-buffer win0 (gdb-get-buffer-create 'gdb-breakpoints-buffer))
+	(set-window-buffer win3 (gdb-get-buffer-create 'gdb-locals-buffer))
+	(set-window-buffer win4 (gdb-get-buffer-create 'gdb-stack-buffer))
+	(select-window win2)
+	)
   )
-)
 
 ; GDB variables
 (setq gdb-many-windows t)
@@ -191,7 +141,6 @@
 (setq gdb-use-separate-io-buffer nil)
 (setq gdb-delete-out-of-scope t)
 (setq gdb-speedbar-auto-raise t)
-
 
 ;;;;;;;;;
 
@@ -233,25 +182,25 @@
 			  )
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(gdb-enable-debug t)
- '(gdb-many-windows t)
- '(gdb-stopped-functions nil)
- '(gud-gud-gdb-command-name "gdb --fullname")
- '(gud-tooltip-mode t)
- '(package-selected-packages (quote (idea-darkula-theme evil color-theme)))
- '(scroll-bar-mode nil)
- '(tool-bar-mode nil)
- '(tooltip-mode t)
- '(transient-mark-mode nil))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(gdb-enable-debug t)
+  '(gdb-many-windows t)
+  '(gdb-stopped-functions nil)
+  '(gud-gud-gdb-command-name "gdb --fullname")
+  '(gud-tooltip-mode t)
+  '(package-selected-packages (quote (idea-darkula-theme evil color-theme)))
+  '(scroll-bar-mode nil)
+  '(tool-bar-mode nil)
+  '(tooltip-mode t)
+  '(transient-mark-mode nil))
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  )
 
