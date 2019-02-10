@@ -20,7 +20,10 @@ let g:gutentags_define_advanced_commands = 1
 let g:gutentags_cache_dir='~/tags/'
 let g:gutentags_ctags_tagfile='~/tags/allTags'
 let g:gutentags_resolve_symlinks=1
-""let g:gutentags_ctags_executable='/usr/local/Cellar/universal-ctags/HEAD-5b42263/bin/ctags'
+if (laptop_mode)
+	let g:gutentags_ctags_executable='/usr/local/Cellar/universal-ctags/HEAD-5b42263/bin/ctags'
+else
+endif
 let g:gutentags_auto_add_cscope=1
 let g:gutentags_project_root = ['.root']
 let g:gutentags_add_default_project_roots=0
@@ -65,6 +68,7 @@ autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail |
 nmap <C-i> :A <cr>
 nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
 nmap <C-c> :qa <cr>
+
 
 "=============Unneeded plugin======================="
 """""""""""""" ALE  """""""""""""""""""""""""""
