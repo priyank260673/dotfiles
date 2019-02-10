@@ -30,20 +30,6 @@ let g:gutentags_add_default_project_roots=0
 let g:gutentags_exclude_filetypes = ['text', 'help', 'vim']
 let g:gutentags_plus_switch = 1
 
-""""""""""""  Ultisnips  """""""""""""""""""""
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-a>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsListSnippets="<c-l>"
-let g:UltiSnipsEditSplit="vertical"
-
-""""""""""""""ConqueTerm GDB settings """""""""""""""""""""""""""
-let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
-let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
-let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
-let g:ConqueGdb_SaveHistory = 1
-
 """""""""""" TAG BAR  """""""""""""""""""""""""""
 let g:tagbar_left = 0
 let g:tagbar_autofocus = 1
@@ -64,11 +50,24 @@ autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail |
 			\ else | echohl AsyncRunOK |
 			\ echo 'AsyncRun: [OK]' | cclose | endif | echohl Normal
 
+""""""""""""  Ultisnips  """""""""""""""""""""
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-a>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsListSnippets="<c-l>"
+let g:UltiSnipsEditSplit="vertical"
+
+""""""""""""""ConqueTerm GDB settings """""""""""""""""""""""""""
+let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
+let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
+let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
+let g:ConqueGdb_SaveHistory = 1
+
 """"""""""""  a.vim """""""""""""""""""""
 nmap <C-i> :A <cr>
 nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
 nmap <C-c> :qa <cr>
-
 
 "=============Unneeded plugin======================="
 """""""""""""" ALE  """""""""""""""""""""""""""
