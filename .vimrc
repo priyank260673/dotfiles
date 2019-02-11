@@ -1,5 +1,10 @@
 " init vundle
-let laptop_mode = 0
+if $HOME == "/home/ppatel"
+	let laptop_mode = 0
+else
+	let laptop_mode = 1
+endif
+
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
@@ -83,9 +88,6 @@ endif
 " Put cscope output in quick fix window
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-nmap <C-n> :cnext <CR>
-nmap <C-p> :cprevious <CR>
-
 " Hide menu/toolbar
 set guioptions=
 
@@ -125,6 +127,7 @@ set tm=500
 " Show matching brackets
 set showmatch
 set matchpairs+=<:>
+set matchpairs+=':'
 
 " Set directory to current buffer
 set autochdir 
@@ -141,19 +144,11 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 set mousefocus
 set guioptions+=a
 
-"Better window navigation
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
 " Vim diff settings
 if &diff                             " only for diff mode/vimdiff
 	set diffopt=filler,context:1000000 " filler is default and inserts empty
 	set noro
 endif
-
-map <space> :BufExplorer<RETURN>
 
 " take in an extra file from the local directory if necessary
 if filereadable(glob(".vimrc.local"))
@@ -189,14 +184,14 @@ else
 	set path+=/home/ppatel/git/example/sapphire/
 	set path+=/home/ppatel/git/example/sapphire/hawk/
 
-	nmap <F3> :call MakeCppDbg() <cr>
+	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
 		set makeprg=/usr/bin/g++-7\ -std=c++17\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
 		make
 	endfunction
-	nmap <F4> :call MakeCppDbg() <cr>
+	map <F4> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=/usr/bin/g++-7\ -std=c++17\ -pthread\ -lrt\ -g3\ %\ -o\ %<
+		set makeprg=/usr/bin/g++-7\ -std=c++17\ -pthread\ -lrt\ -g3\ -fsanitize=address\ -fsanitize=leak\ %\ -o\ %<
 		make
 	endfunction
 	""function! BuildDbg()
@@ -204,11 +199,25 @@ else
 	""	set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
 	""	make | copen | resize 25
 	""endfunction
-	nmap <F9> :AsyncRun -save=2 ~/bin/buildApp.sh btecdrop-test<cr>
-	nmap <F10> :AsyncRun -save=2 ~/bin/buildAppRel.sh btecdrop-test<cr>
+	map <F9> :AsyncRun -save=2 ~/bin/buildApp.sh 
+	map <F10> :AsyncRun -save=2 ~/bin/buildAppRel.sh 
+	map <F11> :call BuildDbg()<cr>
+	function! BuildDbg()
+		cd /home/ppatel/git/example/sapphire/build/debug/
+		"set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
+		set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ btec_drop
+		make | copen | resize 25
+	endfunction
+	map <F12> :call BuildRel()<cr>
+	function! BuildRel()
+		cd /home/ppatel/git/example/sapphire/build/debug/
+		"set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
+		set makeprg=make\ -j3\ VERBOSE=1\ btec_drop
+		make | copen | resize 25
+	endfunction
 endif
 
-"============= FUNCTION KEY MAPPING ======================="
+"============= COMMON FUNCTION KEY MAPPING ======================="
 nmap <F2> :e ~/scratchpad.txt  <cr>
 " For regular compilation of projects
 " Resize windows"

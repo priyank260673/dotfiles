@@ -112,7 +112,7 @@
 	; configurating right window
 	(let
 	  ((winSrc (selected-window)) ; source
-	   (winIO (split-window-vertically (floor (* 0.9 (window-body-height))))) ; I/O
+	   (winIO (split-window-vertically (floor (* 0.8 (window-body-height))))) ; I/O
 	   )
 	  (set-window-buffer winIO (gdb-get-buffer-create 'gdb-inferior-io))
 	  (set-window-buffer

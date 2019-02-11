@@ -44,12 +44,11 @@ let g:gutentags_exclude_filetypes = ['text', 'help', 'vim']
 let g:gutentags_plus_switch = 1
 
 """""""""""" TAG BAR  """""""""""""""""""""""""""
-let g:tagbar_left = 0
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 55
 
 """""""""""" ASYNCRUN  """""""""""""""""""""""""""
-let g:asyncrun_open = 8
+let g:asyncrun_open = 20
 let g:asyncrun_save = 2
 let g:asyncrun_bell = 1
 " Highlight of AsyncRun exit messages
@@ -70,6 +69,12 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsListSnippets="<c-a>"
 let g:UltiSnipsEditSplit="vertical"
+if (laptop_mode)
+set rtp+=/home/ppatel/UltiSnips/
+	set rtp+=/home/ppatel/UltiSnips/
+else
+	set rtp+=/home/ppatel/extra_git/mydotfiles/dotfiles/UltiSnips/
+endif
 
 """"""""""""""ConqueTerm GDB settings """""""""""""""""""""""""""
 let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
@@ -78,14 +83,15 @@ let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is c
 let g:ConqueGdb_SaveHistory = 1
 
 """"""""""""  a.vim """""""""""""""""""""
-nmap <C-i> :A <cr>
-nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
-nmap <C-c> :qa <cr>
+""nmap <C-i> :A <cr>
+""nmap <C-]> :exe ":tj /" . expand("<cword>")<CR>
+""nmap <C-c> :qa <cr>
 
 """"""""""""  fzf """""""""""""""""""""
+" Following require in .bashrc"
+""[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+""export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | grep -v build )2> /dev/null'
 set rtp+=~/.vim/bundle/fzf/
-nnoremap <C-p> :Files<Cr>
-
 """ An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
@@ -130,7 +136,22 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-"=============Unneeded plugin======================="
+"""""""""""""""" Key mappings """"""""""
+map <space> :BufExplorer<RETURN>
+
+"Better window navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+nmap <C-n> :cnext <CR>
+nmap <C-p> :cprevious <CR>
+
+nmap <C-u> :Files <CR>
+
+"=============Unneeded plugin=======================
+
 """""""""""""" ALE  """""""""""""""""""""""""""
 ""let g:ale_linters = {'cpp' : ['gcc'], 'c' : ['gcc']}
 ""let g:ale_completion_enabled = 0
