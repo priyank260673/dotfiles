@@ -149,7 +149,6 @@ nnoremap <C-l> <C-w>l
 
 " Vim diff settings
 if &diff                             " only for diff mode/vimdiff
-	colorscheme xoria256
 	set diffopt=filler,context:1000000 " filler is default and inserts empty
 	set noro
 endif
@@ -181,7 +180,7 @@ if (laptop_mode)
 	endfunction 
 else
 	" take in an extra file from the local directory if necessary
-	if filereadable(glob("~/git/dotfiles/.vimrc.plugin"))
+	if filereadable(glob("~/extra_git/mydotfiles/dotfiles/.vimrc.plugin"))
 		source ~/extra_git/mydotfiles/dotfiles/.vimrc.plugin
 	endif
 

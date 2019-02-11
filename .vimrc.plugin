@@ -10,19 +10,32 @@ set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>
 map <Leader>ff :YcmCompleter FixIt<CR>
+let g:ycm_filetype_blacklist = {
+			\ 'tagbar': 1,
+			\ 'qf': 1,
+			\ 'notes': 1,
+			\ 'markdown': 1,
+			\ 'unite': 1,
+			\ 'text': 1,
+			\ 'vimwiki': 1,
+			\ 'pandoc': 1,
+			\ 'infolog': 1,
+			\ 'mail': 1 }
 au BufRead,BufNewFile *.ipp set filetype=cpp
 
 """"""""""""""""""""""""  GutenTags """""""""""""""""""""
 " mkdir ~/git/example/sapphire/.root, used below
-set tags+=~/tags/allTags,~/tags/Users-ppatel-GUTENTAGS-~-tags-allTags
 let g:gutentags_ctags_extra_args=['-R', '--totals', '--recurse', '--c++-kinds=+p', '--fields=+ialS', '--extras=+qf', '--language-force=C++']
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_cache_dir='~/tags/'
 let g:gutentags_ctags_tagfile='~/tags/allTags'
 let g:gutentags_resolve_symlinks=1
 if (laptop_mode)
+	set tags+=~/tags/allTags,~/tags/Users-ppatel-GUTENTAGS-~-tags-allTags
 	let g:gutentags_ctags_executable='/usr/local/Cellar/universal-ctags/HEAD-5b42263/bin/ctags'
 else
+	set tags+=~/tags/allTags,~/tags/home-ppatel-git-example-sapphire-~-tags-allTags
+	let g:gutentags_ctags_executable='/home/ppatel/bin/CTAGS/LATEST/ctags/ctags'
 endif
 let g:gutentags_auto_add_cscope=1
 let g:gutentags_project_root = ['.root']
