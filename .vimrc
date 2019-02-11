@@ -21,6 +21,8 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'andymass/vim-matchup'
 Bundle 'ludovicchabant/vim-gutentags'
+Bundle 'junegunn/fzf'
+Bundle 'junegunn/fzf.vim'
 
 " Colorschemes "
 colorscheme xoria256_mine
