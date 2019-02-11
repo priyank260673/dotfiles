@@ -1,5 +1,5 @@
 " init vundle
-let laptop_mode = 1
+let laptop_mode = 0
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
@@ -180,6 +180,11 @@ if (laptop_mode)
 		make
 	endfunction 
 else
+	" take in an extra file from the local directory if necessary
+	if filereadable(glob("~/git/dotfiles/.vimrc.plugin"))
+		source ~/extra_git/mydotfiles/dotfiles/.vimrc.plugin
+	endif
+
 	" Add path so that we can find files"
 	set path+=/home/ppatel/
 	set path+=/home/ppatel/git/example/sapphire/

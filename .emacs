@@ -23,7 +23,7 @@
 					(color-theme-initialize)
 					(color-theme-dark-laptop)))
 ;;(color-theme-charcoal-black)))
-(load-theme 'idea-darkula t)
+;;(load-theme 'idea-darkula t)
 
 ;; Go to line
 ;;(global-set-key "\C-l" 'goto-line)
