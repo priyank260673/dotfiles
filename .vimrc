@@ -58,36 +58,6 @@ set textwidth=0
 set hlsearch
 "set softtabstop=4
 
-" Setup cscope
-if has('cscope')
-	set csto=0
-	set cst
-	set nocsverb
-	"set cscopetag cscopeverbose
-	if has('quickfix')
-		set cscopequickfix=s-,c-,d-,i-,t-,e-
-	endif
-
-	cnoreabbrev csa cs add
-	cnoreabbrev csf cs find
-	cnoreabbrev csk cs kill
-	cnoreabbrev csr cs reset
-	cnoreabbrev css cs show
-	cnoreabbrev csh cs help
-
-	" add any database in current directory
-	if filereadable("cscope.out")
-		cs add cscope.out
-		" else add database pointed to by environment
-	elseif $CSCOPE_DB != ""
-		"cs add $CSCOPE_DB
-		cs add ~/tags/cscope.out
-	endif
-endif
-
-" Put cscope output in quick fix window
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-
 " Hide menu/toolbar
 set guioptions=
 
@@ -184,6 +154,7 @@ else
 	set path+=/home/ppatel/git/example/sapphire/
 	set path+=/home/ppatel/git/example/sapphire/hawk/
 
+	nmap <C-c> :qa <cr>
 	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
 		set makeprg=/usr/bin/g++-7\ -std=c++17\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt

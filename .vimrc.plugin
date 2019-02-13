@@ -1,6 +1,97 @@
+""""""" CSCOPE """" 
+" Setup cscope
+if has('cscope')
+	set csto=0
+	set cst
+	set nocsverb
+	"set cscopetag cscopeverbose
+	if has('quickfix')
+		set cscopequickfix=s-,c-,d-,i-,t-,e-
+	endif
+
+	cnoreabbrev csa cs add
+	cnoreabbrev csf cs find
+	cnoreabbrev csk cs kill
+	cnoreabbrev csr cs reset
+	cnoreabbrev css cs show
+	cnoreabbrev csh cs help
+
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+		" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+		"cs add $CSCOPE_DB
+		cs add ~/tags/cscope.out
+	endif
+endif
+
+" Put cscope output in quick fix window
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+" Find ?? "
+function! Csa()
+  cscope find a <cword>
+  copen
+endfunction
+command! Csa call Csa()
+
+" Find callers "
+function! Csc()
+  cscope find c <cword>
+  copen
+endfunction
+command! Csc call Csc()
+
+" Find callers "
+function! Csd()
+  cscope find d <cword>
+  copen
+endfunction
+command! Csd call Csd()
+
+" Find callers "
+function! Cse()
+  cscope find e <cword>
+  copen
+endfunction
+command! Csd call Cse()
+
+" Find file "
+function! Csf()
+  cscope find f <cword>
+  copen
+endfunction
+command! Csf call Csf()
+
+function! Csg()
+  cscope find g <cword>
+  copen
+endfunction
+command! Csg call Csg()
+
+function! Csi()
+  cscope find i <cword>
+  copen
+endfunction
+command! Csi call Csi()
+
+function! Css()
+  cscope find s <cword>
+  copen
+endfunction
+command! Css call Css()
+
+function! Cst()
+  cscope find t <cword>
+  copen
+endfunction
+command! Cst call Cst()
+
 """"""" You complete me """" 
 let g:ycm_global_ycm_extra_conf='~/global_extra_conf.py'
 let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_complete_in_comments = 1
 let g:ycm_error_symbol='>'
 let g:ycm_warning_symbol='>'
 let g:ycm_max_diagnostics_to_display = 1000
@@ -44,8 +135,15 @@ let g:gutentags_exclude_filetypes = ['text', 'help', 'vim']
 let g:gutentags_plus_switch = 1
 
 """""""""""" TAG BAR  """""""""""""""""""""""""""
+let g:tagbar_left = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 55
+if (laptop_mode)
+	let g:tagbar_ctags_bin='/usr/local/Cellar/universal-ctags/HEAD-5b42263/bin/ctags'
+else
+	let g:tagbar_ctags_bin='/home/ppatel/bin/CTAGS/LATEST/ctags/ctags'
+endif
+""highlight TagbarScope guifg=Green ctermfg=Green
 
 """""""""""" ASYNCRUN  """""""""""""""""""""""""""
 let g:asyncrun_open = 20
@@ -70,11 +168,18 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsListSnippets="<c-a>"
 let g:UltiSnipsEditSplit="vertical"
 if (laptop_mode)
-set rtp+=/home/ppatel/UltiSnips/
 	set rtp+=/home/ppatel/UltiSnips/
+	set path+=/home/ppatel/UltiSnips/
 else
+	set path+=/home/ppatel/UltiSnips/
 	set rtp+=/home/ppatel/extra_git/mydotfiles/dotfiles/UltiSnips/
 endif
+
+""""""""""""""GitGutter signs """""""""""""""""""""""""""
+let g:gitgutter_max_signs = 1000
+highlight GitGutterAdd    guifg=#009900 ctermfg=2 ctermbg=242
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3 ctermbg=242
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1 ctermbg=242
 
 """"""""""""""ConqueTerm GDB settings """""""""""""""""""""""""""
 let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
@@ -151,7 +256,6 @@ nmap <C-p> :cprevious <CR>
 nmap <C-u> :Files <CR>
 
 "=============Unneeded plugin=======================
-
 """""""""""""" ALE  """""""""""""""""""""""""""
 ""let g:ale_linters = {'cpp' : ['gcc'], 'c' : ['gcc']}
 ""let g:ale_completion_enabled = 0

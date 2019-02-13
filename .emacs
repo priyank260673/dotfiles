@@ -103,10 +103,10 @@
 			 (floor (* 0.5 (window-width)))))   ; source + i/o
 	 (win2 (split-window-vertically
 			 (floor (* 0.5 (window-body-height))))) ; gdb
-	 (win3 (split-window-vertically
-			 (floor (* 0.5 (window-body-height))))) ; locals
-	 (win4 (split-window-vertically
-			 (floor (* 0.6 (window-body-height))))) ; stack
+	 ;;(win3 (split-window-vertically
+	;;		 (floor (* 0.5 (window-body-height))))) ; locals
+	 ;;(win4 (split-window-vertically
+	;;		 (floor (* 0.6 (window-body-height))))) ; stack
 	 )
 	(select-window win1)
 	; configurating right window
@@ -126,9 +126,10 @@
 	  (set-window-dedicated-p winIO t)
 	  )
 
-	(set-window-buffer win0 (gdb-get-buffer-create 'gdb-breakpoints-buffer))
-	(set-window-buffer win3 (gdb-get-buffer-create 'gdb-locals-buffer))
-	(set-window-buffer win4 (gdb-get-buffer-create 'gdb-stack-buffer))
+	;;(set-window-buffer win0 (gdb-get-buffer-create 'gdb-breakpoints-buffer))
+	(set-window-buffer win0 (gdb-get-buffer-create 'gdb-locals-buffer))
+	;;(set-window-buffer win3 (gdb-get-buffer-create 'gdb-locals-buffer))
+	;;(set-window-buffer win4 (gdb-get-buffer-create 'gdb-stack-buffer))
 	(select-window win2)
 	)
   )

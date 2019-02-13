@@ -56,11 +56,11 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+#if [ "$color_prompt" = yes ]; then
+#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#else
+#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+#fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -255,7 +255,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/bin/GDB/gdb-8.2.1/gdb:${PATH}:.
+export PATH=~/bin/CTAGS/LATEST/ctags:~/bin/GDB/gdb-8.2.1/gdb:${PATH}:.:
 #export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
@@ -271,7 +271,6 @@ alias dffm='git d master .'
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
 alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
 alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
-
 #alias gdb='/home/ppatel/bin/GDB/gdb-8.2.1/gdb/gdb --data-directory=/home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory'
 export TERM=xterm-256color
 
@@ -282,4 +281,20 @@ function debug {
 function debugnw {
     emacs -nw --eval "(gdb \"gdb -i=mi ; --args $* \")";
 }
+
+# Display branch working on path
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+# FZF setup
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | grep -v build )2> /dev/null'
+
+#export FZF_DEFAULT_COMMAND='
+#  (git ls-tree -r --name-only HEAD ||
+#   find /home/ppatel/git/example/sapphire/sapphire/ /home/ppatel/git/example/sapphire/e7core /home/ppatel/git/example/sapphire/hawk /home/ppatel/git/example/sapphire/messages/ -path "*/\.*" -prune -o -type f -print -o -type l -print |
+#      sed s/^..//) 2> /dev/null'
+#export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
