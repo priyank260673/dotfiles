@@ -56,6 +56,11 @@
 (global-set-key [f10] 'gud-remove)
 (global-set-key [f11] 'toggle-current-window-dedication)
 
+;; ipp files needs to be in c*mode otherwise debugger
+;; will open up another source frame
+(add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.ipp\\'" . c-mode))
+
 (add-to-list 'display-buffer-alist
 			 (cons 'cdb-source-code-buffer-p
 				   (cons 'display-source-code-buffer nil)))
@@ -112,7 +117,7 @@
 	; configurating right window
 	(let
 	  ((winSrc (selected-window)) ; source
-	   (winIO (split-window-vertically (floor (* 0.8 (window-body-height))))) ; I/O
+	   (winIO (split-window-vertically (floor (* 0.7 (window-body-height))))) ; I/O
 	   )
 	  (set-window-buffer winIO (gdb-get-buffer-create 'gdb-inferior-io))
 	  (set-window-buffer
@@ -144,7 +149,6 @@
 (setq gdb-speedbar-auto-raise t)
 
 ;;;;;;;;;
-
 ;; Highlight current line in source
 (defvar gud-overlay
   (let* ((ov (make-overlay (point-min) (point-min))))
@@ -168,19 +172,35 @@
 (setq mouse-autoselect-window t)
 
 ;; format title bar to show full path of current file
-(setq-default frame-title-format
-			  (list '(
-					  (buffer-file-name " %f"
-										(dired-directory
-										  dired-directory
-										  (revert-buffer-function " %b"
-																  ("%b - Dir:  " default-directory)
-																  )
-										  )
-										)
-					  )
-					)
-			  )
+;;(setq frame-title-format 
+	;;  (list '((buffer-file-name " %f" 
+	;;			(dired-directory dired-directory 
+	;;				(revert-buffer-function " %b" 
+	;;					("%b - Dir:  " default-directory))))))) 
+
+;;(setq mode-line-format
+ ;;     (list (format "%s %%S: %%j " (system-name))
+  ;;      '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+(setq mode-line-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+(setq mode-line-format
+          '("" invocation-name ": "
+            (:eval
+             (if (buffer-file-name)
+                 (abbreviate-file-name (buffer-file-name))
+               "%b"))))
+
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+(global-set-key [f12] 'show-file-name) ; Or any other key you want
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
