@@ -56,6 +56,16 @@
 (global-set-key [f10] 'gud-remove)
 (global-set-key [f11] 'toggle-current-window-dedication)
 
+;;;; Put full path name
+(defvar mode-line-buffer-identification-default
+    mode-line-buffer-identification
+	  "Original value of `mode-line-buffer-identification'.")
+
+(setq-default mode-line-buffer-identification '(:eval 
+		(if (buffer-file-name) 
+		  (abbreviate-file-name (buffer-file-name))
+		  mode-line-buffer-identification-default)))
+
 (add-to-list 'display-buffer-alist
 			 (cons 'cdb-source-code-buffer-p
 				   (cons 'display-source-code-buffer nil)))
