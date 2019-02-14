@@ -60,6 +60,10 @@
 ;; will open up another source frame
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c-mode))
+
+(global-linum-mode 1)
+(setq linum-format "%4d ")
+
 ;;;; Put full path name
 (defvar mode-line-buffer-identification-default
     mode-line-buffer-identification
@@ -70,6 +74,7 @@
 		  (abbreviate-file-name (buffer-file-name))
 		  mode-line-buffer-identification-default)))
 
+;; Only open one source buffer window while debugging
 (add-to-list 'display-buffer-alist
 			 (cons 'cdb-source-code-buffer-p
 				   (cons 'display-source-code-buffer nil)))
@@ -179,31 +184,6 @@
 ;;(global-linum-mode t)
 ;; follow focus with mouse
 (setq mouse-autoselect-window t)
-
-;; format title bar to show full path of current file
-;;(setq frame-title-format 
-	;;  (list '((buffer-file-name " %f" 
-	;;			(dired-directory dired-directory 
-	;;				(revert-buffer-function " %b" 
-	;;					("%b - Dir:  " default-directory))))))) 
-
-;;(setq mode-line-format
- ;;     (list (format "%s %%S: %%j " (system-name))
-  ;;      '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-
-(setq frame-title-format
-      (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-(setq mode-line-format
-      (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-
-(setq mode-line-format
-          '("" invocation-name ": "
-            (:eval
-             (if (buffer-file-name)
-                 (abbreviate-file-name (buffer-file-name))
-               "%b"))))
 
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
