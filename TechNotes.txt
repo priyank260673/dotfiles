@@ -4,3 +4,103 @@ Debugging assembly via gdb:
 2) g++ -S -o assembly.s assembly.cpp // generate assembly output
 3) as --gstabs -o assembly.o assembly.s // genearte object file using assembly
 4) g++ -o assembly assembly.o // Generate executable from object file
+
+
+Debugging with process:
+-----------------------
+// Instructs gdb to switch to child process – in our case scalper_d first and after that cmerouter_d
+set follow-fork-mode child
+// Both child and parent processes will be held in control of GDB
+set detach-on-fork off
+// Follow execution of new child process
+set follow-exec-mode new
+
+Now follow is the execution you will need to debug. Do regular cleanup of shared memory and create necessary shm sections as per commands before starting controller.
+
+./stop.sh; rm -f /dev/shm/*; sleep 10; /home/ppatel/git/example/sapphire/build/debug/bin/create_sections_d -e PPatel -f ./sapphire.cfg.cme
+
+Now run gdb however you run with following:
+
+ gdb /home/ppatel/git/example/sapphire/build/debug/bin/controller_d
+(gdb) set args -n 0 -e  PPatel -f ./sapphire.cfg.cme
+(gdb) break main
+(gdb) start
+Temporary breakpoint 2 at 0x41e0d6: file /home/ppatel/git/example/sapphire/sapphire/cmake/standard_main.cpp, line 6.
+Starting program: /home/ppatel/git/example/sapphire/build/debug/bin/controller_d -n 0 -e  PPatel -f ./sapphire.cfg.cme
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (argc=7, argv=0x7fffffffe338) at /home/ppatel/git/example/sapphire/sapphire/cmake/standard_main.cpp:6
+6          exit( entry_point( argc, argv ) );
+(gdb) cont
+Continuing.
+…..
+……
+
+At this point scalper_d will start and gdb will halt….run “Ctrl-C” and do following:
+
+(gdb) info infe
+  Num  Description       Executable
+  1    process 33401     /home/ppatel/git/example/sapphire/build/debug/bin/controller_d
+* 3    process 33410     /home/ppatel/git/example/sapphire/build/debug/bin/scalper_d
+(gdb) infe 1
+[Switching to inferior 1 [process 33401] (/home/ppatel/git/example/sapphire/build/debug/bin/controller_d)]
+[Switching to thread 1.1 (Thread 0x15555552d740 (LWP 33401))]
+#0  0x00001555538c241a in __libc_fork () at ../sysdeps/nptl/fork.c:145
+145     ../sysdeps/nptl/fork.c: No such file or directory.
+(gdb) detach infe 3  This command will detach scalper_d will run outside gdb …
+Detaching from program: /home/ppatel/git/example/sapphire/build/debug/bin/scalper_d, process 33410
+(gdb) 2019-01-08,08:12:05.658998876 [INFO] scalper_d(33410) node/BaseNode.h:871 | engine:PPatel
+2019-01-08,08:12:05.659142587 [INFO] scalper_d(33410) node/BaseNode.h:868 | queue:sapphire_PPatel_0_controller_d
+…….
+……..
+Got back to inferior 1 -> controller_d process back …
+……
+
+(gdb) infe 1
+[Switching to inferior 1 [process 33401] (/home/ppatel/git/example/sapphire/build/debug/bin/controller_d)]
+[Switching to thread 1.1 (Thread 0x15555552d740 (LWP 33401))]
+#0  0x00001555538c241a in __libc_fork () at ../sysdeps/nptl/fork.c:145
+145     in ../sysdeps/nptl/fork.c
+(gdb) cont
+Continuing.
+[New process 33444]
+….
+….
+process 33444 is executing new program: /home/ppatel/git/example/sapphire/build/debug/bin/cmerouter_d
+[New process 33444]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x15555552f740 (LWP 33444)]
+
+Thread 5.1 "cmerouter_d" hit Breakpoint 1, main (argc=15, argv=0x7fffffffe2b8) at /home/ppatel/git/example/sapphire/sapphire/cmake/standard_main.cpp:6
+6          exit( entry_point( argc, argv ) );
+(gdb) b FixMessageConstructor.h:26 <-  Set breakpoint wherever you want now in CME router
+……
+(gdb) info infe
+  Num  Description       Executable
+  1    process 33401     /home/ppatel/git/example/sapphire/build/debug/bin/controller_d
+  3    <null>            /home/ppatel/git/example/sapphire/build/debug/bin/scalper_d
+* 5    process 33444     /home/ppatel/git/example/sapphire/build/debug/bin/cmerouter_d
+
+… let controller_d run outside of gdb control now ….
+(gdb) detach infe 1
+Detaching from program: /home/ppatel/git/example/sapphire/build/debug/bin/controller_d, process 33401
+
+…make sure we are back on cmetouer_d inferior….
+
+(gdb) infe 5
+[Switching to inferior 5 [process 33444] (/home/ppatel/git/example/sapphire/build/debug/bin/cmerouter_d)]
+[Switching to thread 5.1 (Thread 0x15555552f740 (LWP 33444))]
+#0  main (argc=15, argv=0x7fffffffe2b8) at /home/ppatel/git/example/sapphire/sapphire/cmake/standard_main.cpp:6
+6          exit( entry_point( argc, argv ) );
+(gdb) cont
+Continuing…
+…..
+…..
+All nodes have been sent their configurations…
+
+// Now we will hit our breakpoint in CME router ….and you can successfully debug cmerouter_d now on gdb……
+Thread 5.1 "cmerouter_d" hit Breakpoint 3, sapphire::glbx::FixMessageConstructor::BuildMessage (this=0x7fffffff4fe0, message=..., msgBuilder=..., settings=...) at /home/ppatel/git/example/sapphire/./sapphire/gateways/router/cme/FixMessageConstructor.h:26
+26                std::cout << " PHP " << __FILE__ << ":"  << __LINE__  << std::endl;
+

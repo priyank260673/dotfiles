@@ -14,8 +14,8 @@ std::map <string, string> tags =
 	{"5","AdvTransType"},
 	{"6","AvgPx"},
 	{"7","BeginSeqNo"},
-	{"8","BeginString"},
-	{"9","BodyLength"},
+	//{"8","BeginString"},
+	//{"9","BodyLength"},
 	{"10","CheckSum"},
 	{"11","ClOrdID"},
 	{"12","Commission"},
@@ -1126,17 +1126,19 @@ int main(int argc, char **argv)
 			{
 				if (tags.find (key_value[0]) != tags.end())
 				{
+					auto& convertedValue = ConvertToString (key_value[0], key_value[1]);
 					std::cout << tags[key_value[0]] << "(" << key_value[0] << ")="; 
-					std::cout << ConvertToString (key_value[0], key_value[1]);
+					std::cout << (!convertedValue.empty() ? convertedValue : "**ERROR**");
 				}
 				else
 				{
-					std::cout << " ERROR: " << key_value[0] << std::endl;
+					if (key_value[0] != "8" && key_value[0] != "9")
+						std::cout << " ERROR: " << key_value[0] << std::endl;
 					std::cout << key_value[0] << '=' << key_value[1];
 				}
 			}
-			std::cout << " | ";
+			std::cout << "|";
 		}
-		std::cout << std::endl << std::endl;
+		std::cout << std::endl;
 	}
 }

@@ -25,11 +25,14 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'andymass/vim-matchup'
-Bundle 'ludovicchabant/vim-gutentags'
 Bundle 'junegunn/fzf'
 Bundle 'junegunn/fzf.vim'
+""Bundle 'ludovicchabant/vim-gutentags'
 
-" Colorschemes "
+" Set tags
+set tags=~/tags/allTags
+
+"Colorschemes "
 colorscheme xoria256_mine
 let g:airline_theme='alduin'
 
@@ -154,7 +157,6 @@ else
 	set path+=/home/ppatel/git/example/sapphire/
 	set path+=/home/ppatel/git/example/sapphire/hawk/
 
-	nmap <C-c> :qa <cr>
 	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
 		set makeprg=/usr/bin/g++-7\ -std=c++17\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
@@ -186,6 +188,9 @@ else
 		set makeprg=make\ -j3\ VERBOSE=1\ btec_drop
 		make | copen | resize 25
 	endfunction
+
+	nmap <C-c> :qa <cr>
+	imap <C-c> <Esc>
 endif
 
 "============= COMMON FUNCTION KEY MAPPING ======================="

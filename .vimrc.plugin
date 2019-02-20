@@ -114,26 +114,6 @@ let g:ycm_filetype_blacklist = {
 			\ 'mail': 1 }
 au BufRead,BufNewFile *.ipp set filetype=cpp
 
-""""""""""""""""""""""""  GutenTags """""""""""""""""""""
-" mkdir ~/git/example/sapphire/.root, used below
-let g:gutentags_ctags_extra_args=['-R', '--totals', '--recurse', '--c++-kinds=+p', '--fields=+ialS', '--extras=+qf', '--language-force=C++']
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_cache_dir='~/tags/'
-let g:gutentags_ctags_tagfile='~/tags/allTags'
-let g:gutentags_resolve_symlinks=1
-if (laptop_mode)
-	set tags+=~/tags/allTags,~/tags/Users-ppatel-GUTENTAGS-~-tags-allTags
-	let g:gutentags_ctags_executable='/usr/local/Cellar/universal-ctags/HEAD-5b42263/bin/ctags'
-else
-	set tags+=~/tags/allTags,~/tags/home-ppatel-git-example-sapphire-~-tags-allTags
-	let g:gutentags_ctags_executable='/home/ppatel/bin/CTAGS/LATEST/ctags/ctags'
-endif
-let g:gutentags_auto_add_cscope=1
-let g:gutentags_project_root = ['.root']
-let g:gutentags_add_default_project_roots=0
-let g:gutentags_exclude_filetypes = ['text', 'help', 'vim']
-let g:gutentags_plus_switch = 1
-
 """""""""""" TAG BAR  """""""""""""""""""""""""""
 let g:tagbar_left = 1
 let g:tagbar_autofocus = 1
@@ -241,20 +221,35 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+""""""""""""""""""""""""  GutenTags """""""""""""""""""""
+" mkdir ~/git/example/sapphire/.root, used below
+"-->"let g:gutentags_ctags_extra_args=['-R', '--totals', '--recurse', '--c++-kinds=+p', '--fields=+ialS', '--extras=+qf', '--language-force=C++']
+"-->"let g:gutentags_define_advanced_commands = 1
+"-->"let g:gutentags_cache_dir='~/tags/'
+"-->"let g:gutentags_ctags_tagfile='~/tags/allTags'
+"-->"let g:gutentags_resolve_symlinks=1
+"-->"if (laptop_mode)
+"-->"	set tags+=~/tags/allTags,~/tags/Users-ppatel-GUTENTAGS-~-tags-allTags
+"-->"	let g:gutentags_ctags_executable='/usr/local/Cellar/universal-ctags/HEAD-5b42263/bin/ctags'
+"-->"else
+"-->"	set tags+=~/tags/allTags,~/tags/home-ppatel-git-example-sapphire-~-tags-allTags
+"-->"	let g:gutentags_ctags_executable='/home/ppatel/bin/CTAGS/LATEST/ctags/ctags'
+"-->"endif
+"-->"let g:gutentags_auto_add_cscope=1
+"-->"let g:gutentags_project_root = ['.root']
+"-->"let g:gutentags_add_default_project_roots=0
+"-->"let g:gutentags_exclude_filetypes = ['text', 'help', 'vim']
+"-->"let g:gutentags_plus_switch = 1
 """""""""""""""" Key mappings """"""""""
 map <space> :BufExplorer<RETURN>
-
 "Better window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
-
 nmap <C-n> :cnext <CR>
 nmap <C-p> :cprevious <CR>
-
 nmap <C-u> :Files <CR>
-
 "=============Unneeded plugin=======================
 """""""""""""" ALE  """""""""""""""""""""""""""
 ""let g:ale_linters = {'cpp' : ['gcc'], 'c' : ['gcc']}

@@ -18,3 +18,4 @@ set history size 1000
 set history remove-duplicates 100
 set history filename ~/.gdb_history
 set data-directory /home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory/
+handle SIGINT pass
