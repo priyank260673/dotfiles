@@ -42,7 +42,7 @@ set wildmode=longest,full
 set wildmenu
 
 " vim options
-set cursorline
+set nocursorline
 set encoding=utf-8
 filetype on
 filetype plugin indent on
@@ -155,6 +155,7 @@ else
 	" Add path so that we can find files"
 	set path+=/home/ppatel/
 	set path+=/home/ppatel/git/example/sapphire/
+	set path+=/home/ppatel/git/example/sapphire/sapphire/
 	set path+=/home/ppatel/git/example/sapphire/hawk/
 
 	map <F3> :call MakeCppDbg() <cr>
@@ -191,6 +192,8 @@ else
 
 	nmap <C-c> :qa <cr>
 	imap <C-c> <Esc>
+	" Current build 
+	map <C-z> :AsyncRun -save=2 ~/bin/buildApp.sh instinetrouter <cr>
 endif
 
 "============= COMMON FUNCTION KEY MAPPING ======================="
