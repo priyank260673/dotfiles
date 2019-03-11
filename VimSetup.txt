@@ -49,3 +49,34 @@ time due to problems with vim. I did invest lot of time making it effecient to u
 Thanks
 Priyank
 
+======================================================================
+
+1) Make sure you vim version is > 8.1
+2) Create dirctory called .vim/bundle
+3) Download following from github in bundle directory:
+   git clone https://github.com/VundleVim/Vundle.vim.git
+4) For intelisense/completion do following:
+   cd ~/.vim/bundle/YouCompleteMe
+   install.py --clang-completer
+5) Copy .vimrc  in your home directory and .vimrc.plugin
+6) Run BundleInstall to install all plugins
+   You can run BundleUpdate to update plugins
+
+// Tags setup
+1) mkdir ~/tags/
+2) Get latest ctags and build it
+   https://github.com/universal-ctags/ctags.git
+   -> Go in the directory where ctags has downloaded.
+      You might need install of pkg-config (open ticket for support group)
+   -> ./autogen.sh && make;
+   -> Make sure you path is pointing to this ctags
+3) Run buildTags.sh
+
+// TMUX aliases
+alias tl='tmux last-window'
+alias tmd='tmux detach'
+alias tmk='tmux kill-session -t $1'
+alias tml='tmux ls'
+alias tmn='tmux -2 new -s $1'
+alias tmr='tmux attach -d -t $1'
+
