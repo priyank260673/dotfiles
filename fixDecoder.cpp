@@ -7,7 +7,8 @@
 using namespace std;
 using namespace boost;
 std::map <string, string> tags = 
-{{"1","Account"},
+{	
+	{"1","Account"},
 	{"2","AdvId"},
 	{"3","AdvRefID"},
 	{"4","AdvSide"},
@@ -977,6 +978,7 @@ std::map <string, string> tags =
 	{"1137","DefaultApplVerID"},
 	{"1409","SessionStatus"},
 	{"809","NoUsernames"},
+	{"9066","TradingSession"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)
@@ -1075,6 +1077,7 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "4") tagValue +="(FOK)";
 		if (tagValue == "5") tagValue +="(Good Till Crossing)";
 		if (tagValue == "6") tagValue +="(Good Till Date)";
+		if (tagValue == "7") tagValue +="(At the closing)";
 	}
 	if (name == "22")  // SecurityIdSource
 	{
