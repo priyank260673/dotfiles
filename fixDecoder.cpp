@@ -978,11 +978,25 @@ std::map <string, string> tags =
 	{"1137","DefaultApplVerID"},
 	{"1409","SessionStatus"},
 	{"809","NoUsernames"},
-	{"9066","TradingSession"},
+	{"9366","TradingSession"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)
 {
+	if (name == "35")
+	{
+		if (tagValue == "A") tagValue = "Logon";
+		if (tagValue == "0") tagValue = "HB";
+		if (tagValue == "1") tagValue = "TestReq";
+		if (tagValue == "2") tagValue = "ResendReq";
+		if (tagValue == "3") tagValue = "Reject";
+		if (tagValue == "4") tagValue = "SeqReset";
+		if (tagValue == "5") tagValue = "Logout";
+		if (tagValue == "D") tagValue = "NewOrder";
+		if (tagValue == "G") tagValue = "OrderReplace";
+		if (tagValue == "F") tagValue = "OrderCancel";
+		if (tagValue == "8") tagValue = "ExecReport";
+	}
 	if (name == "1409")
 	{
 		if (tagValue == "0") tagValue = "Session_Active";
@@ -993,27 +1007,27 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "100") tagValue = "InvalidBodyLength";
 		if (tagValue == "101") tagValue = "HBIntervalLow";
 	}
-	if (name == "569")
+	else if (name == "569")
 		tagValue = "AllTrades";
-	if (name == "263") 
+	else if (name == "263") 
 	{
 		if (tagValue == "0") tagValue = "Snapshot";
 		if (tagValue == "1") tagValue = "Shapshot_And_Updates";
 	}
-	if (name == "749") 
+	else if (name == "749") 
 	{
 		if (tagValue == "0") tagValue = "Successful";
 		if (tagValue == "2") tagValue = "Invalid type of Trade Request";
 		if (tagValue == "8") tagValue = "Trade Request Type not supported";
 		if (tagValue == "9") tagValue = "Not authorized";
 	}
-	if (name == "750") 
+	else if (name == "750") 
 	{
 		if (tagValue == "0") tagValue = "Accepted";
 		if (tagValue == "1") tagValue = "Completed";
 		if (tagValue == "2") tagValue = "Rejected";
 	}
-	if (name == "150") // ExecType
+	else if (name == "150") // ExecType
 	{
 		if (tagValue == "0") tagValue +="(New)";
 		if (tagValue == "1") tagValue +="(Partial fill)";
@@ -1031,7 +1045,7 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "D") tagValue +="(Restated)";
 		if (tagValue == "E") tagValue +="(Pending Replace)";
 	}
-	if (name == "39") // OrdStatus
+	else if (name == "39") // OrdStatus
 	{
 		if (tagValue == "0") tagValue +="(New)";
 		if (tagValue == "1") tagValue +="(Partial filled)";
@@ -1049,14 +1063,14 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "D") tagValue +="(Restated)";
 		if (tagValue == "E") tagValue +="(Pending Replace)";
 	}
-	if (name == "20")  // ExecTransType
+	else if (name == "20")  // ExecTransType
 	{
 		if (tagValue == "0") tagValue +="(New)";
 		if (tagValue == "1") tagValue +="(Cancel)";
 		if (tagValue == "2") tagValue +="(Correct)";
 		if (tagValue == "3") tagValue +="(Status)";
 	}
-	if (name == "54")  // Side
+	else if (name == "54")  // Side
 	{
 		if (tagValue == "1") tagValue +="(Buy)";
 		if (tagValue == "2") tagValue +="(Sell)";
@@ -1068,7 +1082,7 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "8") tagValue +="(Cross)";
 		if (tagValue == "9") tagValue +="(Cross short)";
 	}
-	if (name == "59")  // Tif
+	else if (name == "59")  // Tif
 	{
 		if (tagValue == "0") tagValue +="(Day)";
 		if (tagValue == "1") tagValue +="(GTC)";
@@ -1079,7 +1093,7 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "6") tagValue +="(Good Till Date)";
 		if (tagValue == "7") tagValue +="(At the closing)";
 	}
-	if (name == "22")  // SecurityIdSource
+	else if (name == "22")  // SecurityIdSource
 	{
 		if (tagValue == "1") tagValue +="(CUSIP)";
 		if (tagValue == "2") tagValue +="(SEDOL)";
@@ -1091,7 +1105,7 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "8") tagValue +="(Exchange Symbol)";
 		if (tagValue == "9") tagValue +="(Consolidated Tape Assoc)";
 	}
-	if (name == "40")  // OrdType
+	else if (name == "40")  // OrdType
 	{
 		if (tagValue == "1") tagValue +="(Market)";
 		if (tagValue == "2") tagValue +="(Limit)";
