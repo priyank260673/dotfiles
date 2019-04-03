@@ -137,7 +137,7 @@ if (laptop_mode)
 	" For regular compilation of projects
 	nmap <C-c> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=g++-8\ -g3\ %\ -o\ %<
+		set makeprg=g++-8\ -std=c++17 -g3\ %\ -o\ %<
 		make
 	endfunction
 
