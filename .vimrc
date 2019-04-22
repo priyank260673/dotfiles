@@ -120,6 +120,7 @@ set guioptions+=a
 " Vim diff settings
 if &diff                             " only for diff mode/vimdiff
 	set diffopt=filler,context:1000000 " filler is default and inserts empty
+	set diffopt+=iwhite
 	set noro
 endif
 

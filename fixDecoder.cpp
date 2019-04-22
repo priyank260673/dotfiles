@@ -966,6 +966,7 @@ std::map <string, string> tags =
 	{"1057","AggressorIndicator"},
 	{"7165","CommissionAdjLastPx"},
 	{"7166","DirtyPrice"},
+	{"9006","StrategyPreference"},
 	{"9730","NativeLiquidityIndicator"},
 	{"20010","CustomerInfo"},
 	{"20011","DealID"},
@@ -978,24 +979,33 @@ std::map <string, string> tags =
 	{"1137","DefaultApplVerID"},
 	{"1409","SessionStatus"},
 	{"809","NoUsernames"},
-	{"9366","TradingSession"},
+	{"9336","TradingSession"},
+	{"6000","ExecID_R"},
+	{"5700","LocateBroker"},
+	{"9303","RoutingInst"},
+	{"9400","RoutStrategy"},
+	{"9350","RoutDeliveryMethod"},
+	{"9450","ApplicationName"},
+	{"9451","ApplicationVersion"},
+	{"9452","ApplicationVendor"},
+	{"9007","TimeStampPreference"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)
 {
 	if (name == "35")
 	{
-		if (tagValue == "A") tagValue = "Logon";
-		if (tagValue == "0") tagValue = "HB";
-		if (tagValue == "1") tagValue = "TestReq";
-		if (tagValue == "2") tagValue = "ResendReq";
-		if (tagValue == "3") tagValue = "Reject";
-		if (tagValue == "4") tagValue = "SeqReset";
-		if (tagValue == "5") tagValue = "Logout";
-		if (tagValue == "D") tagValue = "NewOrder";
-		if (tagValue == "G") tagValue = "OrderReplace";
-		if (tagValue == "F") tagValue = "OrderCancel";
-		if (tagValue == "8") tagValue = "ExecReport";
+		if (tagValue == "A") tagValue +="(Logon)";
+		if (tagValue == "0") tagValue +="(HB)";
+		if (tagValue == "1") tagValue +="(TestReq)";
+		if (tagValue == "2") tagValue +="(ResendReq)";
+		if (tagValue == "3") tagValue +="(Reject)";
+		if (tagValue == "4") tagValue +="(SeqReset)";
+		if (tagValue == "5") tagValue +="(Logout)";
+		if (tagValue == "D") tagValue +="(NewOrder)";
+		if (tagValue == "G") tagValue +="(OrderReplace)";
+		if (tagValue == "F") tagValue +="(OrderCancel)";
+		if (tagValue == "8") tagValue +="(ExecReport)";
 	}
 	if (name == "1409")
 	{
@@ -1127,6 +1137,16 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 		if (tagValue == "I") tagValue +="(Funari)";
 		if (tagValue == "P") tagValue +="(Pegged)";
 	}
+	else if (name == "18")  // OrdType
+	{
+		if (tagValue == "6") tagValue +="(DoNotRoute)";
+		if (tagValue == "8") tagValue +="(PriceSlide)";
+		if (tagValue == "p") tagValue +="(ALO)";
+		if (tagValue == "M p") tagValue +="(MidPointPeg_ALO)";
+		if (tagValue == "M") tagValue +="(MidPoint)";
+		if (tagValue == "P") tagValue +="(Market)";
+		if (tagValue == "R") tagValue +="(Primary)";
+	}
 	return tagValue;
 }
 
@@ -1135,7 +1155,7 @@ int main(int argc, char **argv)
 	for (std::string line; std::getline(std::cin, line);) {
 		std::vector<string> results; 
 		split(results, line, is_any_of("\001,|"));
-		for (auto i : results)
+		for (const auto& i : results)
 		{
 			std::vector<string> key_value; 
 			split(key_value, i, is_any_of("="));
@@ -1153,8 +1173,8 @@ int main(int argc, char **argv)
 						std::cout << " ERROR: " << key_value[0] << std::endl;
 					std::cout << key_value[0] << '=' << key_value[1];
 				}
+				std::cout << "|";
 			}
-			std::cout << "|";
 		}
 		std::cout << std::endl;
 	}

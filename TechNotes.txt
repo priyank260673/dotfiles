@@ -1,3 +1,7 @@
+AWK min, max, avg
+================
+input | awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print total/count, max, min}'
+
 Debugging assembly via gdb:
 --------------------------
 1) Write any c++ program
@@ -103,4 +107,11 @@ All nodes have been sent their configurations…
 // Now we will hit our breakpoint in CME router ….and you can successfully debug cmerouter_d now on gdb……
 Thread 5.1 "cmerouter_d" hit Breakpoint 3, sapphire::glbx::FixMessageConstructor::BuildMessage (this=0x7fffffff4fe0, message=..., msgBuilder=..., settings=...) at /home/ppatel/git/example/sapphire/./sapphire/gateways/router/cme/FixMessageConstructor.h:26
 26                std::cout << " PHP " << __FILE__ << ":"  << __LINE__  << std::endl;
+
+// Run clang-tidy
+/home/ppatel/bin/CLANG/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy  -header-filter=.* -checks=*,-llvm-*,-google-reada*,-fuchsia-*  -p=. <fileName>
+
+// Run cpp-check
+~/TOOLS/cppcheck-1.87/cppcheck --enable=all --project=./compile_commands.json <fileName>
+
 
