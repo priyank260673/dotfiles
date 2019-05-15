@@ -111,7 +111,8 @@ Thread 5.1 "cmerouter_d" hit Breakpoint 3, sapphire::glbx::FixMessageConstructor
 // Run clang-tidy
 /home/ppatel/bin/CLANG/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy  -header-filter=.* -checks=*,-llvm-*,-google-reada*,-fuchsia-*  -p=. <fileName>
 
+/home/ppatel/bin/CLANG/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy  -header-filter=.*sapphire.* -checks=-*,clang-analyzer-*,performance-* -p=. /home/ppatel/git/example/sapphire/sapphire/gateways/router/cme/EntryPoint.cpp
+
 // Run cpp-check
 ~/TOOLS/cppcheck-1.87/cppcheck --enable=all --project=./compile_commands.json <fileName>
-
 

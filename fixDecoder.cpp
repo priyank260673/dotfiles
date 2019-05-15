@@ -989,6 +989,21 @@ std::map <string, string> tags =
 	{"9451","ApplicationVersion"},
 	{"9452","ApplicationVendor"},
 	{"9007","TimeStampPreference"},
+	{"9139","OrignatorUserID"},
+	{"9195","AccountCode"},
+	{"9208","CTICode"},
+	{"9175","INVALID"},
+	{"9028","SequenceWithinMillis"},
+	{"9018","NumOfLots"},
+	{"9022","NumOfCycles"},
+	{"9064","ExchangeSilo"},
+	{"9707","MiFIDID"},
+	{"9120","LiquidityIndicator"},
+	{"9413","ClientAppType"},
+	{"9019","LegNumOfLots"},
+	{"9020","LegStartDate"},
+	{"9021","LegEndDate"},
+	{"9023","LegNumOfCycles"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)
@@ -1177,5 +1192,10 @@ int main(int argc, char **argv)
 			}
 		}
 		std::cout << std::endl;
+		auto& lastValue = *(++results.rbegin());
+		if (lastValue.find("10=") == std::string::npos)
+		{
+			std::cout << " ERROR: LAST TAG NOT CHECKSUM" << std::endl;
+		}
 	}
 }

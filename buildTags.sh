@@ -8,9 +8,9 @@ echo " Building C++ tags..."
 #find /usr/local/share/drop/openonload/openonload-201710-u1/include  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print | /home/ppatel/bin/CTAGS/LATEST/ctags/ctags -R --sort=yes --tag-relative=yes  --totals --recurse --extras="+qf"  --language-force=C++ --c++-kinds=+pl --fields=+iasKS  -L - --append -o ~/tags/allTags
 ## ----------------------------------------------- ##
 echo "Building connectivity tags..."
-find /home/ppatel/git/example/sapphire  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print | grep -v unit-test | grep -v onetick | grep -v feeder | grep -v "sapphire/strategy" | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" | /home/ppatel/bin/CTAGS/LATEST/ctags/ctags -R --sort=yes --tag-relative=yes --totals --recurse  --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --extras="+qf" --language-force=C++ --fields=+ilasKS -L - --append -o ~/tags/allTags
+find /home/ppatel/git/example/sapphire  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print | grep -v unit-test | grep -v onetick | grep -v feeder | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" | /home/ppatel/bin/CTAGS/LATEST/ctags/ctags -R --sort=yes --tag-relative=yes --totals --recurse  --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --extras="+qf" --language-force=C++ --fields=+ilasKS -L - --append -o ~/tags/allTags
 
-find /home/ppatel/git/concord/ -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print | grep -v unit-test | grep -v onetick | grep -v feeder | grep -v "sapphire/strategy" | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" | /home/ppatel/bin/CTAGS/LATEST/ctags/ctags -R --sort=yes --tag-relative=yes --totals --recurse  --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --extras="+qf" --language-force=C++ --fields=+ilasKS -L - --append -o ~/tags/ccs2
+#find /home/ppatel/git/concord/ -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print | grep -v unit-test | grep -v onetick | grep -v feeder | grep -v "sapphire/strategy" | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" | /home/ppatel/bin/CTAGS/LATEST/ctags/ctags -R --sort=yes --tag-relative=yes --totals --recurse  --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --extras="+qf" --language-force=C++ --fields=+ilasKS -L - --append -o ~/tags/ccs2
 
 ## ----------------------------------------------- ##
 echo "Building gtest tags..."
@@ -21,7 +21,7 @@ find ~/extra_git/spdlog/include/  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -prin
 echo " Building CSCOPE files..." 
 #find /usr/include/c++/7/ -type f >> ~/tags/cscope.files
 find /home/ppatel/git/example/sapphire/  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print  | grep -v unit-test | grep -v onetick | grep -v feeder  | grep -v "sapphire/strategy" | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" >> ~/tags/cscope.files
-find /home/ppatel/git/concord/  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print  | grep -v unit-test | grep -v onetick | grep -v feeder  | grep -v "sapphire/strategy" | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" >> ~/tags/cscope_concord.files
+#find /home/ppatel/git/concord/  -regex ".*\.\(c\|h\|hpp\|cc\|cpp\|ipp\)" -print  | grep -v unit-test | grep -v onetick | grep -v feeder  | grep -v "sapphire/strategy" | grep  -v "hawk/hawk/book" |  grep -v "hawk/hawk/io/compression/brotli" >> ~/tags/cscope_concord.files
 #find /usr/include/boost  -type f >> ~/tags/cscope.files
 cscope -Rb -q -i ~/tags/cscope.files -f ~/tags/cscope.out
 cscope -Rb -q -i ~/tags/cscope_concord.files -f ~/tags/cscope_concord.out

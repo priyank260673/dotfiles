@@ -97,7 +97,7 @@ let g:ycm_warning_symbol='>'
 let g:ycm_max_diagnostics_to_display = 1000
 let g:ycm_confirm_extra_conf=0
 let g:ycm_disable_for_files_larger_than_kb=10000
-let g:ycm_min_num_of_chars_for_completion=0
+let g:ycm_min_num_of_chars_for_completion=1
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>

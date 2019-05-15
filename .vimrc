@@ -181,14 +181,14 @@ else
 		cd /home/ppatel/git/example/sapphire/build/debug/
 		"set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
 		set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ btec_drop
-		make | copen | resize 25
+		make | copen | resize 75
 	endfunction
 	map <F12> :call BuildRel()<cr>
 	function! BuildRel()
 		cd /home/ppatel/git/example/sapphire/build/debug/
 		"set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
 		set makeprg=make\ -j3\ VERBOSE=1\ btec_drop
-		make | copen | resize 25
+		make | copen | resize 75
 	endfunction
 
 	nmap <C-c> :qa <cr>
