@@ -25,8 +25,8 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'andymass/vim-matchup'
-Bundle 'junegunn/fzf'
-Bundle 'junegunn/fzf.vim'
+"Bundle 'junegunn/fzf'
+"Bundle 'junegunn/fzf.vim'
 ""Bundle 'ludovicchabant/vim-gutentags'
 
 " Set tags
