@@ -1004,6 +1004,18 @@ std::map <string, string> tags =
 	{"9020","LegStartDate"},
 	{"9021","LegEndDate"},
 	{"9023","LegNumOfCycles"},
+	{"10011","TTClOrdID"},
+	{"18211","TTDeliveryTerm"},
+	{"1028", "TTManualOrderIndicator"},
+	{"18216", "ExchCred"},
+	{"10553", "TTID"},
+	{"18220", "BrokerID"},
+	{"18221", "CompanyID"},
+	{"18222", "AOTCCompanyActionPrevType"},
+	{"18223", "ContractYearMonth"},
+	{"16112", "NoLinks"},
+	{"16116", "OrderIDGUID"},
+	{"16999", "ClearingAccountOverride"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)
@@ -1180,22 +1192,25 @@ int main(int argc, char **argv)
 				{
 					auto& convertedValue = ConvertToString (key_value[0], key_value[1]);
 					std::cout << tags[key_value[0]] << "(" << key_value[0] << ")="; 
-					std::cout << (!convertedValue.empty() ? convertedValue : "**ERROR**");
+					std::cout << (!convertedValue.empty() ? convertedValue : "**EMPTY**");
 				}
 				else
 				{
+					//if (key_value[0] != "8" && key_value[0] != "9")
+					//	std::cout << " ERROR: " << key_value[0] << std::endl;
 					if (key_value[0] != "8" && key_value[0] != "9")
-						std::cout << " ERROR: " << key_value[0] << std::endl;
-					std::cout << key_value[0] << '=' << key_value[1];
+						std::cout << "->" << key_value[0] << '=' << key_value[1] << "<-";
+					else
+						std::cout << key_value[0] << '=' << key_value[1];
 				}
 				std::cout << "|";
 			}
 		}
 		std::cout << std::endl;
-		auto& lastValue = *(++results.rbegin());
+		/**auto& lastValue = *(++results.rbegin());
 		if (lastValue.find("10=") == std::string::npos)
 		{
 			std::cout << " ERROR: LAST TAG NOT CHECKSUM" << std::endl;
-		}
+		}*/
 	}
 }
