@@ -30,7 +30,7 @@ Bundle 'andymass/vim-matchup'
 ""Bundle 'ludovicchabant/vim-gutentags'
 
 " Set tags
-set tags=~/tags/allTags
+set tags=~/tags/allTags,~/tags/cppTags
 
 "Colorschemes "
 colorscheme xoria256_mine

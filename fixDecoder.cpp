@@ -1016,6 +1016,10 @@ std::map <string, string> tags =
 	{"16112", "NoLinks"},
 	{"16116", "OrderIDGUID"},
 	{"16999", "ClearingAccountOverride"},
+	{"9717", "CorrelationClOrdID"},
+	{"9702", "CTI"},
+	{"1091", "PreTradeAnonymity"},
+	{"9768", "OMF_Override"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)

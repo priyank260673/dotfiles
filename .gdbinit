@@ -3,6 +3,7 @@ python
 import sys
 sys.path.insert(0, '/usr/share/gcc-7/python/libstdcxx/v6/')
 sys.path.insert(0, '/home/ppatel/TOOLS/GDB/gdb-8.3/build/share/gdb/python/gdb/')
+sys.path.insert(0, '/usr/share/gdb/python/gdb')
 from printers import register_libstdcxx_printers
 register_libstdcxx_printers (None)
 end
