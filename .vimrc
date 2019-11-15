@@ -42,7 +42,7 @@ set wildmode=longest,full
 set wildmenu
 
 " vim options
-set nocursorline
+set cursorline
 set encoding=utf-8
 filetype on
 filetype plugin indent on
@@ -154,10 +154,7 @@ else
 	endif
 
 	" Add path so that we can find files"
-	set path+=/home/ppatel/
-	set path+=/home/ppatel/git/example/sapphire/
-	set path+=/home/ppatel/git/example/sapphire/sapphire/
-	set path+=/home/ppatel/git/example/sapphire/hawk/
+	set path+=/home/ppatel/git/example/sapphire/**
 
 	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
@@ -174,7 +171,7 @@ else
 	""	set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
 	""	make | copen | resize 25
 	""endfunction
-	map <F9> :AsyncRun -save=2 ~/bin/buildApp.sh 
+	map <F9> :AsyncRun -save=2 ~/bin/buildCfe.sh<cr>
 	map <F10> :AsyncRun -save=2 ~/bin/buildAppRel.sh 
 	map <F11> :call BuildDbg()<cr>
 	function! BuildDbg()
@@ -191,7 +188,7 @@ else
 		make | copen | resize 75
 	endfunction
 
-	nmap <C-c> :qa <cr>
+	nmap <C-c> :q <cr>
 	imap <C-c> <Esc>
 	" Current build 
 	map <C-z> :AsyncRun -save=2 ~/bin/buildApp.sh instinetrouter-test <cr>
@@ -205,6 +202,8 @@ nmap <F5> :vertical resize -1  <cr>
 nmap <F6> :vertical resize +1  <cr>
 nmap <F7> :resize -1  <cr>
 nmap <F8> :resize +1  <cr>
+nnoremap gf :vertical wincmd F<CR>
+set splitright
 
 ""============= COMMON FUNCTION KEY MAPPING ======================="
 "function! ExpandCMacro()
