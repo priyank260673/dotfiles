@@ -91,6 +91,8 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias pegi='ps -eaf | grep -i $1'
+alias nnta='netstat -nta | grep -i $1'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -117,6 +119,7 @@ if ! shopt -oq posix; then
 fi
 
 alias v='vim'
+alias vimf='vim `find . -type f`'
 alias g++='/usr/bin/g++-7'
 
 # Tmux aliases
@@ -156,12 +159,24 @@ function htod() {
     printf "%d\n" $1
 }
 
-function grpLoadAll() {
-    vim `grep -ilR $1 *`
+function vimg() {
+    vim `egrep -lR $* * | grep -v unit-test`
+}
+
+function vimga() {
+    vim `grep -lR $* *`
+}
+
+function vimgi() {
+    vim `egrep -ilR $* * | grep -v unit-test`
+}
+
+function vimgui() {
+    vim `grep -ilR $* *`
 }
 
 function grpLoadInFile() {
-   vim `find . -name $1 | xargs grep -l $2`
+   vim `find . -name $* | xargs grep -l $2`
 }
 
 
@@ -175,6 +190,10 @@ function gvf {
 
 function ff {
      find `pwd` -iname $1
+}
+
+function vimall {
+	vim `find . -not -path '*/\.*' -type f | egrep "\.h|\.hpp|\.cpp|\.ipp" | grep -v unit-test | grep -v build`
 }
 
 function cdf {
@@ -223,30 +242,38 @@ function run_test()
    $1 --gtest_filter=$2
 }
 
-alias gobld='cd /home/ppatel/git/example/sapphire/build/debug/'
+export E7_BUILD_TYPE=Debug
+
+alias gobld='cd /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell'
 function blddv {
    export E7_BUILD_TYPE=Debug
-   mkdir -p /home/ppatel/git/example/sapphire/build/debug/
-   cd /home/ppatel/git/example/sapphire/build/debug/
-   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/debug/cmake_out.txt
-   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/debug/build_out_verbose.txt
+   mkdir -p /home/ppatel/git/example/sapphire/build/
+   cd /home/ppatel/git/example/sapphire/
+   /opt/eagleseven/build/scripts/e7_cmake.sh
+   cd /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/cmake_out.txt
+   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/build_out_verbose.txt
 }
 
 function bldd {
    export E7_BUILD_TYPE=Debug
-   mkdir -p /home/ppatel/git/example/sapphire/build/debug/
-   cd /home/ppatel/git/example/sapphire/build/debug/
-   cmake ../.. &> /home/ppatel/git/example/sapphire/build/debug/cmake_out.txt
-   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/debug/build_out.txt
+   mkdir -p /home/ppatel/git/example/sapphire/build/
+   cd /home/ppatel/git/example/sapphire/
+   /opt/eagleseven/build/scripts/e7_cmake.sh
+   cd /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/build_out_verbose.txt
 }
 
-alias gobldr='cd /home/ppatel/git/example/sapphire/build/release/'
+alias gobldr='cd /home/ppatel/git/example/sapphire/build/'
 function bldr {
    export E7_BUILD_TYPE=Release
-   mkdir -p /home/ppatel/git/example/sapphire/build/release/
-   cd /home/ppatel/git/example/sapphire/build/release/
-   cmake --verbose --trace .. &> /home/ppatel/git/example/sapphire/build/release/cmake_out.txt
-   make -j3 VERBOSE=1 -f CMakeFiles/Makefile2  &>> /home/ppatel/git/example/sapphire/build/release/build_out.txt
+   mkdir -p /home/ppatel/git/example/sapphire/build/
+   cd /home/ppatel/git/example/sapphire/
+   /opt/eagleseven/build/scripts/e7_cmake.sh
+   cd /home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/
+   cmake ../.. &> /home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/build_out_verbose.txt
 }
 
 function build {
@@ -255,7 +282,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=~/bin/CTAGS/LATEST/ctags:~/bin/GDB/gdb-8.2.1/gdb:${PATH}:.:
+export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3/build/bin/:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/:
 #export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
@@ -271,14 +298,19 @@ alias dffm='git d master .'
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
 alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
 alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
+alias goqa29='ssh -YC 172.16.0.29 -l faction\\qa'
+alias goqa42='ssh -YC 172.16.0.42 -l faction\\qa'
+alias gograntqa='ssh -YC 172.16.0.25 -l faction\\qa'
+alias goperf6='ssh -YC ch1dslpf006 -l ppatel'
+alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
 #alias gdb='/home/ppatel/bin/GDB/gdb-8.2.1/gdb/gdb --data-directory=/home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory'
 export TERM=xterm-256color
 
-function debug {
+function debugnw {
     emacs --eval "(gdb \"gdb -i=mi ; --args $* \")";
 }
 
-function debugnw {
+function debug {
     emacs -nw --eval "(gdb \"gdb -i=mi ; --args $* \")";
 }
 
@@ -286,11 +318,11 @@ function debugnw {
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+export PS1="\u@\h:\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 # FZF setup
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | grep -v build )2> /dev/null'
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | grep -v build )2> /dev/null'
 
 #export FZF_DEFAULT_COMMAND='
 #  (git ls-tree -r --name-only HEAD ||
@@ -298,3 +330,26 @@ export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.
 #      sed s/^..//) 2> /dev/null'
 #export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
+alias cpy='~/bin/cleanpycores.sh'
+
+alias jasonMachine='ssh -YC ch0dsldv040'
+
+export DBG_BLD_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/bin/'
+export REL_BLD_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/bin/'
+export PRO_BLD_DIR='/home/ppatel/git/example/sapphire/build/Profile-g++-8-haswell/bin/'
+
+export QA_MACHINE=172.16.0.42
+alias gomasterrepo='cd /home/ppatel/git/master_repo/example/sapphire/sapphire/'
+alias golatestrepo='cd /home/ppatel/git/latest/example/sapphire/sapphire/'
+alias gorelnrcrepo='cd /home/ppatel/git/release_nrc_repo/example/sapphire/'
+
+alias gomyvm='ssh -YC ppatel@ch0dsldv035'
+
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/
+
+alias gohw40='ssh -YC ppatel@172.16.0.40'
+alias gohw41='ssh -YC ppatel@172.16.0.41'
+alias gohw38='ssh -YC ppatel@172.16.0.38'
+alias gohw10='ssh -YC ppatel@ch1dslhw010'
+alias gohw2='ssh -YC FACTION\\ppatel@ch1qslhw002.qa1.local'
+alias gohw2_qa='ssh -YC FACTION\\ppatel@ch1dslhw002.qa1.local'

@@ -188,7 +188,7 @@ else
 		make | copen | resize 75
 	endfunction
 
-	nmap <C-c> :q <cr>
+	nmap <C-c> :qa <cr>
 	imap <C-c> <Esc>
 	" Current build 
 	map <C-z> :AsyncRun -save=2 ~/bin/buildApp.sh instinetrouter-test <cr>
