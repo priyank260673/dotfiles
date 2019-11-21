@@ -298,6 +298,7 @@ alias dffm='git d master .'
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
 alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
 alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
+alias goqa25='ssh -YC 172.16.0.25 -l faction\\qa'
 alias goqa29='ssh -YC 172.16.0.29 -l faction\\qa'
 alias goqa42='ssh -YC 172.16.0.42 -l faction\\qa'
 alias gograntqa='ssh -YC 172.16.0.25 -l faction\\qa'
@@ -319,6 +320,10 @@ parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1="\u@\h:\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+function display_assem() {
+	g++ $1 -O2 -c -S -o - -masm=intel | c++filt | grep -vE '\s+\.' 
+}
 
 # FZF setup
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -353,3 +358,4 @@ alias gohw38='ssh -YC ppatel@172.16.0.38'
 alias gohw10='ssh -YC ppatel@ch1dslhw010'
 alias gohw2='ssh -YC FACTION\\ppatel@ch1qslhw002.qa1.local'
 alias gohw2_qa='ssh -YC FACTION\\ppatel@ch1dslhw002.qa1.local'
+alias go_8='ssh -YC ppatel@ch1dslpf008'

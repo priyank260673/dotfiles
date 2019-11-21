@@ -25,6 +25,8 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'andymass/vim-matchup'
+Bundle 'octol/vim-cpp-enhanced-highlight'
+"Bundle 'vim-scripts/Conque-GDB'
 "Bundle 'junegunn/fzf'
 "Bundle 'junegunn/fzf.vim'
 ""Bundle 'ludovicchabant/vim-gutentags'
@@ -33,7 +35,7 @@ Bundle 'andymass/vim-matchup'
 set tags=~/tags/allTags,~/tags/cppTags
 
 "Colorschemes "
-colorscheme xoria256_mine
+"colorscheme xoria256_mine
 let g:airline_theme='alduin'
 
 " Set wildmenu
@@ -42,7 +44,7 @@ set wildmode=longest,full
 set wildmenu
 
 " vim options
-set cursorline
+"set cursorline
 set encoding=utf-8
 filetype on
 filetype plugin indent on
@@ -193,6 +195,9 @@ else
 	" Current build 
 	map <C-z> :AsyncRun -save=2 ~/bin/buildApp.sh instinetrouter-test <cr>
 endif
+
+" Added for menu configuration
+highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 "============= COMMON FUNCTION KEY MAPPING ======================="
 nmap <F2> :e ~/scratchpad.txt  <cr>

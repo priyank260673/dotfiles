@@ -91,7 +91,7 @@ command! Cst call Cst()
 """"""" You complete me """" 
 let g:ycm_global_ycm_extra_conf='~/global_extra_conf.py'
 let g:ycm_collect_identifiers_from_tags_files=1
-let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_comments = 0
 let g:ycm_error_symbol='>'
 let g:ycm_warning_symbol='>'
 let g:ycm_max_diagnostics_to_display = 1000
@@ -114,6 +114,7 @@ let g:ycm_filetype_blacklist = {
 			\ 'infolog': 1,
 			\ 'mail': 1 }
 au BufRead,BufNewFile *.ipp set filetype=cpp
+highlight YcmErrorLine guibg=#3f0000
 
 """""""""""" TAG BAR  """""""""""""""""""""""""""
 let g:tagbar_left = 1
@@ -167,6 +168,9 @@ let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always w
 let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly 
 let g:ConqueGdb_SaveHistory = 1
+
+""""""""""""  airline """""""""""""""""""""
+let g:airline_powerline_fonts = 1
 
 """"""""""""  a.vim """""""""""""""""""""
 ""nmap <C-i> :A <cr>
