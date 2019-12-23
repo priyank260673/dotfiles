@@ -108,6 +108,16 @@ All nodes have been sent their configurations…
 Thread 5.1 "cmerouter_d" hit Breakpoint 3, sapphire::glbx::FixMessageConstructor::BuildMessage (this=0x7fffffff4fe0, message=..., msgBuilder=..., settings=...) at /home/ppatel/git/example/sapphire/./sapphire/gateways/router/cme/FixMessageConstructor.h:26
 26                std::cout << " PHP " << __FILE__ << ":"  << __LINE__  << std::endl;
 
+
+========================
+Install Clang: 
+=======================
+http://releases.llvm.org/download.html
+-> Download pre-built binaries
+
+// Compile command json -p=
+/home/ppatel/TOOLS/CLANG/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/share/clang/run_clang_tidy.py ~/git/example/sapphire/sapphire/gateways/router/instinet/*  -checks=-*,clang-analyzer-*,bugprone-*,performance* -header-filter=.* -p=. &> /tmp/out.txt
+
 // Run clang-tidy
 /home/ppatel/bin/CLANG/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy  -header-filter=.* -checks=*,-llvm-*,-google-reada*,-fuchsia-*  -p=. <fileName>
 
@@ -118,7 +128,6 @@ Thread 5.1 "cmerouter_d" hit Breakpoint 3, sapphire::glbx::FixMessageConstructor
 
 // Min/Max/Avg using AWK
 cat  routerSubmit.txt| awk -F"queue_read_time: " '{print $2}' | awk -F", wire_write_time: " '{print $2-$1 "\t" $2 "\t" $1}'|  awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print "avg " total/count," | max "max," | min " min " | samples " NR}'
-
 
 // Clone
 git clone ssh://git@stash:7999/desk/example.git

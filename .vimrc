@@ -210,6 +210,10 @@ nmap <F8> :resize +1  <cr>
 nnoremap gf :vertical wincmd F<CR>
 set splitright
 
+set errorformat +=%E%f:%l:%c:\ %trror:\ %m,%-C,%-Z%p^
+set errorformat +=%E%f:%l:%c:\ %tning:\ %m,%-C,%-Z%p^
+set errorformat +=note:\ ,%-C,%-Z%p^
+
 ""============= COMMON FUNCTION KEY MAPPING ======================="
 function! ExpandCMacro()
   "get current info

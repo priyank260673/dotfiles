@@ -282,7 +282,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3/build/bin/:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/:
+export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3/build/bin/:${PATH}:.:~/TOOLS/CLANG/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 #export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
@@ -355,7 +355,11 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/
 alias gohw40='ssh -YC ppatel@172.16.0.40'
 alias gohw41='ssh -YC ppatel@172.16.0.41'
 alias gohw38='ssh -YC ppatel@172.16.0.38'
-alias gohw10='ssh -YC ppatel@ch1dslhw010'
+#alias gohw10='ssh -YC ppatel@ch1dslhw010'
 alias gohw2='ssh -YC FACTION\\ppatel@ch1qslhw002.qa1.local'
 alias gohw2_qa='ssh -YC FACTION\\ppatel@ch1dslhw002.qa1.local'
 alias go_8='ssh -YC ppatel@ch1dslpf008'
+alias gohw4='ssh -YC ppatel@ch1dslhw004'
+alias gohw3='ssh -YC ppatel@ch1dslhw003'
+alias gocapture='ssh -YC ppatel@ch1dslss066'
+
