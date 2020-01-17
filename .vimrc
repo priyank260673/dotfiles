@@ -160,12 +160,12 @@ else
 
 	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=/usr/bin/g++-7\ -std=c++17\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
+		set makeprg=/usr/bin/g++-8\ -std=c++17\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
 		make
 	endfunction
 	map <F4> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=/usr/bin/g++-7\ -std=c++17\ -pthread\ -lrt\ -g3\ -fsanitize=address\ -fsanitize=leak\ %\ -o\ %<
+		set makeprg=/usr/bin/g++-8\ -std=c++17\ -pthread\ -lrt\ -g3\ -fsanitize=address\ -fsanitize=leak\ %\ -o\ %<
 		make
 	endfunction
 	""function! BuildDbg()

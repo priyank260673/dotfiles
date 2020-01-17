@@ -175,6 +175,11 @@ function vimgui() {
     vim `grep -ilR $* *`
 }
 
+function vimgdiff() {
+	cd ~/git/example/sapphire/sapphire/
+    vim `git diff --name-only $1`
+}
+
 function grpLoadInFile() {
    vim `find . -name $* | xargs grep -l $2`
 }
@@ -282,7 +287,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3/build/bin/:${PATH}:.:~/TOOLS/CLANG/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
+export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:~/TOOLS/CLANG/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 #export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
