@@ -31,8 +31,40 @@ Bundle 'bfrg/vim-cpp-modern'
 "Bundle 'junegunn/fzf.vim'
 "Bundle 'ludovicchabant/vim-gutentags'
 
-" Set tags
+" Setup cscope
+if has('cscope')
+	set csto=0
+	set cst
+	set nocsverb
+	"set cscopetag cscopeverbose
+	if has('quickfix')
+		set cscopequickfix=s-,c-,d-,i-,t-,e-
+	endif
+
+	cnoreabbrev csa cs add
+	cnoreabbrev csf cs find
+	cnoreabbrev csk cs kill
+	cnoreabbrev csr cs reset
+	cnoreabbrev css cs show
+	cnoreabbrev csh cs help
+
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+		" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+		"cs add $CSCOPE_DB
+		"cs add ~/tags/cscope.out
+		"cs add ~/tags/master_cscope.out
+	endif
+endif
+
+" Set master tags
 set tags=~/tags/allTags,~/tags/cppTags
+cs add ~/tags/cscope.out
+" Set master_repo tags
+"set tags=~/tags/masterTags,~/tags/cppTags
+""cs add ~/tags/master_cscope.out
 
 "Colorschemes "
 "colorscheme xoria256_mine
