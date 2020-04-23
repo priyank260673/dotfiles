@@ -229,6 +229,15 @@ nmap <C-n> :cnext <CR>
 nmap <C-p> :cprevious <CR>
 nmap <C-u> :Files <CR>
 "=============Unneeded plugin=======================
+let g:mwDefaultHighlightingPalette = 'extended'
+set viminfo^=!
+nmap <Leader>M <Plug>MarkToggle
+nmap <Leader>N <Plug>MarkAllClear
+nmap * <Plug>MarkSearchGroupNext
+nmap # <Plug>MarkSearchGroupPrev
+"=============Unneeded plugin=======================
+"
+"
 """""""""""""" ALE  """""""""""""""""""""""""""
 ""let g:ale_linters = {'cpp' : ['gcc'], 'c' : ['gcc']}
 ""let g:ale_completion_enabled = 0

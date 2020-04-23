@@ -295,7 +295,7 @@ export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 alias gitd='git d'
 alias gitsubpullmast='git submodule foreach git pull origin master'
 alias gitsubcheckoutmast='git submodule foreach git checkout master'
-alias gitdiff_f='git diff --name-only'
+alias gitdiff_f='git diff --name-only $1'
 alias dffos='git d /home/ppatel/git/example/sapphire/sapphire/'
 alias dffm='git d master .'
 ##----------------------------- ## 

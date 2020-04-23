@@ -18,7 +18,6 @@ Bundle 'yegappan/grep'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'majutsushi/tagbar'
-Bundle 'vim-scripts/a.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'skywind3000/asyncrun.vim'
 Bundle 'jiangmiao/auto-pairs'
@@ -26,6 +25,9 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'andymass/vim-matchup'
 Bundle 'bfrg/vim-cpp-modern'
+Bundle 'inkarkat/vim-mark'
+Bundle 'inkarkat/vim-ingo-library'
+"Bundle 'vim-scripts/a.vim'
 "Bundle 'octol/vim-cpp-enhanced-highlight'
 "Bundle 'junegunn/fzf'
 "Bundle 'junegunn/fzf.vim'
@@ -59,16 +61,25 @@ if has('cscope')
 	endif
 endif
 
+
 " Set master tags
 set tags=~/tags/allTags,~/tags/cppTags
 cs add ~/tags/cscope.out
+"
 " Set master_repo tags
 "set tags=~/tags/masterTags,~/tags/cppTags
-""cs add ~/tags/master_cscope.out
+"cs add ~/tags/master_cscope.out
 
 "Colorschemes "
 "colorscheme xoria256_mine
+colorscheme gruvbox
 let g:airline_theme='alduin'
+"highlight Cursor guifg=white guibg=black
+"highlight iCursor guifg=white guibg=steelblue
+"set guicursor=n-v-c:block-Cursor
+"set guicursor+=i:ver100-iCursor
+"set guicursor+=n-v-c:blinkon0
+"set guicursor+=i:blinkwait10
 
 " Set wildmenu
 ""set wildmode=longest,list,full
@@ -92,7 +103,6 @@ set wrap
 set backspace=0
 set t_Co=256
 set textwidth=0
-set hlsearch
 "set softtabstop=4
 
 " Hide menu/toolbar
@@ -120,7 +130,7 @@ set ignorecase
 " " When searching try to be smart about cases 
 set smartcase
 " " Highlight search results
-set hlsearch
+"set hlsearch
 " " Don't redraw while executing macros (good performance config)
 set lazyredraw
 " " For regular expressions turn magic on
@@ -156,6 +166,9 @@ if &diff                             " only for diff mode/vimdiff
 	set diffopt=filler,context:1000000 " filler is default and inserts empty
 	set diffopt+=iwhite
 	set noro
+	set wrap 
+	autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+	colorscheme gruvbox
 endif
 
 " take in an extra file from the local directory if necessary
@@ -245,53 +258,54 @@ set splitright
 set errorformat +=%E%f:%l:%c:\ %trror:\ %m,%-C,%-Z%p^
 set errorformat +=%E%f:%l:%c:\ %tning:\ %m,%-C,%-Z%p^
 set errorformat +=note:\ ,%-C,%-Z%p^
+set errorformat -=*\.cmake*
 
 ""============= COMMON FUNCTION KEY MAPPING ======================="
-function! ExpandCMacro()
-  "get current info
-  let l:macro_file_name = "__macroexpand__".tabpagenr()
-  let l:file_row = line('.')
-  let l:file_name = expand('%')
-  let l:file_window = winnr()
-  "create mark
-  execute "normal! Oint " . l:macro_file_name . ";"
-  execute "w"
-  "open tiny window ... check if we have already an open buffer for macro
-  if bufwinnr( l:macro_file_name ) != -1
-    execute bufwinnr( l:macro_file_name) . "wincmd w"
-    setlocal modifiable
-    execute "normal! ggdG"
-  else
-    execute "bot 10split " . l:macro_file_name
-    execute "setlocal filetype=cpp"
-    execute "setlocal buftype=nofile"
-    nnoremap <buffer> q :q!<CR>
-  endif
-  "read file with gcc
-  silent! execute "r!gcc -E " . l:file_name
-  "keep specific macro line
-  execute "normal! ggV/int " . l:macro_file_name . ";$\<CR>d"
-  execute "normal! jdG"
-  "indent
-  execute "%!indent -st -kr"
-  execute "normal! gg=G"
-  "resize window
-  execute "normal! G"
-  let l:macro_end_row = line(".")
-  execute "resize " . l:macro_end_row
-  execute "normal! gg"
-  "no modifiable
-  setlocal nomodifiable
-  "return to origin place
-  execute l:file_window . "wincmd w"
-  execute l:file_row
-  execute "normal!u"
-  execute "w"
-  "highlight origin line
-  let @/ = getline('.')
-endfunction
-
-autocmd FileType h nnoremap <leader>m :call ExpandCMacro()<CR>
-autocmd FileType hpp nnoremap <leader>m :call ExpandCMacro()<CR>
-autocmd FileType ipp nnoremap <leader>m :call ExpandCMacro()<CR>
-autocmd FileType cpp nnoremap <leader>m :call ExpandCMacro()<CR>
+"function! ExpandCMacro()
+"  "get current info
+"  let l:macro_file_name = "__macroexpand__".tabpagenr()
+"  let l:file_row = line('.')
+"  let l:file_name = expand('%')
+"  let l:file_window = winnr()
+"  "create mark
+"  execute "normal! Oint " . l:macro_file_name . ";"
+"  execute "w"
+"  "open tiny window ... check if we have already an open buffer for macro
+"  if bufwinnr( l:macro_file_name ) != -1
+"    execute bufwinnr( l:macro_file_name) . "wincmd w"
+"    setlocal modifiable
+"    execute "normal! ggdG"
+"  else
+"    execute "bot 10split " . l:macro_file_name
+"    execute "setlocal filetype=cpp"
+"    execute "setlocal buftype=nofile"
+"    nnoremap <buffer> q :q!<CR>
+"  endif
+"  "read file with gcc
+"  silent! execute "r!gcc -E " . l:file_name
+"  "keep specific macro line
+"  execute "normal! ggV/int " . l:macro_file_name . ";$\<CR>d"
+"  execute "normal! jdG"
+"  "indent
+"  execute "%!indent -st -kr"
+"  execute "normal! gg=G"
+"  "resize window
+"  execute "normal! G"
+"  let l:macro_end_row = line(".")
+"  execute "resize " . l:macro_end_row
+"  execute "normal! gg"
+"  "no modifiable
+"  setlocal nomodifiable
+"  "return to origin place
+"  execute l:file_window . "wincmd w"
+"  execute l:file_row
+"  execute "normal!u"
+"  execute "w"
+"  "highlight origin line
+"  let @/ = getline('.')
+"endfunction
+"
+"autocmd FileType h nnoremap <leader>m :call ExpandCMacro()<CR>
+"autocmd FileType hpp nnoremap <leader>m :call ExpandCMacro()<CR>
+"autocmd FileType ipp nnoremap <leader>m :call ExpandCMacro()<CR>
+"autocmd FileType cpp nnoremap <leader>m :call ExpandCMacro()<CR>
