@@ -231,10 +231,12 @@ nmap <C-u> :Files <CR>
 "=============Unneeded plugin=======================
 let g:mwDefaultHighlightingPalette = 'extended'
 set viminfo^=!
-nmap <Leader>M <Plug>MarkToggle
-nmap <Leader>N <Plug>MarkAllClear
-nmap * <Plug>MarkSearchGroupNext
-nmap # <Plug>MarkSearchGroupPrev
+nmap Q <Plug>MarkSearchAnyNext
+nmap W <Plug>MarkSearchAnyPrev
+nmap N <Plug>MarkSearchCurrentNext
+nmap M <Plug>MarkSearchCurrentPrev
+nmap C <Plug>MarkClear
+let g:mwAutoLoadMarks = 1
 "=============Unneeded plugin=======================
 "
 "

@@ -127,11 +127,19 @@ http://releases.llvm.org/download.html
 ~/TOOLS/cppcheck-1.87/cppcheck --enable=all --project=./compile_commands.json <fileName>
 
 // Min/Max/Avg using AWK
-cat  routerSubmit.txt| awk -F"queue_read_time: " '{print $2}' | awk -F", wire_write_time: " '{print $2-$1 "\t" $2 "\t" $1}'|  awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print "avg " total/count," | max "max," | min " min " | samples " NR}'
+cat  routerSubmit.txt| awk -F"queue_read_time: " '{print $2}' | awk -F", wire_write_time: " '{print $2-$1 "\t" $2 "\t" $1}'| awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print "avg " total/count," | max "max," | min " min " | samples " NR}'
 
 // Clone
 git clone ssh://git@stash:7999/desk/example.git
 git submodule update --init --recursive
 git submodule foreach git checkout release/nrc
 git submodule foreach git pull --all
+
+// Create example branch
+-> Create your example desk branch
+-> checkout each of the submodule branches to each of the desired branches 
+-> add, commit and push the changes:
+-> git add e7core hawk messages sapphire
+-> git commit -m "GAT-890"
+-> git push
 

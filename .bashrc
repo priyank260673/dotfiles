@@ -344,14 +344,26 @@ alias cpy='~/bin/cleanpycores.sh'
 
 alias jasonMachine='ssh -YC ch0dsldv040'
 
-export DBG_BLD_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/bin/'
-export REL_BLD_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/bin/'
-export PRO_BLD_DIR='/home/ppatel/git/example/sapphire/build/Profile-g++-8-haswell/bin/'
+export DBG_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/bin/'
+export REL_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/bin/'
+export SAN_DIR='/home/ppatel/git/example/sapphire/build/Sanitize-g++-8-haswell/bin/'
+export PROFILE_DIR='/home/ppatel/git/example/sapphire/build/Profile-g++-8-haswell/bin/'
+
+export DBG_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-8-haswell/bin/'
+export REL_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Release-g++-8-haswell/bin/'
+export SAN_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Sanitize-g++-8-haswell/bin/'
+export PROFILE_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Profile-g++-8-haswell/bin/'
+
+export DBG_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Debug-g++-8-haswell/bin/'
+export REL_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Release-g++-8-haswell/bin/'
+export SAN_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Sanitize-g++-8-haswell/bin/'
+export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Profile-g++-8-haswell/bin/'
 
 export QA_MACHINE=172.16.0.42
 alias gomasterrepo='cd /home/ppatel/git/master_repo/example/sapphire/sapphire/'
 alias golatestrepo='cd /home/ppatel/git/latest/example/sapphire/sapphire/'
 alias gorelnrcrepo='cd /home/ppatel/git/release_nrc_repo/example/sapphire/'
+alias goglass='cd /mnt/ppatel/GLASS'
 
 alias gomyvm='ssh -YC ppatel@ch0dsldv035'
 

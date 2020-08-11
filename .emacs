@@ -213,3 +213,6 @@
   ;; If there is more than one, they won't work right.
   )
 
+;; C-x 1 - zoom in, C-c <left Arrow> zoom out
+(when (fboundp 'winner-mode)
+  (winner-mode 1))

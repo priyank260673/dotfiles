@@ -61,6 +61,11 @@ if has('cscope')
 	endif
 endif
 
+packadd termdebug
+let g:termdebug_popup = 0
+let g:termdebug_wide = 163
+"autocmd filetype cpp nnoremap <F6> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
+"nmap <C-q> <c-w>2j<c-w>L<c-w>h
 
 " Set master tags
 set tags=~/tags/allTags,~/tags/cppTags
@@ -245,7 +250,7 @@ endif
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 "============= COMMON FUNCTION KEY MAPPING ======================="
-nmap <F2> :e ~/scratchpad.txt  <cr>
+"nmap <F2> :e ~/scratchpad.txt  <cr>
 " For regular compilation of projects
 " Resize windows"
 nmap <F5> :vertical resize -1  <cr>
