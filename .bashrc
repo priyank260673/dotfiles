@@ -330,6 +330,11 @@ function display_assem() {
 	g++ $1 -O2 -c -S -o - -masm=intel | c++filt | grep -vE '\s+\.' 
 }
 
+function gitcheckout() 
+{
+	git checkout $1; git pull
+}
+
 # FZF setup
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 #export FZF_DEFAULT_COMMAND='(find /home/ppatel/git/example/sapphire/ -path "*/\.*" -prune -o -type f -print -o -type l -print | grep -v build )2> /dev/null'
@@ -342,7 +347,7 @@ function display_assem() {
 
 alias cpy='~/bin/cleanpycores.sh'
 
-alias jasonMachine='ssh -YC ch0dsldv040'
+alias jasonMachine='ssh -YC ch0dsldv104'
 
 export DBG_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/bin/'
 export REL_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-8-haswell/bin/'
