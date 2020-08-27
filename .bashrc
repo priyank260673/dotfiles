@@ -330,7 +330,7 @@ function display_assem() {
 	g++ $1 -O2 -c -S -o - -masm=intel | c++filt | grep -vE '\s+\.' 
 }
 
-function gitcheckout() 
+function checkout() 
 {
 	git checkout $1; git pull
 }
