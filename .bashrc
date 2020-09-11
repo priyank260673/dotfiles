@@ -330,9 +330,42 @@ function display_assem() {
 	g++ $1 -O2 -c -S -o - -masm=intel | c++filt | grep -vE '\s+\.' 
 }
 
-function checkout() 
+function gcheckout() 
 {
-	git checkout $1; git pull
+	cd /home/ppatel/git/example/sapphire/
+	git checkout master; git pull; git checkout $1; git pull
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd -
+}
+
+function gcheckoutrelnrc() 
+{
+	cd /home/ppatel/git/release_nrc_repo/example/sapphire/
+	git checkout master; git pull; git checkout $1; git pull
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd -
+}
+
+function gcheckoutmaster() 
+{
+	cd /home/ppatel/git/master_repo/example/sapphire/
+	git checkout master; git pull; git checkout $1; git pull
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd -
+}
+
+function grevert() 
+{
+	git checkout $1
 }
 
 # FZF setup
