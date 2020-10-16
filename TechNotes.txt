@@ -143,3 +143,13 @@ git submodule foreach git pull --all
 -> git commit -m "GAT-890"
 -> git push
 
+// Tool to convert gprof outoput to dot
+https://github.com/jrfonseca/gprof2dot
+$ python3 ~/.local/lib/python2.7/site-packages/gprof2dot.py -f callgrind callgrind.out.21683-01 | dot -w -Tsvg -o /mnt/ppatel/test.svg
+$ python3 ~/.local/lib/python2.7/site-packages/gprof2dot.py -f callgrind callgrind.out.21683-01 -w | dot -Tsvg -o /mnt/ppatel/test.svg
+$ python3 ~/.local/lib/python2.7/site-packages/gprof2dot.py -f callgrind callgrind.out.21683-01 -s | dot -Tsvg -o /mnt/ppatel/test_1.svg
+
+
+// Getting and building mFAST
+git clone --recursive  https://github.com/objectcomputing/mFAST.git
+

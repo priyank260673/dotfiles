@@ -159,6 +159,18 @@ function htod() {
     printf "%d\n" $1
 }
 
+function dtob() {
+	echo "obase=2;$1" | bc
+}
+
+function htob() {
+    local htod1="printf "%d" $1"
+	local htod2=`eval $htod1`
+	echo $htod2
+	echo "obase=2;$htod2" | bc
+}
+
+
 function vimg() {
     vim `egrep -lR $* * | grep -v unit-test`
 }
@@ -287,7 +299,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:~/TOOLS/CLANG/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
+export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 #export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
