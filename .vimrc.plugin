@@ -74,6 +74,8 @@ let g:ycm_confirm_extra_conf=0
 let g:ycm_disable_for_files_larger_than_kb=10000
 let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_always_populate_location_list = 1
+let g:ycm_enable_diagnostic_signs = 1
+let g:ycm_show_diagnostics_ui = 1
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>

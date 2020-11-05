@@ -67,9 +67,21 @@ let g:termdebug_wide = 163
 "autocmd filetype cpp nnoremap <F6> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
 "nmap <C-q> <c-w>2j<c-w>L<c-w>h
 
+" Set sappshire tags
+"set tags=~/tags/allTags,~/tags/cppTags
+"cs add ~/tags/cscope.out
+"set path+=/home/ppatel/git/example/sapphire/**
+
 " Set master tags
-set tags=~/tags/allTags,~/tags/cppTags
-cs add ~/tags/cscope.out
+set tags=~/tags/masterTags,~/tags/cppTags
+cs add ~/tags/master_cscope.out
+set path+=/home/ppatel/git/master_repo/sapphire/**
+
+" Set release tags
+"set tags=~/tags/relNrcTags,~/tags/cppTags
+"cs add ~/tags/relnrc_cscope.out
+"set path+=/home/ppatel/git/release_nrc_repo/sapphire/**
+
 "
 " Set master_repo tags
 "set tags=~/tags/masterTags,~/tags/cppTags
@@ -204,9 +216,6 @@ else
 	if filereadable(glob("~/extra_git/mydotfiles/dotfiles/.vimrc.plugin"))
 		source ~/extra_git/mydotfiles/dotfiles/.vimrc.plugin
 	endif
-
-	" Add path so that we can find files"
-	set path+=/home/ppatel/git/example/sapphire/**
 
 	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()

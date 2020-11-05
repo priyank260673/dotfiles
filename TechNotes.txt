@@ -153,3 +153,5 @@ $ python3 ~/.local/lib/python2.7/site-packages/gprof2dot.py -f callgrind callgri
 // Getting and building mFAST
 git clone --recursive  https://github.com/objectcomputing/mFAST.git
 
+// Checking icc status
+systemctl status icecc_no_remote.service

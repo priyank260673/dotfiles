@@ -120,7 +120,6 @@ fi
 
 alias v='vim'
 alias vimf='vim `find . -type f`'
-alias g++='/usr/bin/g++-7'
 
 # Tmux aliases
 alias tmn='tmux -2 new -s $1'
@@ -170,6 +169,9 @@ function htob() {
 	echo "obase=2;$htod2" | bc
 }
 
+function btod() {
+	echo "$((2#$1))"
+}
 
 function vimg() {
     vim `egrep -lR $* * | grep -v unit-test`
@@ -299,7 +301,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=~/bin/CTAGS/LATEST/ctags:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
+export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 #export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
@@ -323,6 +325,8 @@ alias goperf6='ssh -YC ch1dslpf006 -l ppatel'
 alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
 #alias gdb='/home/ppatel/bin/GDB/gdb-8.2.1/gdb/gdb --data-directory=/home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory'
 export TERM=xterm-256color
+alias gohawk_eurex='cd /home/ppatel/git/example/sapphire/hawk/hawk/feeder/exchanges/eurex/eobi/'
+alias gofeeder_eurex='cd /home/ppatel/git/example/sapphire/sapphire/gateways/feeder/eurex/'
 
 function debugnw {
     emacs --eval "(gdb \"gdb -i=mi ; --args $* \")";
@@ -379,6 +383,8 @@ function grevert()
 {
 	git checkout $1
 }
+
+alias remote='git config --get remote.origin.url'
 
 # FZF setup
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
