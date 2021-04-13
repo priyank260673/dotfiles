@@ -108,7 +108,6 @@ All nodes have been sent their configurations…
 Thread 5.1 "cmerouter_d" hit Breakpoint 3, sapphire::glbx::FixMessageConstructor::BuildMessage (this=0x7fffffff4fe0, message=..., msgBuilder=..., settings=...) at /home/ppatel/git/example/sapphire/./sapphire/gateways/router/cme/FixMessageConstructor.h:26
 26                std::cout << " PHP " << __FILE__ << ":"  << __LINE__  << std::endl;
 
-
 ========================
 Install Clang: 
 =======================
@@ -155,3 +154,46 @@ git clone --recursive  https://github.com/objectcomputing/mFAST.git
 
 // Checking icc status
 systemctl status icecc_no_remote.service
+
+
+// Some calculations from log file
+#!/bin/bash
+head -1 $1; tail -1 $1;
+grep ERROR 20210126_16_38_02_downloader.log | grep -v "PacketDrop" | wc -l
+grep New $1| wc -l
+grep Saving $1| wc -l
+grep "Instrument saved" $1| awk -F"Instrument saved " '{print $2}'| awk '{split($0,a,","); print a[2] " " a[1] " " a[3]}' | sort | sed "s/{symbol =//" | sed "s/security_id =.*$//" | sed "s/ iid = //" | uniq > IidToSymbol.txt.3; sort -u IidToSymbol.txt.3 | awk 'NR==FNR{seen[$1]++;next}seen[$1]>1'  - IidToSymbol.txt.3
+rm IidToSymbol.txt.3
+
+// Running and joining TCP dump
+sudo tcpdump -i xeur-am udp port 59000 and dst 224.0.114.46 -w xeur_data_snapshot.pcap -C 100
+sudo tcpdump -i xeur-am udp port 59001 and dst 224.0.114.47 -w xeur_data.pcap
+mcast_util.py listen 224.0.114.46 59000 -count 0
+mcast_util.py listen 224.0.114.47 59001 -count 0
+
+// Listen for packet
+tcpdump -n -i {interface-name} dst {IP-address} port {port}
+
+// EPF Client run
+./epfclient -g 239.240.255.10:10003 -e 262 -i <IID of instrument with corssed book> -l 20 -O -b
+
+// Eurex startup time
+xeur1-20210201-235000.udp-224.0.114.34-59000.pcap -  17:50/5:50 (PM)
+
+// Joining on multicast
+python /opt/eagleseven/python/latest/network_utils/mcast_util.py  listen 224.0.50.221 59000 -timeout 0 -count 0
+
+// Capture TCP dump
+sudo tcpdump -i sf1 host  224.0.50.221 -w /tmp/221_4.pcap
+
+// Replay on local interface
+sudo tcpreplay -T nano -i lo -x 100.0 --stats=5 /tmp/LargePackets.pcap
+
+
+// Market state grep
+cat /tmp/parsed_after.txt.1 | egrep "market::Accumulator|FeederMarketState::MarketStateUpdate|MarketSegmentID= 690.*ProductSummaryT|MarketSegmentID= 690.*InstrumentStateChangeT.*SecurityID=72060557565362236|MarketSegmentID= 690.*ProductStateChangeT|MarketSegmentID= 690.*InstrumentSummaryT.*SecurityID=72060557565362236|MarketSegmentID= 690.*MassInstrumentStateChangeT" &> /tmp/parsed_filtered_after.txt
+
+
+// Running report tool
+$DBG_MASTER_DIR/report_eurex_mbo_d -i 'FGBL SI 20210608 PS'@XEUR -d 2021-03-12 -s 10:10 -f 10:40 -E -S -M -O -l TRACE
+

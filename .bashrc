@@ -302,11 +302,10 @@ function build {
 
 export E7_ARCH=haswell
 export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
-#export PATH=~/bin/CTAGS/LATEST/ctags:${PATH}:.:/home/ppatel/bin/CLANG/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 
 ##----------------------------- ## 
-alias gitd='git d'
+alias gitd='git d HEAD'
 alias gitsubpullmast='git submodule foreach git pull origin master'
 alias gitsubcheckoutmast='git submodule foreach git checkout master'
 alias gitdiff_f='git diff --name-only $1'
@@ -318,6 +317,7 @@ alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
 alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
 alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
 alias goqa25='ssh -YC 172.16.0.25 -l faction\\qa'
+alias goqa26='ssh -YC 172.16.0.26 -l faction\\qa'
 alias goqa29='ssh -YC 172.16.0.29 -l faction\\qa'
 alias goqa42='ssh -YC 172.16.0.42 -l faction\\qa'
 alias gograntqa='ssh -YC 172.16.0.25 -l faction\\qa'
@@ -354,7 +354,7 @@ function gcheckout()
 	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd -
+	cd sapphire
 }
 
 function gcheckoutrelnrc() 
@@ -365,7 +365,7 @@ function gcheckoutrelnrc()
 	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd -
+	cd sapphire
 }
 
 function gcheckoutmaster() 
@@ -376,7 +376,7 @@ function gcheckoutmaster()
 	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd -
+	cd sapphire
 }
 
 function grevert() 
@@ -417,7 +417,7 @@ export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/bu
 
 export QA_MACHINE=172.16.0.42
 alias gomasterrepo='cd /home/ppatel/git/master_repo/example/sapphire/sapphire/'
-alias golatestrepo='cd /home/ppatel/git/latest/example/sapphire/sapphire/'
+alias godevrepo='cd /home/ppatel/git/dev_work/example/sapphire/sapphire/'
 alias gorelnrcrepo='cd /home/ppatel/git/release_nrc_repo/example/sapphire/'
 alias goglass='cd /mnt/ppatel/GLASS'
 
@@ -436,4 +436,9 @@ alias gohw1='ssh -YC ppatel@ch1dslhw001'
 alias gohw4='ssh -YC ppatel@ch1dslhw004'
 alias gohw3='ssh -YC ppatel@ch1dslhw003'
 alias gocapture='ssh -YC ppatel@ch1dslss066'
-
+alias topTen='ls -laShR'
+alias viml='vim --noplugin $1'
+alias copyFromMaster='cp /home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-8-haswell/bin/*_d /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/bin/'
+export SAPPHIRE_PCAP_PATH=/mnt/intraday_pcaps/
+alias notes='vim ~/extra_git/mydotfiles/dotfiles/TechNotes.txt'
+export MANPAGER="vim -M +MANPAGER --not-a-term -"

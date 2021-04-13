@@ -27,6 +27,8 @@ Bundle 'andymass/vim-matchup'
 Bundle 'bfrg/vim-cpp-modern'
 Bundle 'inkarkat/vim-mark'
 Bundle 'inkarkat/vim-ingo-library'
+Bundle 'christoomey/vim-tmux-navigator'
+
 "Bundle 'vim-scripts/a.vim'
 "Bundle 'octol/vim-cpp-enhanced-highlight'
 "Bundle 'junegunn/fzf'
@@ -61,26 +63,25 @@ if has('cscope')
 	endif
 endif
 
-packadd termdebug
-let g:termdebug_popup = 0
-let g:termdebug_wide = 163
+"packadd termdebug
+"let g:termdebug_wide=1
 "autocmd filetype cpp nnoremap <F6> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
 "nmap <C-q> <c-w>2j<c-w>L<c-w>h
 
 " Set sappshire tags
-"set tags=~/tags/allTags,~/tags/cppTags
-"cs add ~/tags/cscope.out
-"set path+=/home/ppatel/git/example/sapphire/**
+set tags=~/tags/allTags,~/tags/cppTags,~/tags/mFastTags
+cs add ~/tags/cscope.out
+set path+=/home/ppatel/git/example/sapphire/**
 
 " Set master tags
-set tags=~/tags/masterTags,~/tags/cppTags
-cs add ~/tags/master_cscope.out
-set path+=/home/ppatel/git/master_repo/sapphire/**
+"set tags=~/tags/masterTags,~/tags/cppTags
+"cs add ~/tags/master_cscope.out
+"set path+=/home/ppatel/git/master_repo/example/sapphire/**
 
 " Set release tags
-"set tags=~/tags/relNrcTags,~/tags/cppTags
-"cs add ~/tags/relnrc_cscope.out
-"set path+=/home/ppatel/git/release_nrc_repo/sapphire/**
+" set tags=~/tags/relNrcTags,~/tags/cppTags
+" cs add ~/tags/relnrc_cscope.out
+" set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
 
 "
 " Set master_repo tags
@@ -273,6 +274,35 @@ set errorformat +=%E%f:%l:%c:\ %trror:\ %m,%-C,%-Z%p^
 set errorformat +=%E%f:%l:%c:\ %tning:\ %m,%-C,%-Z%p^
 set errorformat +=note:\ ,%-C,%-Z%p^
 set errorformat -=*\.cmake*
+
+"autocmd BufWritePost * :AsyncRun ~/bin/buildApp.sh regulatory_reader_cfe_boe cfeboerouter_condor followtopofbook2 strategy_nodeimpl-test
+autocmd insertleave * update
+au textchanged,insertleave * nested if &readonly == 0 | silent! update | endif
+
+augroup todo
+  autocmd!
+  autocmd Syntax * call matchadd(
+              \ 'Search',
+              \ '\v\W\zs<(NOTE|INFO|TODO|FIXME|CHANGED|BUG|HACK)>'
+              \ )
+augroup END
+
+
+""============= DEBUGGER SETTING ======================="
+packadd termdebug
+let g:termdebug_wide=1
+nnoremap <F9> :Break<CR>
+"autocmd filetype cpp nnoremap <F2> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
+"nnoremap <F2> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
+"nmap <C-q> <c-w>2j<c-w>L<c-w>h
+"
+""============= HIGHLIGT SPLIT WINDOW ======================="
+set cul
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cul
+    autocmd WinLeave * set nocul
+augroup END
 
 ""============= COMMON FUNCTION KEY MAPPING ======================="
 "function! ExpandCMacro()

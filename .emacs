@@ -35,6 +35,7 @@
 ;; Switching between split windows
 (global-set-key "\C-l" 'next-multiframe-window)
 (global-set-key "\C-h" 'previous-multiframe-window)
+(global-set-key "\C-x\C-b" 'buffer-menu)
 
 
 ;; turn off dedicated-windows
