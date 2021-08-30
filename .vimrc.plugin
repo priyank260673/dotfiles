@@ -107,7 +107,7 @@ endif
 ""highlight TagbarScope guifg=Green ctermfg=Green
 
 """""""""""" ASYNCRUN  """""""""""""""""""""""""""
-let g:asyncrun_open = 20
+let g:asyncrun_open = 30
 let g:asyncrun_save = 2
 let g:asyncrun_bell = 1
 " Highlight of AsyncRun exit messages

@@ -189,6 +189,10 @@ function vimgui() {
     vim `grep -ilR $* *`
 }
 
+function vims() {
+	vim `git status -s -uno | cut -c4-`
+}
+
 function vimgdiff() {
 	cd ~/git/example/sapphire/sapphire/
     vim `git diff --name-only $1`
@@ -301,8 +305,10 @@ function build {
 }
 
 export E7_ARCH=haswell
+#export PATH=/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
+export MAN_DISABLE_SECCOMP=1
 
 ##----------------------------- ## 
 alias gitd='git d HEAD'
@@ -316,11 +322,15 @@ alias dffm='git d master .'
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
 alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
 alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
-alias goqa25='ssh -YC 172.16.0.25 -l faction\\qa'
-alias goqa26='ssh -YC 172.16.0.26 -l faction\\qa'
-alias goqa29='ssh -YC 172.16.0.29 -l faction\\qa'
-alias goqa42='ssh -YC 172.16.0.42 -l faction\\qa'
-alias gograntqa='ssh -YC 172.16.0.25 -l faction\\qa'
+alias goqaextra='ssh -YC ch0qslss001 -l faction\\qa'
+alias goqa1='ssh -YC ch0dslqa001 -l faction\\qa'
+alias goqa2='ssh -YC ch0dslqa002 -l faction\\qa'
+alias goqa3='ssh -YC ch0dslqa003 -l faction\\qa'
+alias goqa4='ssh -YC ch0dslqa004 -l faction\\qa'
+alias goqa5='ssh -YC ch0dslqa005 -l faction\\qa'
+#alias gograntqa='ssh -YC ch1qwwqa001 -l faction\\qa'
+#alias gorickqa='ssh -YC ch1qwwqa002 -l faction\\qa'
+
 alias goperf6='ssh -YC ch1dslpf006 -l ppatel'
 alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
 #alias gdb='/home/ppatel/bin/GDB/gdb-8.2.1/gdb/gdb --data-directory=/home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory'
@@ -442,3 +452,4 @@ alias copyFromMaster='cp /home/ppatel/git/master_repo/example/sapphire/build/Deb
 export SAPPHIRE_PCAP_PATH=/mnt/intraday_pcaps/
 alias notes='vim ~/extra_git/mydotfiles/dotfiles/TechNotes.txt'
 export MANPAGER="vim -M +MANPAGER --not-a-term -"
+alias checkICC='systemctl status icecc_no_remote.service'

@@ -1020,6 +1020,8 @@ std::map <string, string> tags =
 	{"9702", "CTI"},
 	{"1091", "PreTradeAnonymity"},
 	{"9768", "OMF_Override"},
+	{"9821", "SMP_ID_ICE"},
+	{"9822", "SMP_INSTR_ICE"},
 };
 
 const std::string& ConvertToString (const std::string& name, std::string& tagValue)

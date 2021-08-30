@@ -28,7 +28,7 @@ Bundle 'bfrg/vim-cpp-modern'
 Bundle 'inkarkat/vim-mark'
 Bundle 'inkarkat/vim-ingo-library'
 Bundle 'christoomey/vim-tmux-navigator'
-
+"Bundle 'kien/ctrlp.vim'
 "Bundle 'vim-scripts/a.vim'
 "Bundle 'octol/vim-cpp-enhanced-highlight'
 "Bundle 'junegunn/fzf'
@@ -69,7 +69,7 @@ endif
 "nmap <C-q> <c-w>2j<c-w>L<c-w>h
 
 " Set sappshire tags
-set tags=~/tags/allTags,~/tags/cppTags,~/tags/mFastTags
+set tags=~/tags/allTags,~/tags/cppTags
 cs add ~/tags/cscope.out
 set path+=/home/ppatel/git/example/sapphire/**
 
@@ -116,7 +116,7 @@ syntax on
 set autoindent autowrite noexpandtab tabstop=4 shiftwidth=4
 set nocompatible
 set laststatus=2
-set number
+set nonumber
 set wrap
 set backspace=0
 set t_Co=256
@@ -233,7 +233,7 @@ else
 	""	set makeprg=make\ -j3\ VERBOSE=1\ debug=1\ cmerouter-test
 	""	make | copen | resize 25
 	""endfunction
-	map <F9> :AsyncRun -save=2 ~/bin/buildCfe.sh<cr>
+	map <F9> :AsyncRun -save=2 ~/bin/buildIce.sh<cr>
 	map <F10> :AsyncRun -save=2 ~/bin/buildAppRel.sh 
 	map <F11> :call BuildDbg()<cr>
 	function! BuildDbg()
@@ -270,10 +270,11 @@ nmap <F8> :resize +1  <cr>
 nnoremap gf :vertical wincmd F<CR>
 set splitright
 
-set errorformat +=%E%f:%l:%c:\ %trror:\ %m,%-C,%-Z%p^
-set errorformat +=%E%f:%l:%c:\ %tning:\ %m,%-C,%-Z%p^
-set errorformat +=note:\ ,%-C,%-Z%p^
-set errorformat -=*\.cmake*
+"set errorformat =%E%f:%l:%c:\ %trror:\ %m,%-C,%-Z%p^
+"set errorformat +=%E%f:%l:%c:\ %tning:\ %m
+"set errorformat +=%C%.%#
+"set errorformat +=note:\ 
+"set errorformat -=*\.cmake*
 
 "autocmd BufWritePost * :AsyncRun ~/bin/buildApp.sh regulatory_reader_cfe_boe cfeboerouter_condor followtopofbook2 strategy_nodeimpl-test
 autocmd insertleave * update
@@ -291,7 +292,7 @@ augroup END
 ""============= DEBUGGER SETTING ======================="
 packadd termdebug
 let g:termdebug_wide=1
-nnoremap <F9> :Break<CR>
+nnoremap <C-K> <c-w>w
 "autocmd filetype cpp nnoremap <F2> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
 "nnoremap <F2> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
 "nmap <C-q> <c-w>2j<c-w>L<c-w>h
@@ -303,6 +304,29 @@ augroup BgHighlight
     autocmd WinEnter * set cul
     autocmd WinLeave * set nocul
 augroup END
+
+""============= COMMON FUNCTION KEY MAPPING ======================="
+"augroup quickfix
+"    autocmd!
+"    autocmd QuickFixCmdPost [^l]* cwindow
+"    autocmd QuickFixCmdPost l* lwindow
+"augroup END
+
+""============= ZOOM TOGGLE ======================="
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <C-A> :ZoomToggle<CR>
 
 ""============= COMMON FUNCTION KEY MAPPING ======================="
 "function! ExpandCMacro()

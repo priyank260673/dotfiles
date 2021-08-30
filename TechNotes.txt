@@ -129,7 +129,7 @@ http://releases.llvm.org/download.html
 cat  routerSubmit.txt| awk -F"queue_read_time: " '{print $2}' | awk -F", wire_write_time: " '{print $2-$1 "\t" $2 "\t" $1}'| awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print "avg " total/count," | max "max," | min " min " | samples " NR}'
 
 // Clone
-git clone ssh://git@stash:7999/desk/example.git
+git clone ssh://git@bitbucket:7999/desk/example.git
 git submodule update --init --recursive
 git submodule foreach git checkout release/nrc
 git submodule foreach git pull --all
@@ -196,4 +196,32 @@ cat /tmp/parsed_after.txt.1 | egrep "market::Accumulator|FeederMarketState::Mark
 
 // Running report tool
 $DBG_MASTER_DIR/report_eurex_mbo_d -i 'FGBL SI 20210608 PS'@XEUR -d 2021-03-12 -s 10:10 -f 10:40 -E -S -M -O -l TRACE
+
+
+./build/Debug-g++-8-haswell/bin/report_eurex_mbo_d -s 1:00 -f 23:00 -d 2021-04-26/2021-04-27 -i 'FESX SI 20210618 CS'@XEUR -T | egrep 'PacketDrop|PacketId=1146054'
+
+// This method will only add millisecond if it is not max value "999"
+void addMilli (std::string& inOutStr)
+{
+	static constexpr auto FORMAT = "%02d:%02d:%02d.%03d";
+	static constexpr auto FORMAT_SIZE = 13;
+	static constexpr auto MAX_MILLIS = 999;
+	static constexpr auto MAX_MINUTES_SECONDS = 59;
+	static constexpr auto MAX_HOURS = 23;
+	int h{0}, m{0}, s{0}, millis{0};
+	if (4 == std::sscanf(inOutStr.c_str(), FORMAT, &h, &m, &s, &millis))
+	{
+		if (millis != MAX_MILLIS)
+		{
+			++millis;
+			char buffer[FORMAT_SIZE]{};
+			std::sprintf(buffer, FORMAT, h, m, s, millis);
+			inOutStr = buffer;
+		}
+	}
+}
+
+GDB:
+====
+handle SIGINT print stop pass
 
