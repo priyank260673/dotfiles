@@ -68,25 +68,27 @@ endif
 "autocmd filetype cpp nnoremap <F6> :Termdebug %:r<CR><c-w>2j<c-w>L<c-w>h
 "nmap <C-q> <c-w>2j<c-w>L<c-w>h
 
+"==========================================================================
 " Set sappshire tags
-set tags=~/tags/allTags,~/tags/cppTags
-cs add ~/tags/cscope.out
-set path+=/home/ppatel/git/example/sapphire/**
+" set tags=~/tags/allTags,~/tags/cppTags
+" cs add ~/tags/cscope.out
+" set path+=/home/ppatel/git/example/sapphire/**
 
 " Set master tags
-"set tags=~/tags/masterTags,~/tags/cppTags
-"cs add ~/tags/master_cscope.out
-"set path+=/home/ppatel/git/master_repo/example/sapphire/**
+" set tags=~/tags/masterTags,~/tags/cppTags
+" cs add ~/tags/master_cscope.out
+" set path+=/home/ppatel/git/master_repo/example/sapphire/**
 
 " Set release tags
-" set tags=~/tags/relNrcTags,~/tags/cppTags
-" cs add ~/tags/relnrc_cscope.out
-" set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
+set tags=~/tags/relNrcTags,~/tags/cppTags
+cs add ~/tags/relnrc_cscope.out
+set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
 
-"
-" Set master_repo tags
-"set tags=~/tags/masterTags,~/tags/cppTags
-"cs add ~/tags/master_cscope.out
+" Set dev work tags
+" set tags=~/tags/devTags,~/tags/cppTags
+" cs add ~/tags/dev_cscope.out
+" set path+=/home/ppatel/git/dev_work/example/sapphire/**
+"==========================================================================
 
 "Colorschemes "
 "colorscheme xoria256_mine
@@ -116,7 +118,7 @@ syntax on
 set autoindent autowrite noexpandtab tabstop=4 shiftwidth=4
 set nocompatible
 set laststatus=2
-set nonumber
+set nu
 set wrap
 set backspace=0
 set t_Co=256
@@ -253,7 +255,7 @@ else
 	nmap <C-c> :qa <cr>
 	imap <C-c> <Esc>
 	" Current build 
-	map <C-z> :AsyncRun -save=2 ~/bin/buildApp.sh instinetrouter-test <cr>
+	map <C-z> :AsyncRun -save=2 ~/bin/buildApp.sh eurexrouter_condor <cr>
 endif
 
 " Added for menu configuration

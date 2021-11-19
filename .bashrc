@@ -306,7 +306,8 @@ function build {
 
 export E7_ARCH=haswell
 #export PATH=/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
-export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
+#export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
+export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-13.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/:
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -315,8 +316,10 @@ alias gitd='git d HEAD'
 alias gitsubpullmast='git submodule foreach git pull origin master'
 alias gitsubcheckoutmast='git submodule foreach git checkout master'
 alias gitdiff_f='git diff --name-only $1'
+alias gitdiff_fm='git diff --name-only master'
 alias dffos='git d /home/ppatel/git/example/sapphire/sapphire/'
 alias dffm='git d master .'
+alias vimdf='vim `git diff --name-only master`'
 ##----------------------------- ## 
 
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
@@ -338,7 +341,7 @@ export TERM=xterm-256color
 alias gohawk_eurex='cd /home/ppatel/git/example/sapphire/hawk/hawk/feeder/exchanges/eurex/eobi/'
 alias gofeeder_eurex='cd /home/ppatel/git/example/sapphire/sapphire/gateways/feeder/eurex/'
 
-function debugnw {
+function debugw {
     emacs --eval "(gdb \"gdb -i=mi ; --args $* \")";
 }
 
@@ -389,6 +392,17 @@ function gcheckoutmaster()
 	cd sapphire
 }
 
+function gcheckoutdevw() 
+{
+	cd /home/ppatel/git/dev_work/example/sapphire/
+	git checkout master; git pull; git checkout $1; git pull
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd sapphire
+}
+
 function grevert() 
 {
 	git checkout $1
@@ -425,6 +439,11 @@ export REL_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/
 export SAN_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Sanitize-g++-8-haswell/bin/'
 export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Profile-g++-8-haswell/bin/'
 
+export DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Debug-g++-8-haswell/bin/'
+export REL_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Release-g++-8-haswell/bin/'
+export SAN_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Sanitize-g++-8-haswell/bin/'
+export PROFILE_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Profile-g++-8-haswell/bin/'
+
 export QA_MACHINE=172.16.0.42
 alias gomasterrepo='cd /home/ppatel/git/master_repo/example/sapphire/sapphire/'
 alias godevrepo='cd /home/ppatel/git/dev_work/example/sapphire/sapphire/'
@@ -453,3 +472,4 @@ export SAPPHIRE_PCAP_PATH=/mnt/intraday_pcaps/
 alias notes='vim ~/extra_git/mydotfiles/dotfiles/TechNotes.txt'
 export MANPAGER="vim -M +MANPAGER --not-a-term -"
 alias checkICC='systemctl status icecc_no_remote.service'
+alias printTemplates='clang++ -I ~/git/example/sapphire/hawk/ -Xclang -ast-print -fsyntax-only -ferror-limit=1000 $1'

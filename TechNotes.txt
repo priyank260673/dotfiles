@@ -1,3 +1,6 @@
+#GITHUB TOKEN:
+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
+
 AWK min, max, avg
 ================
 input | awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print total/count, max, min}'
@@ -174,6 +177,9 @@ mcast_util.py listen 224.0.114.47 59001 -count 0
 // Listen for packet
 tcpdump -n -i {interface-name} dst {IP-address} port {port}
 
+// Capture TCP stream
+tcpdump -i any -s 0 'tcp port <PORTNUMBER>' -w /tmp/http.cap
+
 // EPF Client run
 ./epfclient -g 239.240.255.10:10003 -e 262 -i <IID of instrument with corssed book> -l 20 -O -b
 
@@ -193,10 +199,8 @@ sudo tcpreplay -T nano -i lo -x 100.0 --stats=5 /tmp/LargePackets.pcap
 // Market state grep
 cat /tmp/parsed_after.txt.1 | egrep "market::Accumulator|FeederMarketState::MarketStateUpdate|MarketSegmentID= 690.*ProductSummaryT|MarketSegmentID= 690.*InstrumentStateChangeT.*SecurityID=72060557565362236|MarketSegmentID= 690.*ProductStateChangeT|MarketSegmentID= 690.*InstrumentSummaryT.*SecurityID=72060557565362236|MarketSegmentID= 690.*MassInstrumentStateChangeT" &> /tmp/parsed_filtered_after.txt
 
-
 // Running report tool
 $DBG_MASTER_DIR/report_eurex_mbo_d -i 'FGBL SI 20210608 PS'@XEUR -d 2021-03-12 -s 10:10 -f 10:40 -E -S -M -O -l TRACE
-
 
 ./build/Debug-g++-8-haswell/bin/report_eurex_mbo_d -s 1:00 -f 23:00 -d 2021-04-26/2021-04-27 -i 'FESX SI 20210618 CS'@XEUR -T | egrep 'PacketDrop|PacketId=1146054'
 
@@ -224,4 +228,10 @@ void addMilli (std::string& inOutStr)
 GDB:
 ====
 handle SIGINT print stop pass
+
+// For AST dump
+clang++ --std=c++17 -I ~/git/example/sapphire/hawk/ -I  ~/git/example/sapphire/ -I /home/ppatel/git/example/sapphire/messages/generated/ -I /home/ppatel/git/example/sapphire/messages/generated/feeder/ -I /home/ppatel/git/example/sapphire/messages/generated/Sapphire/ -I /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/emds/decoder/ -I /usr/local/share/drop/mFAST/1.3.0/include/ -I /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/emdi/decoder/xml/10.0/ -I /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/emdi/decoder/xml/9.1.2/ -I /home/ppatel/git/example/sapphire/e7core/ -Xclang -ast-dump  -ferror-limit=1000 EntryPoint.cpp &> /tmp/out.txt_dump_1
+
+
+
 
