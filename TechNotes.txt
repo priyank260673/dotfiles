@@ -1,5 +1,5 @@
 #GITHUB TOKEN:
-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
+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
 
 AWK min, max, avg
 ================
