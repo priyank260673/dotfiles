@@ -83,7 +83,7 @@ flags = [
 '-I',
 '/home/ppatel/extra_git/spdlog/',
 '-I',
-'/usr/local/share/drop/condor/condor_exa-0.0.24/include/condor_exa/',
+'/usr/local/share/drop/condor/condor_exa-3.2.9/include/condor_exa/',
 '-I',
 '/home/ppatel/git/example/sapphire/sapphire/gateways/feeder/',
 '-I',

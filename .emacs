@@ -37,7 +37,6 @@
 (global-set-key "\C-h" 'previous-multiframe-window)
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
-
 ;; turn off dedicated-windows
 (defun toggle-current-window-dedication ()
   (interactive)
@@ -154,7 +153,7 @@
   )
 
 ; GDB variables
-(setq gdb-many-windows t)
+;;(setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq gdb-show-changed-values t)
 (setq gdb-use-colon-colon-notation t)
@@ -178,11 +177,6 @@
 								  (move-overlay ov (line-beginning-position) (line-beginning-position 2)
 												(current-buffer)))))
 
-;; Alt-x key binding
-;; (global-set-key [f12] 'execute-extended-command)
-;; display line numbers
-;;(global-linum-mode t)
-;; follow focus with mouse
 (setq mouse-autoselect-window t)
 
 (defun show-file-name ()
@@ -197,7 +191,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
   '(gdb-enable-debug t)
-  '(gdb-many-windows t)
+  '(gdb-many-windows f)
   '(gdb-stopped-functions nil)
   '(gud-gud-gdb-command-name "gdb --fullname")
   '(gud-tooltip-mode t)
@@ -207,13 +201,7 @@
   '(tooltip-mode t)
   '(transient-mark-mode nil))
 
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  )
-
 ;; C-x 1 - zoom in, C-c <left Arrow> zoom out
 (when (fboundp 'winner-mode)
   (winner-mode 1))
+

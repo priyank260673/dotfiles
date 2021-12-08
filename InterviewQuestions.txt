@@ -1,0 +1,167 @@
+https://www.toptal.com/c-plus-plus/interview-questions
+https://tests4geeks.com/blog/cpp-interview-questions/
+
+1) Sites that usually refer to for learning, development, keeping up to date with C++.
+
+2) Development environment, debugger, IDE usage. GCC/C++ version used.
+
+3) Error in following code and how to fix.
+	my_struct_t *bar;
+	memset(bar, 0, sizeof(bar));
+
+4) What kind of sorting alrogithms you have used? Implment quick sort. 
+
+5) Find 10th element in 1 million elements. 
+
+6) Fibionacci series. When is it possible to calculate in compile time and how? 
+
+7) Can this be compiled, What will happen here? 
+
+struct Fred {
+	Fred(int n): v(n) {}
+	std::vector<int> v;
+
+};
+
+int main() {
+	using namespace std;
+	Fred f(1);
+	f.v[0] = 5;
+	cout << f.v[0] << endl;
+	f = 7;          // is this legal?
+	cout << f.v[0]; // what is output here?
+}
+
+8) How can we pass "bias" to lambda? 
+
+int getSum(int a, int b)
+{
+	int bias = 3;
+	int sum;
+	auto lf = [](int x, int y) { return x + y; };
+
+	// Calculate the sum using the lambda function
+	sum = lf(a, b);
+
+	return(sum);
+}
+
+9) How do you sort list and vector? 
+
+10) What does move constructor does?  Write move constructor for class.
+
+11) Find bug in following code. 
+
+/**
+#include <vector.h>
+
+void main(int argc, char** argv)
+{
+  int n;
+  if (argc > 1)
+    n = argv[0];
+  int* stuff = new int[n];
+  vector<int> v(100000);
+  delete stuff;
+  return 0;
+}
+*/
+
+12) Value of i and j after execution.
+ int i = 5;
+ int j = i++;
+
+13) How do you call particular template method of only certain type?
+
+template <typename T> 
+void foo() 
+{
+	std::cout << " foo called " << std::endl;
+}
+
+14)  Implement is same class type - is same type returns true else false. 
+std::is_same<T,T> return true or false.
+
+15)  Polymorphic lambda. 
+
+/**
+Candidate specific questions: 
+=============================
+1) Problems faced during EMDI development. 
+2) Problems faced during CFE Quoting/Orders development.
+*/
+
+
+/**
+#include <vector.h>
+
+void main(int argc, char** argv)
+{
+  int n;
+  if (argc > 1)
+    n = argv[0];
+  int* stuff = new int[n];
+  vector<int> v(100000);
+  delete stuff;
+  return 0;
+}
+
+// Problem with following code
+
+my_struct_t *bar;
+memset(bar, 0, sizeof(bar));
+
+*/
+
+/**
+ Implement method to return true if two types passed is same. 
+ */
+
+/**
+// Write contrustor, move constructor, destructor, assignment, move assignment, copy constructor 
+class A
+{
+	int a{10};
+	char * ptr;
+};
+*/
+
+/** Fibionacci series. When is it possible to calculate in compile time and how?  */
+
+
+/**
+ Find Kth index element in given array after sorting
+ */
+
+#pragma once
+#include <cstddef>
+#include <utility>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+// Assumption: 
+// Indexing is always based on zero. 
+// Doing inplace sorting of an array. So, original array will change.
+ 
+template <typename ContainerType>
+size_t partition_array (ContainerType& arr, size_t startIndex, size_t endIndex)
+{
+	// Fill in code here
+	return 0;
+}
+
+// int kth_element (int arr[], int startIndex, int endIndex, const int& kthIndex)
+template <typename ContainerType>
+int kth_element (ContainerType& arr, size_t size, size_t startIndex, size_t endIndex, const size_t& kthIndex)
+{
+	// Fill in code here
+	return 0;
+}
+
+int main() {
+	std::vector<int> v{5, 10, 3, 13, 1, 2, 18, 6};
+	// sorted {1, 2, 3, 5, 6, 10, 13, 18};
+	std::cout << kth_element(v, v.size(), 0, v.size()-1, 0) << std::endl;
+}
+
