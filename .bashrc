@@ -473,3 +473,4 @@ alias notes='vim ~/extra_git/mydotfiles/dotfiles/TechNotes.txt'
 export MANPAGER="vim -M +MANPAGER --not-a-term -"
 alias checkICC='systemctl status icecc_no_remote.service'
 alias printTemplates='clang++ -I ~/git/example/sapphire/hawk/ -Xclang -ast-print -fsyntax-only -ferror-limit=1000 $1'
+alias gou20dev='ssh -YC ppatel@ch0dsldv139.eagleseven.com'
