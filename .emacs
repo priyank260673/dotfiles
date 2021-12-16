@@ -37,6 +37,11 @@
 (global-set-key "\C-h" 'previous-multiframe-window)
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+
 ;; turn off dedicated-windows
 (defun toggle-current-window-dedication ()
   (interactive)

@@ -47,7 +47,7 @@ flags = [
 '-x',
 'c++',
 '-isystem',
-'/usr/include/c++/8/',
+'/usr/include/c++/10/',
 '-isystem',
 '/usr/local/share/drop/gtest-1.8-c++17/include/',
 '-isystem',
@@ -83,13 +83,13 @@ flags = [
 '-I',
 '/home/ppatel/extra_git/spdlog/',
 '-I',
-'/usr/local/share/drop/condor/condor_exa-3.2.9/include/condor_exa/',
+'/usr/local/share/drop/condor/condor_exa-4.0.54/include/condor_exa/',
 '-I',
 '/home/ppatel/git/example/sapphire/sapphire/gateways/feeder/',
 '-I',
 '/home/ppatel/git/example/sapphire/messages/generated/feeder/',
 '-I',
-'/home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/fast/decoder/',
+'/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/hawk/hawk/feeder/exchanges/eurex/fast/decoder/',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

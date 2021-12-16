@@ -47,7 +47,7 @@ flags = [
 '-x',
 'c++',
 '-isystem',
-'/usr/include/c++/8/',
+'/usr/include/c++/10/',
 '-isystem',
 '/usr/local/share/drop/gtest-1.8-c++17/include/',
 '-isystem',
