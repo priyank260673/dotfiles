@@ -178,11 +178,19 @@ function vimg() {
 }
 
 function vimga() {
+    vim `egrep -lR $* *`
+}
+
+function vimga() {
     vim `grep -lR $* *`
 }
 
 function vimgi() {
     vim `egrep -ilR $* * | grep -v unit-test`
+}
+
+function vimgia() {
+    vim `egrep -ilR $* *`
 }
 
 function vimgui() {
@@ -305,9 +313,8 @@ function build {
 }
 
 export E7_ARCH=haswell
-#export PATH=/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
 #export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
-export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-13.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/:
+export PATH=/usr/bin/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-13.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/:
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -474,3 +481,4 @@ export MANPAGER="vim -M +MANPAGER --not-a-term -"
 alias checkICC='systemctl status icecc_no_remote.service'
 alias printTemplates='clang++ -I ~/git/example/sapphire/hawk/ -Xclang -ast-print -fsyntax-only -ferror-limit=1000 $1'
 alias gou20dev='ssh -YC ppatel@ch0dsldv139.eagleseven.com'
+alias goextragit='cd /home/ppatel/extra_git/mydotfiles/dotfiles/'
