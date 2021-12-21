@@ -54,7 +54,7 @@ if has('cscope')
 
 	" add any database in current directory
 	if filereadable("cscope.out")
-		cs add cscope.out
+		" cs add ~/tags/cscope.out
 		" else add database pointed to by environment
 	elseif $CSCOPE_DB != ""
 		"cs add $CSCOPE_DB
