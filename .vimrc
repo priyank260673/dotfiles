@@ -21,13 +21,14 @@ Bundle 'majutsushi/tagbar'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'skywind3000/asyncrun.vim'
 Bundle 'jiangmiao/auto-pairs'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
 Bundle 'andymass/vim-matchup'
 Bundle 'bfrg/vim-cpp-modern'
 Bundle 'inkarkat/vim-mark'
 Bundle 'inkarkat/vim-ingo-library'
 Bundle 'christoomey/vim-tmux-navigator'
+
+"Bundle 'SirVer/ultisnips'
+"Bundle 'honza/vim-snippets'
 "Bundle 'kien/ctrlp.vim'
 "Bundle 'vim-scripts/a.vim'
 "Bundle 'octol/vim-cpp-enhanced-highlight'
@@ -70,14 +71,14 @@ endif
 
 "==========================================================================
 " Set sappshire tags
-set tags=~/tags/allTags,~/tags/cppTags
-cs add ~/tags/cscope.out
-set path+=/home/ppatel/git/example/sapphire/**
+" set tags=~/tags/allTags,~/tags/cppTags
+" cs add ~/tags/cscope.out
+" set path+=/home/ppatel/git/example/sapphire/**
 
 " Set master tags
-" set tags=~/tags/masterTags,~/tags/cppTags
-" cs add ~/tags/master_cscope.out
-" set path+=/home/ppatel/git/master_repo/example/sapphire/**
+"set tags=~/tags/masterTags,~/tags/cppTags
+"cs add ~/tags/master_cscope.out
+"set path+=/home/ppatel/git/master_repo/example/sapphire/**
 
 " Set release tags
 " set tags=~/tags/relNrcTags,~/tags/cppTags
@@ -85,9 +86,9 @@ set path+=/home/ppatel/git/example/sapphire/**
 " set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
 
 " Set dev work tags
-" set tags=~/tags/devTags,~/tags/cppTags
-" cs add ~/tags/dev_cscope.out
-" set path+=/home/ppatel/git/dev_work/example/sapphire/**
+set tags=~/tags/devTags,~/tags/cppTags
+cs add ~/tags/dev_cscope.out
+set path+=/home/ppatel/git/dev_work/example/sapphire/**
 "==========================================================================
 
 "Colorschemes "
@@ -108,6 +109,7 @@ set wildmenu
 
 " vim options
 "set cursorline
+"hi CursorLine   cterm=NONE ctermbg=blue ctermfg=white guibg=darkred guifg=white
 set encoding=utf-8
 filetype on
 filetype plugin indent on
@@ -135,7 +137,8 @@ set history=1000
 " " Set to auto read when a file is changed from the outside
 set autoread
 " Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+"set so=7
+set so=999
 " "Always show current position
 set ruler
 " " Height of the command bar
@@ -151,6 +154,7 @@ set ignorecase
 set smartcase
 " " Highlight search results
 "set hlsearch
+"hi Search guibg=LightBlue
 " " Don't redraw while executing macros (good performance config)
 set lazyredraw
 " " For regular expressions turn magic on
@@ -205,13 +209,14 @@ if (laptop_mode)
 	" For regular compilation of projects
 	nmap <C-c> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=g++\ -std=c++20\ -g3\ %\ -o\ %<
+		set makeprg=g++\ -std=c++2a\ -g3\ %\ -o\ %<
 		make
 	endfunction
 
 	nmap <f4> :call MakeCppPre () <cr>
 	function! MakeCppPre ()
-		set makeprg=g++\ -std=c++20\ -E\ -g3\ %\ -o\ /tmp/out.txt
+		"set makeprg=g++\ -std=c++2a\ -E\ -g3\ %\ -o\ /tmp/out.txt
+		set makeprg=g++\ -std=c++2a\ -g3\ %\ -o\ %<
 		make
 	endfunction 
 else
@@ -222,12 +227,12 @@ else
 
 	map <F3> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=/usr/bin/g++\ -std=c++20\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
+		set makeprg=/usr/bin/g++\ -std=c++2a\ -E\ -pthread\ -lrt\ -g3\ -o\ /tmp/preprocess.txt
 		make
 	endfunction
 	map <F4> :call MakeCppDbg() <cr>
 	function! MakeCppDbg()
-		set makeprg=/usr/bin/g++\ -std=c++20\ -pthread\ -lrt\ -g3\ -fsanitize=address\ -fsanitize=leak\ %\ -o\ %<
+		set makeprg=/usr/bin/g++\ -std=c++2a\ -pthread\ -lrt\ -g3\ -fsanitize=address\ -fsanitize=leak\ %\ -o\ %<
 		make
 	endfunction
 	""function! BuildDbg()

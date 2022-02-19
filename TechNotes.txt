@@ -233,5 +233,20 @@ handle SIGINT print stop pass
 clang++ --std=c++17 -I ~/git/example/sapphire/hawk/ -I  ~/git/example/sapphire/ -I /home/ppatel/git/example/sapphire/messages/generated/ -I /home/ppatel/git/example/sapphire/messages/generated/feeder/ -I /home/ppatel/git/example/sapphire/messages/generated/Sapphire/ -I /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/emds/decoder/ -I /usr/local/share/drop/mFAST/1.3.0/include/ -I /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/emdi/decoder/xml/10.0/ -I /home/ppatel/git/example/sapphire/build/Debug-g++-8-haswell/hawk/hawk/feeder/exchanges/eurex/emdi/decoder/xml/9.1.2/ -I /home/ppatel/git/example/sapphire/e7core/ -Xclang -ast-dump  -ferror-limit=1000 EntryPoint.cpp &> /tmp/out.txt_dump_1
 
 
+// TMUX in vim setup
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+Add these lines to ~/.tmux.conf:
+
+## Plugin management
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+run -b '~/.tmux/plugins/tpm/tpm'
+
+// Build youcomplete me with following
+python3 ./install.py --clang-completer
+
+DBG_MASTER_DIR/glbx_drop_d -c drop_config.json | decodeLine.sh 2>&1 | tee /tmp/out.txt
 
 

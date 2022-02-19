@@ -77,6 +77,7 @@ let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_always_populate_location_list = 1
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_show_diagnostics_ui = 1
+let g:ycm_disable_signature_help = 1
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>
@@ -138,6 +139,7 @@ endif
 
 """"""""""""""GitGutter signs """""""""""""""""""""""""""
 let g:gitgutter_max_signs = 1000
+"let g:gitgutter_highlight_lines = 1
 highlight GitGutterAdd    guifg=#009900 ctermfg=2 ctermbg=242
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3 ctermbg=242
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1 ctermbg=242

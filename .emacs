@@ -158,7 +158,7 @@
   )
 
 ; GDB variables
-;;(setq gdb-many-windows t)
+(setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq gdb-show-changed-values t)
 (setq gdb-use-colon-colon-notation t)
