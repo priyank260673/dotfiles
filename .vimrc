@@ -76,9 +76,9 @@ endif
 " set path+=/home/ppatel/git/example/sapphire/**
 
 " Set master tags
-"set tags=~/tags/masterTags,~/tags/cppTags
-"cs add ~/tags/master_cscope.out
-"set path+=/home/ppatel/git/master_repo/example/sapphire/**
+set tags=~/tags/masterTags,~/tags/cppTags
+cs add ~/tags/master_cscope.out
+set path+=/home/ppatel/git/master_repo/example/sapphire/**
 
 " Set release tags
 " set tags=~/tags/relNrcTags,~/tags/cppTags
@@ -86,9 +86,9 @@ endif
 " set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
 
 " Set dev work tags
-set tags=~/tags/devTags,~/tags/cppTags
-cs add ~/tags/dev_cscope.out
-set path+=/home/ppatel/git/dev_work/example/sapphire/**
+" set tags=~/tags/devTags,~/tags/cppTags
+" cs add ~/tags/dev_cscope.out
+" set path+=/home/ppatel/git/dev_work/example/sapphire/**
 "==========================================================================
 
 "Colorschemes "
@@ -137,8 +137,7 @@ set history=1000
 " " Set to auto read when a file is changed from the outside
 set autoread
 " Set 7 lines to the cursor - when moving vertically using j/k
-"set so=7
-set so=999
+"set scrolloff=7
 " "Always show current position
 set ruler
 " " Height of the command bar

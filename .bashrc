@@ -313,8 +313,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-#export PATH=~/extra_git/ctags/:/home/ppatel/TOOLS/GDB/gdb-8.3.1/gdb/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/:
-export PATH=/usr/bin/:${PATH}:.:/home/ppatel/TOOLS/CLANG/clang+llvm-13.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/:
+export PATH=/usr/bin/:.:/home/ppatel/TOOLS/CLANG/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04/bin/:
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -459,7 +458,7 @@ alias goglass='cd /mnt/ppatel/GLASS'
 
 alias gomyvm='ssh -YC ppatel@ch0dsldv035'
 
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/:~/TOOLS/CLANG/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04/lib/
 
 alias gohw40='ssh -YC ppatel@172.16.0.40'
 alias gohw41='ssh -YC ppatel@172.16.0.41'
@@ -483,3 +482,4 @@ alias printTemplates='clang++ -I ~/git/example/sapphire/hawk/ -Xclang -ast-print
 alias gou20dev='ssh -YC ppatel@ch0dsldv139.eagleseven.com'
 alias goextragit='cd /home/ppatel/extra_git/mydotfiles/dotfiles/'
 alias gosachin='ssh -YC ppatel@ch0dsldv120'
+alias goch0dsldv147='ssh -YC ppatel@ch0dsldv147'
