@@ -313,7 +313,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=/usr/bin/:.:/home/ppatel/TOOLS/CLANG/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04/bin/:
+export PATH=/usr/bin/:.:
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -458,7 +458,7 @@ alias goglass='cd /mnt/ppatel/GLASS'
 
 alias gomyvm='ssh -YC ppatel@ch0dsldv035'
 
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/:~/TOOLS/CLANG/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04/lib/
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/:/home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clang/lib/:
 
 alias gohw40='ssh -YC ppatel@172.16.0.40'
 alias gohw41='ssh -YC ppatel@172.16.0.41'

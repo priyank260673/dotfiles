@@ -71,14 +71,14 @@ endif
 
 "==========================================================================
 " Set sappshire tags
-" set tags=~/tags/allTags,~/tags/cppTags
-" cs add ~/tags/cscope.out
-" set path+=/home/ppatel/git/example/sapphire/**
+set tags=~/tags/allTags,~/tags/cppTags
+cs add ~/tags/cscope.out
+set path+=/home/ppatel/git/example/sapphire/**
 
 " Set master tags
-set tags=~/tags/masterTags,~/tags/cppTags
-cs add ~/tags/master_cscope.out
-set path+=/home/ppatel/git/master_repo/example/sapphire/**
+" set tags=~/tags/masterTags,~/tags/cppTags
+" cs add ~/tags/master_cscope.out
+" set path+=/home/ppatel/git/master_repo/example/sapphire/**
 
 " Set release tags
 " set tags=~/tags/relNrcTags,~/tags/cppTags
