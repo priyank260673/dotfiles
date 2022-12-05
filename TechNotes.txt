@@ -245,8 +245,29 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 run -b '~/.tmux/plugins/tpm/tpm'
 
 // Build youcomplete me with following
-python3 ./install.py --clang-completer --clangd-completer
+rm -rf /home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/absl; python3 ./install.py --clang-completer --clangd-completer
 
 DBG_MASTER_DIR/glbx_drop_d -c drop_config.json | decodeLine.sh 2>&1 | tee /tmp/out.txt
 
+<commandToRun> |& tee /tmp/output.txt
+
+============================================================================================
+
+cd <buildDir>
+make -j6 e7_test
+ctest -T test --no-compress-output
+
+==================================================================================================
+
+wget http://jenkins-artifacts/condor/configs/firmware_update.py -O firmware_update.py
+python3 firmware_update.py latest latest --dry --directory dump
+
+==================================================================================================
+
+QA Password: Qu@|ity34
+
+Benchmark:
+==========
+g++ Test.cpp -std=c++11 -isystem ~/extra_git/benchmark/include ~/extra_git/benchmark/build/src/libbenchmark.a  -lpthread -o mybenchmark
+python3  ~/extra_git/benchmark/tools/compare.py benchmarks mybenchmark mybenchmark
 

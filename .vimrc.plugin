@@ -63,8 +63,7 @@ command! Cst call Cst()
 
 """"""" You complete me """" 
 " NOTE - Following setting was creating problem of not exiting YCMD.
-" let g:ycm_collect_identifiers_from_tags_files=1
-"let g:ycm_clangd_args=['--header-insertion=never --compile-commands-dir=/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell']
+"let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_use_clang=1
 let g:ycm_global_ycm_extra_conf='~/global_extra_conf.py'
 let g:ycm_complete_in_comments = 0
@@ -79,10 +78,14 @@ let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_show_diagnostics_ui = 1
 let g:ycm_disable_signature_help = 1
 let g:ycm_auto_hover=''
-let g:ycm_use_clangd=0
+let g:ycm_use_clangd=1
+"let g:ycm_clangd_args=['--background-index', '--header-insertion=iwyu', '--limit-references=0', '--inlay-hints', '--clang-tidy']
+"let g:ycm_clangd_args=['--background-index', '--limit-references=0', '--inlay-hints']
+let g:ycm_clangd_args=['--header-insertion=never']
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>
+map <Leader>s :YcmCompleter GoToSymbol 
 map <Leader>ff :YcmCompleter FixIt<CR>
 let g:ycm_filetype_blacklist = {
 			\ 'tagbar': 1,
@@ -110,7 +113,7 @@ endif
 ""highlight TagbarScope guifg=Green ctermfg=Green
 
 """""""""""" ASYNCRUN  """""""""""""""""""""""""""
-let g:asyncrun_open = 30
+let g:asyncrun_open = 40
 let g:asyncrun_save = 2
 let g:asyncrun_bell = 1
 " Highlight of AsyncRun exit messages

@@ -8,6 +8,11 @@ endif
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+
 " vundle packages
 Bundle 'gmarik/vundle'
 Bundle 'vim-airline/vim-airline'
@@ -25,8 +30,10 @@ Bundle 'andymass/vim-matchup'
 Bundle 'bfrg/vim-cpp-modern'
 Bundle 'inkarkat/vim-mark'
 Bundle 'inkarkat/vim-ingo-library'
-Bundle 'christoomey/vim-tmux-navigator'
 
+"Bundle 'statox/vim-compare-lines'
+"Bundle 'christoomey/vim-tmux-navigator'
+"Bundle 'tpope/vim-rhubarb'
 "Bundle 'SirVer/ultisnips'
 "Bundle 'honza/vim-snippets'
 "Bundle 'kien/ctrlp.vim'
@@ -85,10 +92,10 @@ set path+=/home/ppatel/git/example/sapphire/**
 " cs add ~/tags/relnrc_cscope.out
 " set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
 
-" Set dev work tags
-" set tags=~/tags/devTags,~/tags/cppTags
-" cs add ~/tags/dev_cscope.out
-" set path+=/home/ppatel/git/dev_work/example/sapphire/**
+" Set onetick tags
+" set tags=~/tags/oneTickTags
+" cs add ~/tags/onetick_cscope.out
+" set path+=/home/ppatel/git/example/onetick-collectors/**
 "==========================================================================
 
 "Colorschemes "
@@ -188,6 +195,7 @@ set guioptions+=a
 if &diff                             " only for diff mode/vimdiff
 	set diffopt=filler,context:1000000 " filler is default and inserts empty
 	set diffopt+=iwhite
+	set diffopt+=vertical
 	set noro
 	set wrap 
 	autocmd FilterWritePre * if &diff | setlocal wrap< | endif

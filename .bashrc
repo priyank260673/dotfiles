@@ -149,6 +149,10 @@ export EDITOR=vim
 # set core limit unlimited
 ulimit -c unlimited 
 
+function deleteBranch() {
+	git branch -d $1; git push --delete origin $1;
+}
+
 # functions
 function dtoh() {
     printf "%X\n" $1
@@ -313,7 +317,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=/usr/bin/:.:
+export PATH=/opt/eagleseven/pyenv/e7base/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/:
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -331,14 +335,15 @@ alias vimdf='vim `git diff --name-only master`'
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
 alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
 alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
-alias goqaextra='ssh -YC ch0qslss001 -l faction\\qa'
-alias goqa1='ssh -YC ch0dslqa001 -l faction\\qa'
-alias goqa2='ssh -YC ch0dslqa002 -l faction\\qa'
-alias goqa3='ssh -YC ch0dslqa003 -l faction\\qa'
-alias goqa4='ssh -YC ch0dslqa004 -l faction\\qa'
-alias goqa5='ssh -YC ch0dslqa005 -l faction\\qa'
-#alias gograntqa='ssh -YC ch1qwwqa001 -l faction\\qa'
-#alias gorickqa='ssh -YC ch1qwwqa002 -l faction\\qa'
+alias goqaextra='ssh -YC ch0qslss001 -l qa'
+alias goqa1='ssh -YC ch0dslqa001 -l qa'
+alias goqa2='ssh -YC ch0dslqa002 -l qa'
+alias goqa3='ssh -YC ch0dslqa003 -l qa'
+alias goqa4='ssh -YC ch0dslqa004 -l qa'
+alias goqa5='ssh -YC ch0dslqa005 -l qa'
+alias goqa7='ssh -YC ch0dslqa007 -l qa'
+#alias gograntqa='ssh -YC ch1qwwqa001 -l eagleseven\\qa'
+#alias gorickqa='ssh -YC ch1qwwqa002 -l eagleseven\\qa'
 
 alias goperf6='ssh -YC ch1dslpf006 -l ppatel'
 alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
@@ -414,6 +419,11 @@ function grevert()
 	git checkout $1
 }
 
+function validateJson()
+{
+	python3 -m json.tool $1
+}
+
 alias remote='git config --get remote.origin.url'
 
 # FZF setup
@@ -469,6 +479,7 @@ alias gohw2_qa='ssh -YC FACTION\\ppatel@ch1dslhw002.qa1.local'
 alias go_8='ssh -YC ppatel@ch1dslpf008'
 alias gohw1='ssh -YC ppatel@ch1dslhw001'
 alias gohw4='ssh -YC ppatel@ch1dslhw004'
+alias gohw9='ssh -YC ppatel@ch1dslhw009'
 alias gohw3='ssh -YC ppatel@ch1dslhw003'
 alias gocapture='ssh -YC ppatel@ch1dslss066'
 alias topTen='ls -laShR'
@@ -483,3 +494,7 @@ alias gou20dev='ssh -YC ppatel@ch0dsldv139.eagleseven.com'
 alias goextragit='cd /home/ppatel/extra_git/mydotfiles/dotfiles/'
 alias gosachin='ssh -YC ppatel@ch0dsldv120'
 alias goch0dsldv147='ssh -YC ppatel@ch0dsldv147'
+
+export E7_IMPLIED_CONFIG_DIR=/opt/eagleseven/implied_calibration/configs
+export E7_IMPLIED_SYMBOL=GLBX.CL
+
