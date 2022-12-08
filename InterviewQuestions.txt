@@ -1,26 +1,85 @@
-https://www.toptal.com/c-plus-plus/interview-questions
-https://tests4geeks.com/blog/cpp-interview-questions/
+=====================================================================================
+=> Write contrustor, move constructor, destructor, assignment, move assignment, copy constructor 
+class A
+{
+	int a{10};
+	char * ptr;
+};
 
-1) Sites that usually refer to for learning, development, keeping up to date with C++.
+=> Is there a problem here? 
+std::vector<BigObject> v(10);
+for (auto elem : v) 
+{
+}
 
-2) Development environment, debugger, IDE usage. GCC/C++ version used.
-
-3) Error in following code and how to fix.
+=> Is there a problem here?
 	my_struct_t *bar;
 	memset(bar, 0, sizeof(bar));
 
-4) What kind of sorting alrogithms you have used? Implment quick sort. 
+=> Value of i and j after execution? 
+   int i = 5;
+   int j = i++;
 
-5) Find 10th element in 1 million elements. 
+=> What is the output of following code? 
 
-6) Fibionacci series. When is it possible to calculate in compile time and how? 
+#include <iostream>
 
-7) Can this be compiled, What will happen here? 
+class Base {
+	virtual void method() {
+		std::cout << "from Base" << std::endl;
+	}
+	public:
+	virtual ~Base() {
+		std::cout << " Base descturor " << std::endl; 
+		method();
+	}
+	void baseMethod() { method(); }
+};
+
+class Derived : public Base {
+	void method() {
+		std::cout << "from Derived" << std::endl;
+	}
+	public:
+	~Derived() {
+		std::cout << " Derived destructor " << std::endl; 
+		method();
+	}
+};
+
+int main(void) {
+	Base* base = new Derived;
+	base->baseMethod();
+	delete base;
+	return 0;
+}
+
+=> Is there a problem with following code?
+class A
+{
+	public:
+		A() {}
+		~A(){}
+};
+
+class B: public A
+{
+	public:
+		B():A(){}
+		(){}
+};
+
+int main(void)
+{
+	A* a = new B();
+	delete a;
+}
+
+=> What is the output here?
 
 struct Fred {
 	Fred(int n): v(n) {}
 	std::vector<int> v;
-
 };
 
 int main() {
@@ -32,103 +91,44 @@ int main() {
 	cout << f.v[0]; // what is output here?
 }
 
-8) How can we pass "bias" to lambda? 
+=> How can we sort vector and list? 
 
-int getSum(int a, int b)
-{
-	int bias = 3;
-	int sum;
-	auto lf = [](int x, int y) { return x + y; };
+=> What does move constructor does? Write move constructor for a class. 
 
-	// Calculate the sum using the lambda function
-	sum = lf(a, b);
+=> How do you know cache sizes on Linux? 
 
-	return(sum);
-}
+=> How do you know if UDP layer is dropping packets and how can you solve it? 
 
-9) How do you sort list and vector? 
+=> Best way to remove one element in vector. 
 
-10) What does move constructor does?  Write move constructor for class.
+=> Find 10th greatest element in 1 million elements. 
 
-11) Find bug in following code. 
-
-/**
-#include <vector.h>
-
-void main(int argc, char** argv)
-{
-  int n;
-  if (argc > 1)
-    n = argv[0];
-  int* stuff = new int[n];
-  vector<int> v(100000);
-  delete stuff;
-  return 0;
-}
-*/
-
-12) Value of i and j after execution.
- int i = 5;
- int j = i++;
-
-13) How do you call particular template method of only certain type?
-
-template <typename T> 
-void foo() 
-{
-	std::cout << " foo called " << std::endl;
-}
-
-14)  Implement is same class type - is same type returns true else false. 
-std::is_same<T,T> return true or false.
-
-15)  Polymorphic lambda. 
-
-/**
-Candidate specific questions: 
-=============================
-1) Problems faced during EMDI development. 
-2) Problems faced during CFE Quoting/Orders development.
-*/
+=> Implement a method which returns two if two types passed to that method is same? 
+    Do you know if there are traits like that in C++?
 
 
-/**
-#include <vector.h>
+GENERIC:
+=======
+=> Discuss some problems faced during developing system you developed?
 
-void main(int argc, char** argv)
-{
-  int n;
-  if (argc > 1)
-    n = argv[0];
-  int* stuff = new int[n];
-  vector<int> v(100000);
-  delete stuff;
-  return 0;
-}
+OPERATING SYSTEM:
+================
+=> How do you know cache sizes on Linux? 
+=> How do you TCP/UDP buffer sizes? 
+=> How do you know if UDP layer is dropping packets and how can you solve it? 
 
-// Problem with following code
-
-my_struct_t *bar;
-memset(bar, 0, sizeof(bar));
-
-*/
-
-/**
- Implement method to return true if two types passed is same. 
- */
-
-/**
-// Write contrustor, move constructor, destructor, assignment, move assignment, copy constructor 
-class A
-{
-	int a{10};
-	char * ptr;
-};
-*/
-
-/** Fibionacci series. When is it possible to calculate in compile time and how?  */
+TOOLS:
+=====
+-> Sites that usually refer to for learning, development, keeping up to date with C++.
+-> Static analyzer usage.
+-> How do you investigate memory leak? 
+-> Evironment setup for development.
+-> How do you debug running applications? 
+   How do you know what libraries are loaded in gdb? 
+   How do you know how many threads are in process in gdb? 
 
 
+=============== LAST IF TIME REMAININAG ===================
 /**
  Find Kth index element in given array after sorting
  */
@@ -164,4 +164,27 @@ int main() {
 	// sorted {1, 2, 3, 5, 6, 10, 13, 18};
 	std::cout << kth_element(v, v.size(), 0, v.size()-1, 0) << std::endl;
 }
+
+===================================================================================
+
+6) Fibionacci series. When is it possible to calculate in compile time and how? 
+
+13) How do you call particular template method of only certain type?
+
+template <typename T> 
+void foo() 
+{
+	std::cout << " foo called " << std::endl;
+}
+
+14)  Implement is same class type - is same type returns true else false. 
+std::is_same<T,T> return true or false.
+
+/**
+ Implement method to return true if two types passed is same. 
+ */
+
+https://www.toptal.com/c-plus-plus/interview-questions
+https://tests4geeks.com/blog/cpp-interview-questions/
+
 

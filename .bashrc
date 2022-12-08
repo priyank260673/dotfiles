@@ -342,6 +342,9 @@ alias goqa3='ssh -YC ch0dslqa003 -l qa'
 alias goqa4='ssh -YC ch0dslqa004 -l qa'
 alias goqa5='ssh -YC ch0dslqa005 -l qa'
 alias goqa7='ssh -YC ch0dslqa007 -l qa'
+
+alias go147='ssh -YC ch0dsldv147 -l ppatel'
+alias go148='ssh -YC ch0dsldv148 -l ppatel'
 #alias gograntqa='ssh -YC ch1qwwqa001 -l eagleseven\\qa'
 #alias gorickqa='ssh -YC ch1qwwqa002 -l eagleseven\\qa'
 
