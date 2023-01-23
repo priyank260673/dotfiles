@@ -317,7 +317,7 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=/opt/eagleseven/pyenv/e7base/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/:
+export PATH=/home/ppatel/TOOLS/CLANG/clang+llvm-15.0.6-x86_64-linux-gnu-ubuntu-18.04/bin:/opt/eagleseven/pyenv/e7base38/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -329,7 +329,6 @@ alias gitdiff_f='git diff --name-only $1'
 alias gitdiff_fm='git diff --name-only master'
 alias dffos='git d /home/ppatel/git/example/sapphire/sapphire/'
 alias dffm='git d master .'
-alias vimdf='vim `git diff --name-only master`'
 ##----------------------------- ## 
 
 alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
@@ -345,6 +344,8 @@ alias goqa7='ssh -YC ch0dslqa007 -l qa'
 
 alias go147='ssh -YC ch0dsldv147 -l ppatel'
 alias go148='ssh -YC ch0dsldv148 -l ppatel'
+alias go195='ssh -YC ch0dsldv195 -l ppatel'
+alias go183='ssh -YC ch0dsldv183 -l ppatel'
 #alias gograntqa='ssh -YC ch1qwwqa001 -l eagleseven\\qa'
 #alias gorickqa='ssh -YC ch1qwwqa002 -l eagleseven\\qa'
 
@@ -377,44 +378,30 @@ function gcheckout()
 {
 	cd /home/ppatel/git/example/sapphire/
 	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull; 
 	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd sapphire
 }
 
 function gcheckoutrelnrc() 
 {
 	cd /home/ppatel/git/release_nrc_repo/example/sapphire/
 	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull;
 	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd sapphire
 }
 
 function gcheckoutmaster() 
 {
 	cd /home/ppatel/git/master_repo/example/sapphire/
 	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd sapphire; git checkout master; git pull; git checkout $1; git pull; 
 	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
 	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd sapphire
-}
-
-function gcheckoutdevw() 
-{
-	cd /home/ppatel/git/dev_work/example/sapphire/
-	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd sapphire
 }
 
 function grevert() 
@@ -425,6 +412,18 @@ function grevert()
 function validateJson()
 {
 	python3 -m json.tool $1
+}
+
+function vimdiff_f_master()
+{ 
+	vim `git diff --name-only master`
+}
+
+function renameBranch() 
+{
+	git branch -m $1 $2
+	git push origin -u $2
+	git push origin --delete $1
 }
 
 alias remote='git config --get remote.origin.url'

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
@@ -1183,8 +1184,19 @@ const std::string& ConvertToString (const std::string& name, std::string& tagVal
 	return tagValue;
 }
 
+std::string removeLeadingZeros(string str)
+{
+    // Regex to remove leading
+    // zeros from a string
+    const std::regex pattern("^0+(?!$)");
+    // Replaces the matched
+    // value with given string
+    return regex_replace(str, pattern, "");
+}
+
 int main(int argc, char **argv)
 {
+
 	for (std::string line; std::getline(std::cin, line);) {
 		std::vector<string> results; 
 		split(results, line, is_any_of("\001,|"));
@@ -1194,20 +1206,21 @@ int main(int argc, char **argv)
 			split(key_value, i, is_any_of("="));
 			if (key_value.size() == 2) 
 			{
-				if (tags.find (key_value[0]) != tags.end())
+				std::string key_value_0{removeLeadingZeros(key_value[0])};
+				if (tags.find (key_value_0) != tags.end())
 				{
-					auto& convertedValue = ConvertToString (key_value[0], key_value[1]);
-					std::cout << tags[key_value[0]] << "(" << key_value[0] << ")="; 
+					auto& convertedValue = ConvertToString (key_value_0, key_value[1]);
+					std::cout << tags[key_value_0] << "(" << key_value_0 << ")="; 
 					std::cout << (!convertedValue.empty() ? convertedValue : "**EMPTY**");
 				}
 				else
 				{
 					//if (key_value[0] != "8" && key_value[0] != "9")
 					//	std::cout << " ERROR: " << key_value[0] << std::endl;
-					if (key_value[0] != "8" && key_value[0] != "9")
-						std::cout << "->" << key_value[0] << '=' << key_value[1] << "<-";
+					if (key_value_0 != "8" && key_value_0 != "9")
+						std::cout << "->" << key_value_0 << '=' << key_value[1] << "<-";
 					else
-						std::cout << key_value[0] << '=' << key_value[1];
+						std::cout << key_value_0 << '=' << key_value[1];
 				}
 				std::cout << "|";
 			}

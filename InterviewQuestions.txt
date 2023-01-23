@@ -1,9 +1,24 @@
 =====================================================================================
+=> Find errors in following code: 
+#include <vector.h>
+
+void main(int argc, char** argv)
+{
+  int n;
+  if (argc > 1)
+    n = argv[0];
+  int* stuff = new int[n];
+  vector<int> v(100000);
+  delete stuff;
+  return 0;
+}
+
 => Write contrustor, move constructor, destructor, assignment, move assignment, copy constructor 
 class A
 {
 	int a{10};
 	char * ptr;
+	vector<int> intVec;
 };
 
 => Is there a problem here? 

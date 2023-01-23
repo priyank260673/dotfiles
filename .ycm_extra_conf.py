@@ -24,8 +24,14 @@ import ycm_core
 flags = [
 '-Wall',
 '-Wextra',
+'-Werror',
+'-fexceptions',
+'-DNDEBUG',
+'-Wall',
+'-Wextra',
 '-ggdb3',
 '-fexceptions',
+'-ferror-limit=10000',
 '-DNDEBUG',
 '-pedantic',
 '-Wno-comment',
@@ -46,48 +52,58 @@ flags = [
 # For a C project, you would set this to 'c' instead of 'c++'.
 '-x',
 'c++',
-'-isystem',
-'/usr/include/c++/10/',
-'-isystem',
-'/usr/local/share/drop/gtest-1.10.0-gcc-10.3/',
-'-isystem',
-'/usr/local/share/drop/cryptopp-5.6.5/include/',
-'-I',
-'/usr/local/share/drop/mFAST/0.0.2/',
-'-I',
-'/home/ppatel/git/example/sapphire/messages/',
-'-I',
-'/home/ppatel/git/example/sapphire/messages/generated/',
-'-I',
-'/home/ppatel/git/example/sapphire/messages/generated/Sapphire/',
-'-I',
-'/home/ppatel/git/example/sapphire/messages/generated/Ccs2/',
-'-I',
-'/home/ppatel/git/example/sapphire/messages/generated/Example/',
-'-I',
-'/home/ppatel/git/example/sapphire/e7core/',
-'-I',
-'/home/ppatel/git/example/sapphire/hawk/',
-'-I',
-'/home/ppatel/git/example/sapphire/hawk/hawk/',
-'-I',
-'/home/ppatel/git/example/sapphire/hawk/hawk/feeder/',
-'-I',
-'/home/ppatel/git/example/sapphire/sapphire/',
-'-I',
-'/home/ppatel/git/example/sapphire/sapphire/strategy20/',
-'-I',
-'/home/ppatel/git/example/sapphire/',
-'-I',
-'/home/ppatel/extra_git/spdlog/',
-'-I',
-'/usr/local/share/drop/condor/condor_exa-4.0.54/include/condor_exa/',
-'-I',
-'/home/ppatel/git/example/sapphire/sapphire/gateways/feeder/',
-'-I',
-'/home/ppatel/git/example/sapphire/messages/generated/feeder/',
-'-I',
-'/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/hawk/hawk/feeder/exchanges/eurex/fast/decoder/',
+'-isystem', '/usr/include/c++/10/',
+'-isystem', '/usr/include',
+'-isystem', '/usr/local/include',
+'-isystem', '/usr/local/share/drop/gtest-1.8-c++17/include/',
+'-isystem', '/usr/local/share/drop/cryptopp-5.6.5/include/',
+'-isystem', '/usr/local/share/drop/exanic/v2.7.1/include',
+'-I', '/usr/local/share/drop/mFAST/0.0.2/',
+'-I', '/usr/local/share/drop/openonload/openonload-7.1.2.141/include',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/Example',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/feeder',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/Sapphire',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/pricefeeders',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/Ccs2',
+'-I', '/home/ppatel/git/example/sapphire/.',
+'-I', '/home/ppatel/git/example/sapphire/sapphire',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/e7core',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/hawk',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/sapphirelibs',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/nodes',
+'-I', '/usr/local/share/drop',
+'-I', '/usr/local/share/drop/cryptopp-5.6.5/include',
+'-I', '/usr/include/postgresql',
+'-I', '/usr/include/postgresql/12/server',
+'-I', '/usr/local/share/drop/libtins-3.4/include',
+'-I', '/usr/local/share/drop/taocpp/1.0.0-beta11/include',
+'-I', '/usr/local/share/drop/aws/aws-1.8.135/include',
+'-I', '/usr/local/share/drop/condor/condor_exa-5.1.11/include',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/messages/',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/Example',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/feeder',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/Sapphire',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/pricefeeders',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/Ccs2',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/e7core/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/hawk/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/hawk/hawk/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/hawk/hawk/feeder/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/strategy20/',
+'-I', '/home/ppatel/git/example/sapphire/',
+'-I', '/home/ppatel/extra_git/spdlog/',
+'-I', '/usr/local/share/drop/condor/condor_exa-5.1.11/include/condor_exa/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/gateways/feeder/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/gateways/router/lib/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/gateways/router/lib/channels/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/gateways/router/lib/channels/execution/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/gateways/router/',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/messages/generated/feeder',
+'-I', '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/hawk/hawk/feeder/exchanges/eurex/fast/decoder/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/',
+'-I', '/home/ppatel/git/example/sapphire/sapphire/ccs2/',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
@@ -96,7 +112,6 @@ flags = [
 #
 # Most projects will NOT need to set this to anything; you can just change the
 # 'flags' list of compilation flags.
-#compilation_database_folder = '/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/'
 compilation_database_folder = ''
 
 if os.path.exists( compilation_database_folder ):
@@ -104,7 +119,7 @@ if os.path.exists( compilation_database_folder ):
 else:
   database = None
 
-SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.inl']
+SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.ipp' ]
 
 def DirectoryOfThisScript():
   return os.path.dirname( os.path.abspath( __file__ ) )
@@ -112,7 +127,8 @@ def DirectoryOfThisScript():
 
 def IsHeaderFile( filename ):
   extension = os.path.splitext( filename )[ 1 ]
-  return extension in [ '.h', '.hxx', '.hpp', '.hh', '.ipp', '.inl']
+  return extension in [ '.h', '.hxx', '.hpp', '.hh', '.ipp' ]
+
 
 def GetCompilationInfoForFile( filename ):
   # The compilation_commands.json file generated by CMake does not have entries
@@ -134,33 +150,26 @@ def GetCompilationInfoForFile( filename ):
 
 # This is the entry point; this function is called by ycmd to produce flags for
 # a file.
-#'include_paths_relative_to_dir': DirectoryOfThisScript(),
-def Settings( filename, **kwargs ):
+def Settings( **kwargs ):
   if not database:
-      newfilename = filename
-      root, extension = os.path.splitext(filename)
-      if extension == '.ipp':
-        newfilename = root + '.h' 
+    return {
+      'flags': flags,
+      'include_paths_relative_to_dir': DirectoryOfThisScript()
+    }
+  filename = kwargs[ 'filename' ]
 
-      return { 'flags': flags, 
-              'include_paths_relative_to_dir': "/",
-              'override_filename': newfilename
-              }
+  newfilename = filename
+  root, extension = os.path.splitext(filename)
+  if extension == '.ipp':
+    newfilename = root + '.cpp'
 
-  compilation_info = GetCompilationInfoForFile( filename )
+  compilation_info = GetCompilationInfoForFile( newfilename )
   if not compilation_info:
     return None
-
-    newfilename = filename
-    root, extension = os.path.splitext(filename)
-    if extension == '.ipp':
-        newfilename = root + '.h' 
 
   # Bear in mind that compilation_info.compiler_flags_ does NOT return a
   # python list, but a "list-like" StringVec object.
   return {
     'flags': list( compilation_info.compiler_flags_ ),
-    'include_paths_relative_to_dir': compilation_info.compiler_working_dir_,
-    'override_filename': newfilename
+    'include_paths_relative_to_dir': compilation_info.compiler_working_dir_
   }
-
