@@ -351,7 +351,6 @@ alias go183='ssh -YC ch0dsldv183 -l ppatel'
 
 alias goperf6='ssh -YC ch1dslpf006 -l ppatel'
 alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
-#alias gdb='/home/ppatel/bin/GDB/gdb-8.2.1/gdb/gdb --data-directory=/home/ppatel/bin/GDB/gdb-8.2.1/gdb/data-directory'
 export TERM=xterm-256color
 alias gohawk_eurex='cd /home/ppatel/git/example/sapphire/hawk/hawk/feeder/exchanges/eurex/eobi/'
 alias gofeeder_eurex='cd /home/ppatel/git/example/sapphire/sapphire/gateways/feeder/eurex/'
@@ -374,34 +373,32 @@ function display_assem() {
 	g++ $1 -O2 -c -S -o - -masm=intel | c++filt | grep -vE '\s+\.' 
 }
 
+function gcheckout_common()   
+{
+	echo "In gcheckout_common"
+	cd sapphire; git checkout $1; git pull; 
+	git submodule update --init --recursive
+	git submodule foreach --recursive git checkout $1
+	git submodule foreach git pull --all
+	echo "Done gcheckout_common"
+}
+
 function gcheckout() 
 {
-	cd /home/ppatel/git/example/sapphire/
-	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull; 
-	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	cd /home/ppatel/git/example/sapphire/; git checkout $1; git pull; 
+	gcheckout_common $1;
 }
 
 function gcheckoutrelnrc() 
 {
 	cd /home/ppatel/git/release_nrc_repo/example/sapphire/
-	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull;
-	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	gcheckout_common $1;
 }
 
 function gcheckoutmaster() 
 {
 	cd /home/ppatel/git/master_repo/example/sapphire/
-	git checkout master; git pull; git checkout $1; git pull
-	cd sapphire; git checkout master; git pull; git checkout $1; git pull; 
-	cd hawk; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd e7core; git checkout master; git pull; git checkout $1; git pull; cd ..
-	cd messages; git checkout master; git pull; git checkout $1; git pull; cd ..
+	gcheckout_common $1;
 }
 
 function grevert() 

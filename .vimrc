@@ -30,9 +30,9 @@ Bundle 'andymass/vim-matchup'
 Bundle 'bfrg/vim-cpp-modern'
 Bundle 'inkarkat/vim-mark'
 Bundle 'inkarkat/vim-ingo-library'
+Bundle 'christoomey/vim-tmux-navigator'
 
 "Bundle 'statox/vim-compare-lines'
-"Bundle 'christoomey/vim-tmux-navigator'
 "Bundle 'tpope/vim-rhubarb'
 "Bundle 'SirVer/ultisnips'
 "Bundle 'honza/vim-snippets'
@@ -91,7 +91,7 @@ set path+=/home/ppatel/git/example/sapphire/**
 " set tags=~/tags/relNrcTags,~/tags/cppTags
 " cs add ~/tags/relnrc_cscope.out
 " set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
-
+ 
 " Set onetick tags
 " set tags=~/tags/oneTickTags
 " cs add ~/tags/onetick_cscope.out

@@ -271,3 +271,5 @@ Benchmark:
 g++ Test.cpp -std=c++11 -isystem ~/extra_git/benchmark/include ~/extra_git/benchmark/build/src/libbenchmark.a  -lpthread -o mybenchmark
 python3  ~/extra_git/benchmark/tools/compare.py benchmarks mybenchmark mybenchmark
 
+# Clean repository
+cd /home/ppatel/git/example/sapphire && ./sapphire/scripts/repo_merge_helper.sh

@@ -1,27 +1,8 @@
 Modern C++ - Automatic Memory Managements 
 
--> How many copy of the Test object is created here? 
-
-class Test() { 
-	public:
-	Test() = default;
-	~Test() = default;
-	Test(const Test&) {}
-}
-
-Test foo() 
-{
-	return Test();
-}
-
-int main() 
-{
-	Test t = foo();
-}
-
 Modern C++ - Meta Programming 
 
-Modern C++ - Compile Time Things (constexpr, fold expression) 
+Modern C++ - Compile Time Things (constexpr and more) 
 
 -> Generate unique hash values for given string at compile time. 
 -> What is following code doing? 
@@ -54,25 +35,9 @@ C++ Templates - SFINAE
 
 C++ Templates - Policy Based 
 
--> Explain policy class with example.
-
 C++ Templates - CRTP 
 
--> What is CRTP and when it is useful?
-
-class Interface {
-public:
-	virtual void process() = 0;
-};
-
-class Impl : public Interface
-{
-	virtuanl void process() { std::cout << " Impl " << std::endl;}
-};
-
-
 C++ Templates - class templates 
-
 
 C++ Templates - Traits 
 
@@ -160,25 +125,6 @@ int main()
 {
 	Base * p = new Derived();
 	p->f();
-}
-
--> How to count number of bits active in integer?
-void ask_value (int &val )
-{
-    cin >> val;
-}
-
-void count_number_of_bits () 
-{
-    int x = 0;
-    ask_value (x);
-    int num_bits = 0;
-    while (x)
-    {
-        x &= (x - 1);
-        ++num_bits;
-    }
-    std::cout << " Number of bits is: " << num_bits << std::endl;
 }
 
 
