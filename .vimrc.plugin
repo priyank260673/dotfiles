@@ -76,14 +76,15 @@ let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_always_populate_location_list = 1
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_show_diagnostics_ui = 1
+"let g:ycm_enable_diagnostic_signs = 1
+"let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_disable_signature_help = 1
-let g:ycm_auto_hover=''
+let g:ycm_auto_hover='CursorHold'
 let g:ycm_use_clangd=1
-let g:ycm_clangd_binary_path='/home/ppatel/TOOLS/CLANG/clang+llvm-15.0.6-x86_64-linux-gnu-ubuntu-18.04/bin/clangd'
-let g:ycm_clangd_args=['--background-index', '--header-insertion=never', '--limit-references=0', '--inlay-hints', '--clang-tidy']
+"let g:ycm_clangd_args=['--background-index', '--header-insertion=never', '--limit-references=0', '--inlay-hints']
 "let g:ycm_clangd_args=['--background-index', '--header-insertion=iwyu', '--limit-references=0', '--inlay-hints', '--clang-tidy']
 "let g:ycm_clangd_args=['--background-index', '--limit-references=0', '--inlay-hints']
-let g:ycm_clangd_args=['--header-insertion=never']
+let g:ycm_clangd_args=['--header-insertion=never', '--include-ineligible-results', '--inlay-hints', '--all-scopes-completion', '--limit-references=0', '--completion-style=detailed', '--log=verbose']
 set completefunc=youcompleteme#OmniComplete
 set omnifunc=youcompleteme#OmniComplete
 map <Leader>f :YcmCompleter GoTo<CR>
@@ -115,7 +116,7 @@ endif
 ""highlight TagbarScope guifg=Green ctermfg=Green
 
 """""""""""" ASYNCRUN  """""""""""""""""""""""""""
-let g:asyncrun_open = 40
+let g:asyncrun_open = 30
 let g:asyncrun_save = 2
 let g:asyncrun_bell = 1
 " Highlight of AsyncRun exit messages
@@ -124,10 +125,15 @@ hi AsyncRunOK ctermfg=LightGreen guifg=#558C00
 " Do not silent AsyncRunEvents
 let g:asyncrun_silent = 0
 " Echo exit status of AsyncRun command
+" autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail |
+" 			\ echo 'AsyncRun: [FAIL]' |  
+" 			\ else | echohl AsyncRunOK |
+" 			\ echo 'AsyncRun: [OK]' | cclose | endif | echohl Normal
+" 
 autocmd User AsyncRunStop if g:asyncrun_code != 0 | echohl AsyncRunFail |
 			\ echo 'AsyncRun: [FAIL]' |  
 			\ else | echohl AsyncRunOK |
-			\ echo 'AsyncRun: [OK]' | cclose | endif | echohl Normal
+			\ echo 'AsyncRun: [OK]' | endif | echohl Normal
 
 """"""""""""  Ultisnips  """""""""""""""""""""
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.

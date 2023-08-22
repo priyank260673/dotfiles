@@ -1,11 +1,16 @@
 Modern C++ - Automatic Memory Managements 
+==========================================
 
 Modern C++ - Meta Programming 
+=============================
+-> Which header to include for getting C++ traits for metaprogramming?
+   Can you provide exmple of some type traits availble to use?
+
 
 Modern C++ - Compile Time Things (constexpr and more) 
-
+=====================================================
 -> Generate unique hash values for given string at compile time. 
--> What is following code doing? 
+ OR What is following code doing? 
 
 constexpr uint16_t hash_value(const char & c) {
     return uint16_t(c - ' ');
@@ -31,40 +36,264 @@ enum TestEnum : public uint16_t
 	Second=testHash<'S', 'e', 'c', 'o', 'n', 'd'>;
 };
 
+-> Write fibionacci series and convert that function so it can be run at compile time
+int fib(int n) 
+{ 
+    if (n <= 1) 
+        return n; 
+    return fib(n-1) + fib(n-2); 
+} 
+
+template <int N>
+int fibConstExpr ()
+{
+	if constexpr (N <= 2)
+		return 1;
+	else
+		return fibConstExpr<N-1>() + fibConstExpr <N-2>();
+}
+
 C++ Templates - SFINAE 
+======================
+// How std::void_t can be used?
+template< class... >
+using void_t = void;
+
+
+struct A { int x; }; // Returns true_type
+struct B { }; // Returns false_type
+
+// Primary template
+template <typename T, typename U = std::void_t<>>
+struct HasX : std::false_type { };
+
+// Specialization 
+template <typename T>
+struct HasX <T, std::void_t<decltype(T::x)>> : std::true_type { };
+
+int main() 
+{
+	if constexpr (HasX<A>::value) 
+	{
+		std::cout << " Struc has X data member" << std::endl;
+	}
+}
 
 C++ Templates - Policy Based 
+==========================
+
 
 C++ Templates - CRTP 
+====================
+Convert following in CRTP pattern and how it can be used? 
+
+class Interface {
+public:
+	virtual void process() = 0;
+};
+
+class Impl : public Interface
+{
+	virtuanl void process() { std::cout << " Impl " << std::endl;}
+};
+
+template <typename Impl>
+class Interface
+{
+    public:
+    void process()
+    {
+        impl().process();
+    }
+    private:
+    Impl& impl() {
+        return *static_cast<Impl*> (this);
+    }
+};
+
+class Impl : public Interface<Impl>
+{
+    public:
+    void process()
+    {
+        std::cout << " Impl process" << std::endl;
+    }
+};
+
+Interface<Impl>  obj = new Impl;
+obj->process(); 
+
 
 C++ Templates - class templates 
+===============================
+
 
 C++ Templates - Traits 
+======================
+
 
 C++ Templates - Partial Specialization 
+=======================================
 
-Debugging 
+-> What will be output here? Will this code compile? 
+
+template<class T, int I> // primary template
+struct A
+{
+    void f() {  std::cout << " Primary template f()" << std::endl; }
+    void g()  { std::cout << " Primary template g()" << std::endl; }
+    void h()  { std::cout << " Primary template h()" << std::endl; }
+};
+
+// partial specialization
+template<class T>
+struct A<T, 2>
+{
+    void f();
+    void g() {std::cout << "T,2 - partial specialization g()" << std::endl; }
+    void h() {std::cout << "T,2 - partial specialization h()" << std::endl; }
+};
+
+template<>
+void A<char, 2>::h()
+{
+    std::cout << "char,2 - full specialization h()" << std::endl;
+}
+
+int main() {
+    A<char, 0> a0;
+    A<char, 2> a2;
+    a0.f();
+    a2.g(); // OK, uses partial specialization's member definition
+    a2.h(); // OK, uses fully-specialized definition of
+            // the member of a partial specialization
+    //a2.f(); // error: no definition of f() in the partial
+            // specialization A<T,2> (the primary template is not used)
+}
+
+Output:
+
+Primary template f()
+T,2 - partial specialization g()
+char,2 - full specialization h()
+
+Debugging / Environment
+===============================================
+-> How to catch exception in debugger.
+-> Attach running process.
+-> Print number of threads. 
+-> Development environment details - how you use/how it helps
+   for faster development.
 
 Own Research / Self Learning (websites you use) 
+===============================================
+-> cppreference.com
+-> stackoverflow.com
+-> isocpp.org/blog
+-> youtube channels for C++ (cppcon)
+
+-> Recent books or any blogs read/follow.
+-> 
 
 Data Structures + Efficiency (pros and cons of diff ones) 
+===============================================
+
 
 Computer Arch (cache etc) 
+===============================================
+
 
 Multi-threading - Synchronization/Locks/Cond Vars (why we avoid) 
+================================================================
+Implement lockguard class. Assume you have following interface:
+
+struct mutex {
+	void Lock() {}
+	void Unlock() {}
+};
+
+struct LockGuard {
+	LockGuard(mutex& mutexVal) : mutex_(mutexVal)  
+	{
+		mutex_.Lock();
+	}
+	~LockGuard() 
+	{
+		mutex_.Unlock();
+	}
+	private:
+	LockGuard(const LockGuard&); 
+	LockGuard(LockGuard&&); 
+	LockGuard& operator = (const LockGuard&);
+	LockGuard& operator = (LockGuard&&);
+	mutex& mutex_;
+};
+
+Implement thread safe queue with mutex and condition variable: 
+
+template<typename T>
+class Queue
+{
+	public:
+	void pop(T& item) 
+	{
+		LockGuard(mutex_);
+		while (q.empty()) 
+		{
+			condition_.wait(mutex_);
+		}
+		item = queue_.front();
+		queue_.pop();
+	}
+	void push(const T& item) 
+	{
+		{
+			LockGuard(mutex_);
+			queue_.push(item);
+		}
+		condition_.notify_one();
+	}
+	private:
+	std::queue<T> queue_;
+	std::mutex mutex_;
+	std::condition_variable condition_;
+};
+
 
 Multi-threading - Message Passing (Actor Model) 
+===============================================
+
 
 Networking - UDP Unicast, UDP Multicast, TCP 
+===========================================
+-> Explain TCP handshake?
+-> How does TCP server find status of clients those are dead without notifying server? 
+-> Advantages of non-blocking socket?
+-> Difference between TCP and UDP? 
+-> How does TCP or UDP data gets received from wire to application? 
+
 
 Networking - PCAPs/Wireshark 
+===========================
+
 
 Networking - Stack (OSI 7 Layers) 
+=================================
+
 
 Networking - Sockets 
+=====================
+-> Write basic TCP client and server. This might be too detailed.
 
 Exchange Protocols - CME (compare/contrast) 
+===========================
 
+Behavioral Interview
+====================
+-> Talk about past projects.
+-> Explain in details about couple of challenging bugs you fixed. 
+-> Why looking for change?
+-> 
 
 Specific Programming/Coding Questions 
 =====================================
@@ -105,7 +334,6 @@ public:
   Test(Test t){}
 };
 
-
 -> Is following code safe? 
 class Test{};
 Test *tp = new Test();
@@ -126,8 +354,6 @@ int main()
 	Base * p = new Derived();
 	p->f();
 }
-
-
 
 -> Implement shared pointer.
 //================ Reference Counter class ===========================//
@@ -240,8 +466,545 @@ class SharedPtr {
 };
 
 
+// =============== LINKED LIST IMPLEMENTATION =====================//
+
+// Node
+template<class T>
+class Node
+{
+    public:
+        T data;
+        Node<T> * next = nullptr;
+        Node<T>(const T& d):data(d), next() {}
+        Node<T>(const Node<T>& copyNode) : data(copyNode.data), next() {}
+    private:
+        Node<T>& operator=(const Node<T>&);
+};
+
+template<class T>
+class LinkedList
+{
+    public:
+        Node<T> * head;
+        Node<T> * tail;
+
+        LinkedList(const LinkedList& LL);
+        LinkedList& operator=(LinkedList byValList);
+        LinkedList(): head(NULL), tail(NULL) {}
+        LinkedList(Node<T> * newNode) : head(newNode), tail(newNode) {}
+        ~LinkedList();
+
+        static LinkedList<int> sumLists(const LinkedList<int>& LL1, LinkedList<int>& LL2);
+
+        void insertToTail(T val);
+        void insertToHead(T val);
+        void print();
+        void printBackwards();
+        void reverse();
+        void reverseRecFunc(Node<T>*& prev, Node<T>*& curr, Node<T>*& currN);
+        void reverse1();
+        void revRec (Node<T>* head);
+        void reverse2();
+}; 
+
+    template<class T>
+LinkedList<T>::LinkedList(const LinkedList<T>& LL) : head(NULL), tail(NULL)
+{
+    const Node<T> * curr = LL.head;
+
+    if (!head && curr)
+    {
+        head = new Node<T>(curr->data);
+        tail = head;
+        curr = curr->next;
+    }
+
+    while (curr)
+    {
+        Node<T> * newNode = new Node<T>(curr->data);
+        tail->next = newNode;
+        tail = newNode;
+        curr = curr->next;
+    }
+}
+
+    template<class T>
+LinkedList<T>& LinkedList<T>::operator=(LinkedList byValList)
+{
+    std::swap(head, byValList.head);
+    return *this;
+}
+
+    template<class T>
+LinkedList<T>::~LinkedList()
+{
+    Node<T> * curr = head;
+    while (head)
+    {
+        head = head->next;
+        delete curr;
+        curr = head;
+    }
+}
+
+    template<class T>
+void LinkedList<T>::insertToTail(T val)
+{
+    Node<T> * newNode = new Node<T>(val);
+    if (tail == NULL)
+    {
+        newNode->next = tail;
+        tail = newNode;
+        head = newNode;
+        return;
+    }
+    tail->next = newNode;
+    tail = tail->next;
+}
+
+    template<class T>
+void LinkedList<T>::insertToHead(T val)
+{
+    Node<T> * newNode = new Node<T>(val);
+    newNode->next = head;
+    head = newNode;
+    if (head->next == NULL)
+        tail = newNode;
+}
+
+    template<class T>
+void LinkedList<T>::print()
+{
+    Node<T> * curr = head;
+    while (curr)
+    {
+        cout<<curr->data<<" --> ";
+        curr = curr->next;
+    }
+    cout<<"NULL"<<endl;
+}
+
+/**** REVERSE LINKED LIST ****/
+    template<class T>
+void LinkedList<T>::reverse()
+{
+    // check for empty list
+    if (!head) return;
+
+    // assign tail to head
+    //auto * tail = head;
+    // Iterate through nodes
+    Node<T> * prev = nullptr;
+    auto * curr = head;
+    auto * currN = curr->next;
+    while (curr)
+    {
+        // Move all three pointers
+        curr->next = prev;
+        prev = curr;
+        curr = currN;
+        // Check require
+        if (currN)
+            currN = currN->next;
+    }
+
+    // assign head to previous
+    head = prev;
+}
+
+    template<class T>
+void LinkedList<T>::reverseRecFunc(Node<T>*& prev, Node<T>*& curr, Node<T>*& currN)
+{
+    // check for empty list
+    if (!curr) return;
+
+    curr->next = prev;
+    prev = curr;
+    curr = currN;
+
+    if (currN) {
+        currN = currN->next;
+    }
+
+    // Call recursion
+    reverseRecFunc (prev, curr, currN);
+}
+
+    template<class T>
+void LinkedList<T>::reverse1()
+{
+    // check for empty list
+    if (!head) return;
+
+    // assign tail to head
+    auto * tail = head;
+
+    // Iterate through nodes
+    Node<T> * prev = nullptr;
+    auto * curr = head;
+    auto * currN = head->next;
+
+    // Call recursive func here
+    reverseRecFunc (prev, curr, currN);
+
+    // assign head to previous
+    head = prev;
+}
+    template<class T>
+void LinkedList<T>::revRec(Node<T> * recNode)
+{
+    // We received at last node so, set head and return 
+    if (recNode->next == NULL)
+    {
+        head = recNode;
+        return;
+    }
+    // Call recusion with next node
+    revRec (recNode->next);
+    // Recursion here....
+    recNode->next->next = recNode;
+    recNode->next = NULL;
+    // Setup tail
+    tail = recNode;
+}
+
+    template<class T>
+void LinkedList<T>::reverse2()
+{
+    revRec (head);
+}
+
+void runLinkListChecks()
+{
+    LinkedList<int> intList;
+    intList.insertToTail(10);
+    intList.insertToTail(20);
+    intList.insertToTail(30);
+    intList.insertToTail(40);
+    intList.insertToTail(50);
+    intList.insertToTail(60);
+    intList.insertToTail(70);
+    intList.insertToTail(80);
+    intList.insertToTail(90);
+    intList.insertToTail(100);
+    intList.print();
+    intList.reverse();
+    intList.print();
+    intList.reverse();
+    intList.print();
+    intList.reverse();
+    intList.print();
+    intList.reverse();
+    intList.print();
+    for (int i = 0; i < 5; ++i) 
+    {
+        intList.reverse2();
+        intList.print();
+        intList.reverse2();
+        intList.print();
+    }
+}
 
 
+//------------------ BINARY TREE --------------------//
+// Node 
+struct node {
+    node (int inData) : data (inData) {
+    }
+    int data;
+    struct node* left = 0;
+    struct node* right = 0;
+};
+
+// Binary tree
+class BinaryTree {
+    public:
+        // Insert node in binary tree
+        void insert (node *& newNode, int key) {
+            // 1. If the tree is empty, return a new, single node
+            if (newNode == nullptr) {
+                newNode = new node (key);
+            } else {
+                // 2. Otherwise, recur down the tree
+                if (newNode->data > key) {
+                    insert(newNode->left, key);
+                } else {
+                    insert(newNode->right, key);
+                }
+            }
+        }
+        // In order traversal
+        void InOrderTraversal (node * root) {
+            if (!root) return;
+            InOrderTraversal (root->left);
+            std::cout <<  root->data << " ";
+            InOrderTraversal (root->right);
+        }
+
+        // In order traversal
+        void PreOrderTraversal (node * root) {
+            if (!root) return;
+            std::cout <<  root->data << " ";
+            PreOrderTraversal (root->left);
+            PreOrderTraversal (root->right);
+        }
+
+        // Search particular element in binary tree
+        node * Search (node * root, int key) {
+            if (!root) {
+                return nullptr;
+            } else if (root->data == key) {
+                return root;
+            }
+            if (root->data > key) {
+                return Search (root->left, key);
+            } else {
+                return Search (root->right, key);
+            }
+        }
+
+        //--- Check if binary tree is BST
+        bool isBST (node * root) {
+            if (!root) { 
+                return true;
+            }
+            if (root->left && root->right) {
+                return (
+                        (root->left->data < root->data) && 
+                        (isBST (root->left)) && 
+                        (root->right->data > root->data) && 
+                        (isBST (root->right))
+                       );
+            } else if (root->left && !root->right) {
+                return ((root->left->data < root->data) && 
+                        (isBST (root->left)));
+
+            } else if (root->right && !root->left) {
+                return ((root->right->data > root->data) && 
+                        (isBST (root->right)));
+            } else { 
+                return true;
+            }
+        }
+
+        //--- print paths of binary tree
+        void print (int path [], int position) {
+            for (int i = 0; i < position; ++i) {
+                std::cout << path[i] << " ";
+            }
+            std::cout << std::endl;
+        }
+
+        void printPaths (node *root, int path[], int position) {
+            if (!root) return;
+            path[position++] = root->data;
+            if (root->left == NULL && root->right == NULL) {
+                print (path, position);
+                position = 0;
+                return;
+            }
+            printPaths (root->left, path, position);
+            printPaths (root->right, path, position);
+        }
+
+        int findMax (node * root) 
+        {
+            if (root == NULL) 
+                return -1;
+            int res = root->data;
+            int lres = findMax (root->left);
+            int rres = findMax (root->right);
+            if (lres > res) 
+                res = lres;
+            if (rres > res) 
+                res = rres;
+            return res;
+        }
+
+        int sizeofTree (node * root)
+        {
+            if (root == NULL)
+                return 0;
+            int leftSize = sizeofTree (root->left);
+            int rightSize = sizeofTree (root->right);
+            return 1 + leftSize + rightSize;
+        }
+
+        int findMin (node * root)
+        {
+            if (root == NULL) 
+                return 10000;
+            int res = root->data;
+            int lres = findMin (root->left);
+            int rres = findMin (root->right);
+            if (rres < res) 
+                res = rres;
+            if (lres < res) 
+                res = lres;
+            return res;
+        }
+
+        int maxHeight (node * root) 
+        {
+            if (root == NULL) return 0;
+            int leftHeight = maxHeight  (root->left);
+            int rightHeight = maxHeight  (root->right);
+
+            if (rightHeight > leftHeight) 
+                return rightHeight + 1 ;
+            else 
+                return leftHeight + 1;
+        }
+
+        bool removeNode (node * root, int value) 
+        {
+            if (!root) 
+                return false;
+            // Find out our node 
+            if (root->left == NULL && root->right == NULL && root->data == value)
+            {
+                return true;
+            }
+            if (removeNode (root->left, value)) 
+            {
+                delete root->left;
+                root->left = 0;
+            }
+            if (removeNode (root->right, value))
+            {
+                delete root->right;
+                root->right = 0;
+            }
+            return false;
+        }
+
+        void deleteNode (node * root, int value) 
+        {
+            node * searchNode = Search (root, value); 
+            if (searchNode) 
+            {
+                if (searchNode->right)
+                {
+                    int minVal = findMin (searchNode->right);
+                    removeNode (searchNode, minVal);
+                    searchNode->data = minVal;
+                }
+                else if (searchNode->left)
+                {
+                    int maxVal = findMax (searchNode->left);
+                    removeNode (searchNode, maxVal);
+                    searchNode->data = maxVal;
+                }
+            }
+        }
+};
+
+void testBinaryTree () 
+{
+    BinaryTree bt;
+    node * root = nullptr;
+    bt.insert (root, 20);
+    bt.insert (root, 10);
+    bt.insert (root, 50);
+    bt.insert (root, 30);
+    bt.insert (root, 100);
+    bt.insert (root, 15);
+    bt.insert (root, 17);
+    bt.insert (root, 96);
+    bt.insert (root, 23);
+    bt.insert (root, 18);
+    std::cout << "Maximum value: " << bt.findMax(root) << std::endl;
+    std::cout << "Minimum value: " << bt.findMin(root) << std::endl;
+    std::cout << "Size of tree: " << bt.sizeofTree(root) << std::endl;
+    std::cout << "Max height of tree: " << bt.maxHeight(root) << std::endl;
+    int arr[30] = {};
+    bt.printPaths (root, arr, 0);
+
+    bt.deleteNode (root, 50);
+    bt.deleteNode (root, 30);
+
+    //bt.InOrderTraversal (root);
+
+    node * data = bt.Search (root, 20);
+    if (data) {
+        std::cout << "Found key: " << data->data << std::endl;
+    }
+    data = bt.Search (root, 35);
+    if (data) {
+        std::cout << "Found key: " << data->data << std::endl;
+    } else {
+        std::cout << "Key not found." << std::endl;
+    }
+    bool val = bt.isBST (root);
+    if (val) {
+        std::cout << "Tree is binary search tree. " << std::endl;
+    }
+    bt.printPaths (root, arr, 0);
+}
+
+// Search
+int myBinarySearch (int arr[], size_t startIndex, size_t endIndex, int val) { // Check start index and end index
+    if ((startIndex > endIndex) || 
+            (startIndex == endIndex && arr[startIndex] != val)) {
+        return 0;
+    }
+    // Get midpoint
+    size_t midPoint = (endIndex - startIndex) / 2;
+    if (arr[midPoint] == val) {
+        return val;
+    }  
+    // If value is less use left half otherwise
+    // use right half
+    if (val < arr[midPoint]) {
+        return myBinarySearch (arr, startIndex, midPoint - 1, val);
+    } else if (val > arr[midPoint]) {
+        return myBinarySearch (arr, midPoint + 1, endIndex, val);
+    } 
+    return 0;
+}
+
+
+//-- Sum of digits
+template <typename T>
+//auto sumOfDigits (T number) -> decltype (number) {
+size_t sumOfDigits (T number) {
+    decltype (number) sum (0);
+    while (number) {
+        sum += (number % 10);
+        number = number /10;
+    }
+    return sum;
+}
+
+//-- Convert string into integer
+int stringToInt (const char * str) {
+    auto len (strlen (str));
+    int total(0);
+    for (decltype (len) i = 0; i < len; ++i) {
+        if (std::isdigit(str[i]) && std::isdigit(str[i+1])) {
+            total += str[i] - '0';
+            total *= 10;
+        } else {
+            total += str[i] - '0';
+            return total;
+        }
+    }
+    return total;
+}
+
+//-- Reverse string inplace
+void reverseString (char * str) {
+    auto startPtr = str;
+    auto endPtr = str + strlen (str) - 1;
+    while (startPtr < endPtr) {
+        std::swap (*startPtr, *endPtr);
+        ++startPtr;
+        --endPtr;
+    }
+}
+
+=====================================================================================
+---- ORIGINAL QUESTIONS ----------
 =====================================================================================
 => Find errors in following code: 
 #include <vector.h>
@@ -426,8 +1189,6 @@ int main() {
 
 ===================================================================================
 
-6) Fibionacci series. When is it possible to calculate in compile time and how? 
-
 13) How do you call particular template method of only certain type?
 
 template <typename T> 
@@ -442,8 +1203,5 @@ std::is_same<T,T> return true or false.
 /**
  Implement method to return true if two types passed is same. 
  */
-
-https://www.toptal.com/c-plus-plus/interview-questions
-https://tests4geeks.com/blog/cpp-interview-questions/
 
 

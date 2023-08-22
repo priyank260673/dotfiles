@@ -133,6 +133,7 @@ cat  routerSubmit.txt| awk -F"queue_read_time: " '{print $2}' | awk -F", wire_wr
 
 // Clone
 git clone ssh://git@bitbucket:7999/desk/example.git
+cd example
 git submodule update --init --recursive
 git submodule foreach --recursive git checkout master
 git submodule foreach git pull --all
@@ -245,7 +246,7 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 run -b '~/.tmux/plugins/tpm/tpm'
 
 // Build youcomplete me with following
-rm -rf /home/ppatel/.cache/clangd/index/*; rm -rf /home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/absl; python3 ./install.py --clang-completer --clangd-completer
+rm -rf /home/ppatel/.cache/clangd/index/*; rm -rf /home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/absl; cd ~/.vim/bundle/YouCompleteMe/; python3 ./install.py --clang-completer --clangd-completer
 
 DBG_MASTER_DIR/glbx_drop_d -c drop_config.json | decodeLine.sh 2>&1 | tee /tmp/out.txt
 
@@ -273,3 +274,15 @@ python3  ~/extra_git/benchmark/tools/compare.py benchmarks mybenchmark mybenchma
 
 # Clean repository
 cd /home/ppatel/git/example/sapphire && ./sapphire/scripts/repo_merge_helper.sh
+
+
+=============================================================================================
+Cherry pick things from the commit
+=============================================================================================
+git cherry-pick -n -m 1 <commit> # get your patch, but don't commit (-n = --no-commit)
+git reset # unstage the changes from the cherry-picked commit
+git add # make all your choices (add the changes you do want)
+git commit # make the commit!
+
+#git add -p # make all your choices (add the changes you do want)
+

@@ -5,32 +5,28 @@ else
 	let laptop_mode = 1
 endif
 
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#rc()
 
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-
-" vundle packages
-Bundle 'gmarik/vundle'
-Bundle 'vim-airline/vim-airline'
-Bundle 'vim-airline/vim-airline-themes'
-Bundle 'tpope/vim-fugitive'
-Bundle 'jlanzarotta/bufexplorer'
-Bundle 'yegappan/grep'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'majutsushi/tagbar'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'skywind3000/asyncrun.vim'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'andymass/vim-matchup'
-Bundle 'bfrg/vim-cpp-modern'
-Bundle 'inkarkat/vim-mark'
-Bundle 'inkarkat/vim-ingo-library'
-Bundle 'christoomey/vim-tmux-navigator'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-scripts/vundle'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'yegappan/grep'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'majutsushi/tagbar'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'andymass/vim-matchup'
+Plugin 'bfrg/vim-cpp-modern'
+Plugin 'inkarkat/vim-mark'
+Plugin 'inkarkat/vim-ingo-library'
+Plugin 'christoomey/vim-tmux-navigator'
+call vundle#end()
 
 "Bundle 'statox/vim-compare-lines'
 "Bundle 'tpope/vim-rhubarb'
@@ -42,6 +38,11 @@ Bundle 'christoomey/vim-tmux-navigator'
 "Bundle 'junegunn/fzf'
 "Bundle 'junegunn/fzf.vim'
 "Bundle 'ludovicchabant/vim-gutentags'
+
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 
 " Setup cscope
 if has('cscope')
@@ -81,7 +82,7 @@ endif
 set tags=~/tags/allTags,~/tags/cppTags
 cs add ~/tags/cscope.out
 set path+=/home/ppatel/git/example/sapphire/**
-
+ 
 " Set master tags
 " set tags=~/tags/masterTags,~/tags/cppTags
 " cs add ~/tags/master_cscope.out

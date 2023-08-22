@@ -79,10 +79,12 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
 fi
+
+alias grep='egrep -a --color=auto'
+alias fgrep='fgrep -a --color=auto'
+alias egrep='egrep -a --color=auto'
+alias grepEx='egrep -v -a --color=auto'
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -159,7 +161,7 @@ function dtoh() {
 }
 
 function htod() {
-    printf "%d\n" $1
+    printf "%lld\n" $1
 }
 
 function dtob() {
@@ -178,7 +180,7 @@ function btod() {
 }
 
 function vimg() {
-    vim `egrep -lR $* * | grep -v unit-test`
+    vim `egrep -lR $* * | grep -v unit-test | grep -v Debug-g++-10-haswell`
 }
 
 function vimga() {
@@ -190,7 +192,7 @@ function vimga() {
 }
 
 function vimgi() {
-    vim `egrep -ilR $* * | grep -v unit-test`
+    vim `egrep -ilR $* * | grep -v unit-test | grep -v Debug-g++-10-haswell`
 }
 
 function vimgia() {
@@ -317,7 +319,8 @@ function build {
 }
 
 export E7_ARCH=haswell
-export PATH=/home/ppatel/TOOLS/CLANG/clang+llvm-15.0.6-x86_64-linux-gnu-ubuntu-18.04/bin:/opt/eagleseven/pyenv/e7base38/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/
+export E7_USE_MOLD=false
+export PATH=/home/ppatel/TOOLS/CLANG/myClang/bin:/opt/eagleseven/pyenv/e7base38/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
@@ -342,6 +345,7 @@ alias goqa4='ssh -YC ch0dslqa004 -l qa'
 alias goqa5='ssh -YC ch0dslqa005 -l qa'
 alias goqa7='ssh -YC ch0dslqa007 -l qa'
 
+alias go146='ssh -YC ch0dsldv146 -l ppatel'
 alias go147='ssh -YC ch0dsldv147 -l ppatel'
 alias go148='ssh -YC ch0dsldv148 -l ppatel'
 alias go195='ssh -YC ch0dsldv195 -l ppatel'
@@ -391,13 +395,13 @@ function gcheckout()
 
 function gcheckoutrelnrc() 
 {
-	cd /home/ppatel/git/release_nrc_repo/example/sapphire/
+	cd /home/ppatel/git/release_nrc_repo/example/sapphire/; git checkout $1; git pull;
 	gcheckout_common $1;
 }
 
 function gcheckoutmaster() 
 {
-	cd /home/ppatel/git/master_repo/example/sapphire/
+	cd /home/ppatel/git/master_repo/example/sapphire/; git checkout $1; git pull;
 	gcheckout_common $1;
 }
 
@@ -421,6 +425,35 @@ function renameBranch()
 	git branch -m $1 $2
 	git push origin -u $2
 	git push origin --delete $1
+}
+
+function cloneExampleDesk()
+{
+	git clone ssh://git@bitbucket:7999/desk/example.git
+	cd example
+	git submodule update --init --recursive
+	git submodule foreach --recursive git checkout master
+	git submodule foreach git pull --all
+}
+
+function syncToBranch()
+{
+	if (( $# == 2 ))
+	then
+		git checkout $2; git pull; git checkout $1; git merge $2; git push
+	else
+		echo "syncToBranch <currentBranchName> <synchFromBranchName>"
+	fi
+}
+
+function syncToMaster()
+{
+	if (( $# == 1 ))
+	then
+		git checkout master; git pull; git checkout $1; git merge master; git push
+	else
+		echo "syncToBranch <currentBranchName> <synchFromBranchName>"
+	fi
 }
 
 alias remote='git config --get remote.origin.url'
@@ -493,6 +526,7 @@ alias gou20dev='ssh -YC ppatel@ch0dsldv139.eagleseven.com'
 alias goextragit='cd /home/ppatel/extra_git/mydotfiles/dotfiles/'
 alias gosachin='ssh -YC ppatel@ch0dsldv120'
 alias goch0dsldv147='ssh -YC ppatel@ch0dsldv147'
+alias ..='cd ..'
 
 export E7_IMPLIED_CONFIG_DIR=/opt/eagleseven/implied_calibration/configs
 export E7_IMPLIED_SYMBOL=GLBX.CL

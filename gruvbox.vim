@@ -477,9 +477,9 @@ if version >= 700
   call s:HL('CursorLine',   s:none, s:bg1)
   " Screen column that the cursor is
   hi! link CursorColumn CursorLine
-  hi clear CursorLine
-  hi CursorLine gui=underline cterm=underline
-  "hi CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=darkred guifg=white
+  "hi clear CursorLine
+  "hi CursorLine gui=underline cterm=underline
+  hi CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=darkred guifg=white
   " Tab pages line filler
   call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
   " Active tab page label
