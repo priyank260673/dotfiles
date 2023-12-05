@@ -246,7 +246,7 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 run -b '~/.tmux/plugins/tpm/tpm'
 
 // Build youcomplete me with following
-rm -rf /home/ppatel/.cache/clangd/index/*; rm -rf /home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/absl; cd ~/.vim/bundle/YouCompleteMe/; python3 ./install.py --clang-completer --clangd-completer
+rm -rf /home/ppatel/.cache/clangd/index/*; rm -rf /home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/absl; cd ~/.vim/bundle/YouCompleteMe/; python3 ./install.py --clangd-completer
 
 DBG_MASTER_DIR/glbx_drop_d -c drop_config.json | decodeLine.sh 2>&1 | tee /tmp/out.txt
 
@@ -286,3 +286,15 @@ git commit # make the commit!
 
 #git add -p # make all your choices (add the changes you do want)
 
+
+// Trayport client
+
+#./epfclient_d  -s 10.0.68.137:10262 -i 5013750167 -e 614 -l 5 -T -O
+testenv epf list
+testenv epf restart
+testenv epf start
+testenv epf stop
+
+// To grep multiple strings at the same time
+vimg handleExternalSubmit\|handleExternalCancel\|handleExternalModify
+GrepBuffer  handleExternalSubmit\|handleExternalCancel\|handleExternalModify

@@ -180,7 +180,7 @@ function btod() {
 }
 
 function vimg() {
-    vim `egrep -lR $* * | grep -v unit-test | grep -v Debug-g++-10-haswell`
+    vim `egrep -lR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
 }
 
 function vimga() {
@@ -192,7 +192,7 @@ function vimga() {
 }
 
 function vimgi() {
-    vim `egrep -ilR $* * | grep -v unit-test | grep -v Debug-g++-10-haswell`
+    vim `egrep -ilR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
 }
 
 function vimgia() {
@@ -281,15 +281,15 @@ function run_test()
 
 export E7_BUILD_TYPE=Debug
 
-alias gobld='cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell'
+alias gobld='cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic'
 function blddv {
    export E7_BUILD_TYPE=Debug
    mkdir -p /home/ppatel/git/example/sapphire/build/
    cd /home/ppatel/git/example/sapphire/
    /opt/eagleseven/build/scripts/e7_cmake.sh
-   cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/
-   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/cmake_out.txt
-   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/build_out_verbose.txt
+   cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/cmake_out.txt
+   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/build_out_verbose.txt
 }
 
 function bldd {
@@ -297,9 +297,9 @@ function bldd {
    mkdir -p /home/ppatel/git/example/sapphire/build/
    cd /home/ppatel/git/example/sapphire/
    /opt/eagleseven/build/scripts/e7_cmake.sh
-   cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/
-   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/cmake_out.txt
-   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/build_out_verbose.txt
+   cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/build_out_verbose.txt
 }
 
 alias gobldr='cd /home/ppatel/git/example/sapphire/build/'
@@ -308,9 +308,9 @@ function bldr {
    mkdir -p /home/ppatel/git/example/sapphire/build/
    cd /home/ppatel/git/example/sapphire/
    /opt/eagleseven/build/scripts/e7_cmake.sh
-   cd /home/ppatel/git/example/sapphire/build/Release-g++-10-haswell/
-   cmake ../.. &> /home/ppatel/git/example/sapphire/build/Release-g++-10-haswell/cmake_out.txt
-   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Release-g++-10-haswell/build_out_verbose.txt
+   cd /home/ppatel/git/example/sapphire/build/Release-g++-10-generic/
+   cmake ../.. &> /home/ppatel/git/example/sapphire/build/Release-g++-10-generic/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Release-g++-10-generic/build_out_verbose.txt
 }
 
 function build {
@@ -318,7 +318,7 @@ function build {
 	make -j3 CMakeFiles/Makefile2 $1
 }
 
-export E7_ARCH=haswell
+export E7_ARCH=generic
 export E7_USE_MOLD=false
 export PATH=/home/ppatel/TOOLS/CLANG/myClang/bin:/opt/eagleseven/pyenv/e7base38/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
@@ -358,6 +358,7 @@ alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
 export TERM=xterm-256color
 alias gohawk_eurex='cd /home/ppatel/git/example/sapphire/hawk/hawk/feeder/exchanges/eurex/eobi/'
 alias gofeeder_eurex='cd /home/ppatel/git/example/sapphire/sapphire/gateways/feeder/eurex/'
+alias goepf='ssh -YC ssvcs@ch0dsldv125'
 
 function debugw {
     emacs --eval "(gdb \"gdb -i=mi ; --args $* \")";
@@ -383,7 +384,7 @@ function gcheckout_common()
 	cd sapphire; git checkout $1; git pull; 
 	git submodule update --init --recursive
 	git submodule foreach --recursive git checkout $1
-	git submodule foreach git pull --all
+	git submodule foreach --recursive git pull --all
 	echo "Done gcheckout_common"
 }
 
@@ -472,25 +473,25 @@ alias cpy='~/bin/cleanpycores.sh'
 
 alias jasonMachine='ssh -YC ch0dsldv104'
 
-export DBG_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/bin/'
-export REL_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-10-haswell/bin/'
-export SAN_DIR='/home/ppatel/git/example/sapphire/build/Sanitize-g++-10-haswell/bin/'
-export PROFILE_DIR='/home/ppatel/git/example/sapphire/build/Profile-g++-10-haswell/bin/'
+export DBG_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_DIR='/home/ppatel/git/example/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_DIR='/home/ppatel/git/example/sapphire/build/Profile-g++-10-generic/bin/'
 
-export DBG_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-10-haswell/bin/'
-export REL_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Release-g++-10-haswell/bin/'
-export SAN_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Sanitize-g++-10-haswell/bin/'
-export PROFILE_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Profile-g++-10-haswell/bin/'
+export DBG_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Profile-g++-10-generic/bin/'
 
-export DBG_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Debug-g++-10-haswell/bin/'
-export REL_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Release-g++-10-haswell/bin/'
-export SAN_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Sanitize-g++-10-haswell/bin/'
-export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Profile-g++-10-haswell/bin/'
+export DBG_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Profile-g++-10-generic/bin/'
 
-export DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Debug-g++-10-haswell/bin/'
-export REL_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Release-g++-10-haswell/bin/'
-export SAN_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Sanitize-g++-10-haswell/bin/'
-export PROFILE_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Profile-g++-10-haswell/bin/'
+export DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Profile-g++-10-generic/bin/'
 
 export QA_MACHINE=172.16.0.42
 alias gomasterrepo='cd /home/ppatel/git/master_repo/example/sapphire/sapphire/'
@@ -516,7 +517,7 @@ alias gohw3='ssh -YC ppatel@ch1dslhw003'
 alias gocapture='ssh -YC ppatel@ch1dslss066'
 alias topTen='ls -laShR'
 alias viml='vim --noplugin $1'
-alias copyFromMaster='cp /home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-10-haswell/bin/*_d /home/ppatel/git/example/sapphire/build/Debug-g++-10-haswell/bin/'
+alias copyFromMaster='cp /home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-10-generic/bin/*_d /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/bin/'
 export SAPPHIRE_PCAP_PATH=/mnt/intraday_pcaps/
 alias notes='vim ~/extra_git/mydotfiles/dotfiles/TechNotes.txt'
 export MANPAGER="vim -M +MANPAGER --not-a-term -"
@@ -527,6 +528,7 @@ alias goextragit='cd /home/ppatel/extra_git/mydotfiles/dotfiles/'
 alias gosachin='ssh -YC ppatel@ch0dsldv120'
 alias goch0dsldv147='ssh -YC ppatel@ch0dsldv147'
 alias ..='cd ..'
+alias goccs2devcopy='ssh -YC ssvcs@ccs2admin-devcopy'
 
 export E7_IMPLIED_CONFIG_DIR=/opt/eagleseven/implied_calibration/configs
 export E7_IMPLIED_SYMBOL=GLBX.CL

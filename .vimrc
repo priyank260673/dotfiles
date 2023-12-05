@@ -145,7 +145,7 @@ set history=1000
 " " Set to auto read when a file is changed from the outside
 set autoread
 " Set 7 lines to the cursor - when moving vertically using j/k
-"set scrolloff=7
+set scrolloff=20
 " "Always show current position
 set ruler
 " " Height of the command bar
