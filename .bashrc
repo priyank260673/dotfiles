@@ -121,6 +121,7 @@ if ! shopt -oq posix; then
 fi
 
 alias v='vim'
+alias vimp='nice -n -20 vim'
 alias vimf='vim `find . -type f`'
 
 # Tmux aliases
@@ -180,49 +181,45 @@ function btod() {
 }
 
 function vimg() {
-    vim `egrep -lR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
+    vimp `egrep -lR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
 }
 
 function vimga() {
-    vim `egrep -lR $* *`
-}
-
-function vimga() {
-    vim `grep -lR $* *`
+    vimp `egrep -lR $* * | grep -v Debug-g++-10-generic`
 }
 
 function vimgi() {
-    vim `egrep -ilR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
+    vimp `egrep -ilR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
 }
 
 function vimgia() {
-    vim `egrep -ilR $* *`
+    vimp `egrep -ilR $* *`
 }
 
 function vimgui() {
-    vim `grep -ilR $* *`
+    vimp `grep -ilR $* *`
 }
 
 function vims() {
-	vim `git status -s -uno | cut -c4-`
+	vimp `git status -s -uno | cut -c4-`
 }
 
 function vimgdiff() {
 	cd ~/git/example/sapphire/sapphire/
-    vim `git diff --name-only $1`
+    vimp `git diff --name-only $1`
 }
 
 function grpLoadInFile() {
-   vim `find . -name $* | xargs grep -l $2`
+   vimp `find . -name $* | xargs grep -l $2`
 }
 
 
 function vf {
-     vim `find . -iname $1`
+     vimp `find . -iname $1`
 }
 
 function gvf {
-    vim `find . -iname $1`
+    vimp `find . -iname $1`
 }
 
 function ff {
@@ -230,7 +227,7 @@ function ff {
 }
 
 function vimall {
-	vim `find . -not -path '*/\.*' -type f | egrep "\.h|\.hpp|\.cpp|\.ipp" | grep -v unit-test | grep -v build`
+	vimp `find . -not -path '*/\.*' -type f | egrep "\.h|\.hpp|\.cpp|\.ipp" | grep -v unit-test | grep -v build`
 }
 
 function cdf {
@@ -241,7 +238,7 @@ function cdf {
 }
 
 function tag {
-    vim -t $1
+    vimp -t $1
 }
 
 function st {
@@ -418,7 +415,7 @@ function validateJson()
 
 function vimdiff_f_master()
 { 
-	vim `git diff --name-only master`
+	vimp `git diff --name-only master`
 }
 
 function renameBranch() 

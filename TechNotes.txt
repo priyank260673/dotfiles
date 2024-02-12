@@ -1,5 +1,5 @@
 #GITHUB TOKEN:
-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
+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
 
 AWK min, max, avg
 ================
@@ -290,11 +290,37 @@ git commit # make the commit!
 // Trayport client
 
 #./epfclient_d  -s 10.0.68.137:10262 -i 5013750167 -e 614 -l 5 -T -O
+# ./epfclient_d  --server 10.0.68.137:10262 --inst 5013750169 --exch 614 --levels 5 -TO -b
 testenv epf list
 testenv epf restart
 testenv epf start
 testenv epf stop
 
+
+./epfclient_d  --server 10.0.68.137:10262 --inst 5013788090  --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8886/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23"--exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8886/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+. ./epfclient_d/epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
+#./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8886/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8886/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 20 -TO --throttle 100
+
 // To grep multiple strings at the same time
 vimg handleExternalSubmit\|handleExternalCancel\|handleExternalModify
 GrepBuffer  handleExternalSubmit\|handleExternalCancel\|handleExternalModify
+
+for line in `cat /tmp/messages.txt`; do echo $line | awk -F"." '{print "create_protobuf_dissector(\""$2 "\", " "\""$2"\"," " true, true, " "\"" $line "\")"}';  done
+
+// Running Audit trail
+/opt/eagleseven/condor/scripts/pull_audit.py 20240123-090000 20240123-110000 --localtime --hostname ch0dsldv195 --stdout | /opt/eagleseven/condor/bin/audit_trail_decoder
+
+// Market data printer
+ $DBG_DIR/mdp_eurex_outright_implied_level_d -d 2024-01-31 -s 08:00 -f 10.00 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg -c fr2 -l TRACE
