@@ -5,6 +5,7 @@ else
 	let laptop_mode = 1
 endif
 
+set background=dark
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -26,6 +27,7 @@ Plugin 'bfrg/vim-cpp-modern'
 Plugin 'inkarkat/vim-mark'
 Plugin 'inkarkat/vim-ingo-library'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'preservim/nerdtree'
 call vundle#end()
 
 "Bundle 'statox/vim-compare-lines'
@@ -145,7 +147,7 @@ set history=1000
 " " Set to auto read when a file is changed from the outside
 set autoread
 " Set 7 lines to the cursor - when moving vertically using j/k
-set scrolloff=20
+"set scrolloff=20
 " "Always show current position
 set ruler
 " " Height of the command bar
@@ -342,6 +344,9 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-A> :ZoomToggle<CR>
+
+" Do not highlight cursor line
+set nocursorline
 
 ""============= COMMON FUNCTION KEY MAPPING ======================="
 "function! ExpandCMacro()

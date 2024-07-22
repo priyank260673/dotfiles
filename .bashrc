@@ -1,12 +1,17 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+cd ~
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
+
+alias vim=/home/ppatel/TOOLS/VIM/vim91/src/vim
+alias myvimdiff='/home/ppatel/TOOLS/VIM/vim91/src/vim -d'
+export VIMRUNTIME=~/.vim/bundle/runtime/
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -213,7 +218,6 @@ function grpLoadInFile() {
    vimp `find . -name $* | xargs grep -l $2`
 }
 
-
 function vf {
      vimp `find . -iname $1`
 }
@@ -325,7 +329,7 @@ export MAN_DISABLE_SECCOMP=1
 alias gitd='git d HEAD'
 alias gitsubpullmast='git submodule foreach git pull origin master'
 alias gitsubcheckoutmast='git submodule foreach git checkout master'
-alias gitdiff_f='git diff --name-only $1'
+alias gitdiff_f='git diff --name-only $*'
 alias gitdiff_fm='git diff --name-only master'
 alias dffos='git d /home/ppatel/git/example/sapphire/sapphire/'
 alias dffm='git d master .'
@@ -346,7 +350,10 @@ alias go146='ssh -YC ch0dsldv146 -l ppatel'
 alias go147='ssh -YC ch0dsldv147 -l ppatel'
 alias go148='ssh -YC ch0dsldv148 -l ppatel'
 alias go195='ssh -YC ch0dsldv195 -l ppatel'
+alias go196='ssh -YC ch0dsldv196 -l ppatel'
 alias go183='ssh -YC ch0dsldv183 -l ppatel'
+alias go229='ssh -YC ch0dsldv229 -l ppatel'
+alias go230='ssh -YC ch0dsldv230 -l ppatel'
 #alias gograntqa='ssh -YC ch1qwwqa001 -l eagleseven\\qa'
 #alias gorickqa='ssh -YC ch1qwwqa002 -l eagleseven\\qa'
 
@@ -500,6 +507,7 @@ alias gomyvm='ssh -YC ppatel@ch0dsldv035'
 
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/:/home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clang/lib/:
 
+alias gohw10='ssh -YC ppatel@ch1dslhw010'
 alias gohw40='ssh -YC ppatel@172.16.0.40'
 alias gohw41='ssh -YC ppatel@172.16.0.41'
 alias gohw38='ssh -YC ppatel@172.16.0.38'

@@ -1,6 +1,9 @@
 #GITHUB TOKEN:
 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
 
+QA Password: 
+Qu@|ity37
+
 AWK min, max, avg
 ================
 input | awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1<min) {min=$1}; total+=$1; count+=1} END {print total/count, max, min}'
@@ -245,6 +248,10 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'christoomey/vim-tmux-navigator'
 run -b '~/.tmux/plugins/tpm/tpm'
 
+// Configure vim  like below, copy runtime directory under .vim
+./configure --with-features=huge --enable-python3interp
+export VIMRUNTIME=~/.vim/bundle/runtime/
+
 // Build youcomplete me with following
 rm -rf /home/ppatel/.cache/clangd/index/*; rm -rf /home/ppatel/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/absl; cd ~/.vim/bundle/YouCompleteMe/; python3 ./install.py --clangd-completer
 
@@ -306,8 +313,7 @@ testenv epf stop
 #./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
 ./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
 ./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:.*" --exch 614 --levels 10 -TO --throttle 100
-./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
-./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
+./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100 ./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
 ./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
 ./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8887/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
 ./epfclient_d  --server 10.0.68.137:10262 -S "ccs2svc-dev:8886/TTF HI CAL 51.6:GAS - NG MONTHS:DEC-23" --exch 614 --levels 10 -TO --throttle 100
@@ -323,4 +329,25 @@ for line in `cat /tmp/messages.txt`; do echo $line | awk -F"." '{print "create_p
 /opt/eagleseven/condor/scripts/pull_audit.py 20240123-090000 20240123-110000 --localtime --hostname ch0dsldv195 --stdout | /opt/eagleseven/condor/bin/audit_trail_decoder
 
 // Market data printer
- $DBG_DIR/mdp_eurex_outright_implied_level_d -d 2024-01-31 -s 08:00 -f 10.00 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg -c fr2 -l TRACE
+
+/home/ppatel/git/example/sapphire/sapphire/strategy20/strategy/example/market_data_printer/
+$DBG_DIR/mdp_eurex_outright_implied_level_d -d 2024-01-31 -s 08:00 -f 10.00 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg -c fr2 -l TRACE
+
+// 
+../strategy20/strategy/example/market_data_printer/InstrumentListener.hpp
+$DBG_DIR/mdp_eex_outright_implied_level_d -d 2024-03-21 -s 06:22 -f 23:59 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg_DEBM_SI_20240501_CS -c fr2  &> /tmp/out.txt
+$DBG_DIR/mdp_eex_outright_implied_level_d -d 2024-03-21 -s 01:22 -f 23:59 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg_DEBM_SI_20240501_CS -c ch2
+$DBG_DIR/mdp_eex_outright_implied_level_d -d 2024-03-21 -s 06:22 -f 23:59 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg_DEBM_SI_20240501_CS -c fr2  &> /tmp/out.txt.1
+$DBG_DIR/mdp_eex_outright_implied_level_d -d 2024-03-21 -s 06:22 -f 23:59 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg_DEBQ_SI_20240401_PS -c fr2 &> /tmp/DEBQ_SI_20240401.txt
+#$DBG_DIR/mdp_eex_outright_implied_level_d -d 2024-03-21 -s 06:22 -f 23:59 -T /home/ppatel/MARKET_DATA_PRINTER/strategy.cfg_DEBQ_SI_20240401_PS -c fr2 &> /tmp/DEBQ_SI_20240401.txt
+
+// Reserve condor lab
+alias reserve_lab='/opt/eagleseven/python/rc/fpga_utils/scripts/reserve_lab.py'
+reserve_lab -d 16h -i cme_app,Base,release,1.1.16,e7fpga,ul3524
+
+for file in `cat ~/files.txt`; do vimdiff $RELDIR/$file ./$file; done
+
+// Simpleproxy 
+simpleproxy  -L 65000 -R 193.29.89.129:19543
+
+
