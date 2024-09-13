@@ -248,8 +248,8 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'christoomey/vim-tmux-navigator'
 run -b '~/.tmux/plugins/tpm/tpm'
 
-// Configure vim  like below, copy runtime directory under .vim
-./configure --with-features=huge --enable-python3interp
+// Configur vim  like below, copy runtime directory under .vim
+./configure --with-features=huge --enable-python3interp --disable-gui
 export VIMRUNTIME=~/.vim/bundle/runtime/
 
 // Build youcomplete me with following

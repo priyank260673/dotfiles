@@ -1,9 +1,9 @@
 [diff]
-	tool = /home/ppatel/TOOLS/VIM/vim91/src/vim -d
+	tool = vimdiff 
 [difftool]
 	prompt = false
-[difftool "vimdiff"]
-    cmd = /home/ppatel/TOOLS/VIM/vim91/src/vim -d  "$LOCAL" "$REMOTE"
+[diff.tool "vimdiff"]
+    cmd = vimdiff "$LOCAL" "$REMOTE"
 [alias]
 	d = difftool
 [core]

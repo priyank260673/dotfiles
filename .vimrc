@@ -28,6 +28,8 @@ Plugin 'inkarkat/vim-mark'
 Plugin 'inkarkat/vim-ingo-library'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'preservim/nerdtree'
+Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'xolox/vim-misc'
 call vundle#end()
 
 "Bundle 'statox/vim-compare-lines'
@@ -104,7 +106,10 @@ set path+=/home/ppatel/git/example/sapphire/**
 "Colorschemes "
 "colorscheme xoria256_mine
 colorscheme gruvbox
-let g:airline_theme='alduin'
+"let g:airline_theme='alduin'
+"let g:airline_theme='google_dark'
+"let g:airline_theme='bubblegum'
+let g:airline_section_c = '%F'
 "highlight Cursor guifg=white guibg=black
 "highlight iCursor guifg=white guibg=steelblue
 "set guicursor=n-v-c:block-Cursor

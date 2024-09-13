@@ -9,8 +9,8 @@ case $- in
       *) return;;
 esac
 
-alias vim=/home/ppatel/TOOLS/VIM/vim91/src/vim
-alias myvimdiff='/home/ppatel/TOOLS/VIM/vim91/src/vim -d'
+alias vim=/home/ppatel/extra_git/vim/src/vim
+alias vimdiff='/home/ppatel/extra_git/vim/src/vim -d'
 export VIMRUNTIME=~/.vim/bundle/runtime/
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -321,7 +321,7 @@ function build {
 
 export E7_ARCH=generic
 export E7_USE_MOLD=false
-export PATH=/home/ppatel/TOOLS/CLANG/myClang/bin:/opt/eagleseven/pyenv/e7base38/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/
+export PATH=/home/ppatel/extra_git/vim/src/:/home/ppatel/TOOLS/CLANG/myClang/bin:/opt/eagleseven/pyenv/e7base38/bin/:/usr/bin/:.:/usr/sbin/:/usr/local/bin/
 export CSCOPE_DB=/home/ppatel/tags/cscsope.out
 export MAN_DISABLE_SECCOMP=1
 
