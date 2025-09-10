@@ -1,4 +1,4 @@
-" init vundle
+" ini vundle
 if $HOME == "/home/ppatel"
 	let laptop_mode = 0
 else
@@ -28,7 +28,8 @@ Plugin 'inkarkat/vim-mark'
 Plugin 'inkarkat/vim-ingo-library'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'preservim/nerdtree'
-Plugin 'xolox/vim-colorscheme-switcher'
+"Plugin 'github/copilot.vim'
+"Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'xolox/vim-misc'
 call vundle#end()
 
@@ -85,17 +86,17 @@ endif
 " Set sappshire tags
 set tags=~/tags/allTags,~/tags/cppTags
 cs add ~/tags/cscope.out
-set path+=/home/ppatel/git/example/sapphire/**
- 
+set path+=/home/ppatel/git/sapphire/**
+  
 " Set master tags
-" set tags=~/tags/masterTags,~/tags/cppTags
-" cs add ~/tags/master_cscope.out
-" set path+=/home/ppatel/git/master_repo/example/sapphire/**
+"set tags=~/tags/masterTags,~/tags/cppTags
+"cs add ~/tags/master_cscope.out
+"set path+=/home/ppatel/git/master_repo/example/sapphire/**
 
 " Set release tags
 " set tags=~/tags/relNrcTags,~/tags/cppTags
 " cs add ~/tags/relnrc_cscope.out
-" set path+=/home/ppatel/git/release_nrc_repo/example/sapphire/**
+" set path+=/home/ppatel/git/release_nrc_repo_new/sapphire/**
  
 " Set onetick tags
 " set tags=~/tags/oneTickTags

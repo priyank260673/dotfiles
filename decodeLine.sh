@@ -4,11 +4,13 @@ while read -r line; do
 		if [[ $line =~ .*56\=$1.* ]]; then
 			#echo "$line" | sed  's/^.*\(8=FIX.\)/\1/p' | ~/extra_git/mydotfiles/dotfiles/fixDecoder
 			printf "OUT: "
-			echo "$line" | sed  's/^.*\(8=FIX\)/8=FIX/' | ~/extra_git/mydotfiles/dotfiles/fixDecoder
+			#echo "$line" | sed  's/^.*\(8=FIX\)/8=FIX/' | ~/extra_git/mydotfiles/dotfiles/fixDecoder
+			echo "$line" | ~/extra_git/mydotfiles/dotfiles/fixDecoder
 		else
 			#echo "$line" | sed  's/^.*\(8=FIX.\)/\1/p' | ~/extra_git/mydotfiles/dotfiles/fixDecoder
 			printf " IN: "
-			echo "$line" | sed  's/^.*\(8=FIX\)/8=FIX/' | ~/extra_git/mydotfiles/dotfiles/fixDecoder
+			#echo "$line" | sed  's/^.*\(8=FIX\)/8=FIX/' | ~/extra_git/mydotfiles/dotfiles/fixDecoder
+			echo "$line" | ~/extra_git/mydotfiles/dotfiles/fixDecoder
 		fi
 	else
 		echo "$line"

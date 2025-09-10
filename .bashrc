@@ -100,6 +100,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias pegi='ps -eaf | grep -i $1'
 alias nnta='netstat -nta | grep -i $1'
+alias cloneSapphire='git clone --recurse-submodules -j8 ssh://git@bitbucket:7999/engines/sapphire.git -v --progress'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -186,19 +187,23 @@ function btod() {
 }
 
 function vimg() {
-    vimp `egrep -lR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
+    vimp `egrep -lR --exclude-dir=unit-test --exclude-dir=Debug-g++-10-generic* --exclude-dir=Release-g++-10-generic* $* * `
 }
 
 function vimga() {
-    vimp `egrep -lR $* * | grep -v Debug-g++-10-generic`
+    vimp `egrep -lR --exclude-dir=Debug-g++-10-generic* --exclude-dir=Release-g++-10-generic* $* *`
 }
 
 function vimgi() {
-    vimp `egrep -ilR $* * | grep -v unit-test | grep -v Debug-g++-10-generic`
+    vimp `egrep -ilR --exclude-dir=unit-test --exclude-dir=Debug-g++-10-generic* --exclude-dir=Release-g++-10-generic* $* *`
 }
 
 function vimgia() {
-    vimp `egrep -ilR $* *`
+    vimp `egrep -ilR --exclude-dir=Debug-g++-10-generic* --exclude-dir=Release-g++-10-generic* $* *`
+}
+
+function vimge() {
+    vimp `grep -lR --exclude-dir=$2 $1`
 }
 
 function vimgui() {
@@ -210,7 +215,7 @@ function vims() {
 }
 
 function vimgdiff() {
-	cd ~/git/example/sapphire/sapphire/
+	cd ~/git/sapphire/lib/sapphire/
     vimp `git diff --name-only $1`
 }
 
@@ -282,40 +287,40 @@ function run_test()
 
 export E7_BUILD_TYPE=Debug
 
-alias gobld='cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic'
+alias gobld='cd /home/ppatel/git/sapphire/build/Debug-g++-10-generic'
 function blddv {
    export E7_BUILD_TYPE=Debug
-   mkdir -p /home/ppatel/git/example/sapphire/build/
-   cd /home/ppatel/git/example/sapphire/
+   mkdir -p /home/ppatel/git/sapphire/build/
+   cd /home/ppatel/git/sapphire/
    /opt/eagleseven/build/scripts/e7_cmake.sh
-   cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/
-   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/cmake_out.txt
-   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/build_out_verbose.txt
+   cd /home/ppatel/git/sapphire/build/Debug-g++-10-generic/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/sapphire/build/Debug-g++-10-generic/cmake_out.txt
+   make -j2 VERBOSE=1 -f CMakeFiles/Makefile2  &> /home/ppatel/git/sapphire/build/Debug-g++-10-generic/build_out_verbose.txt
 }
 
 function bldd {
    export E7_BUILD_TYPE=Debug
-   mkdir -p /home/ppatel/git/example/sapphire/build/
-   cd /home/ppatel/git/example/sapphire/
+   mkdir -p /home/ppatel/git/sapphire/build/
+   cd /home/ppatel/git/sapphire/
    /opt/eagleseven/build/scripts/e7_cmake.sh
-   cd /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/
-   cmake --verbose --trace ../.. &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/cmake_out.txt
-   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/build_out_verbose.txt
+   cd /home/ppatel/git/sapphire/build/Debug-g++-10-generic/
+   cmake --verbose --trace ../.. &> /home/ppatel/git/sapphire/build/Debug-g++-10-generic/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/sapphire/build/Debug-g++-10-generic/build_out_verbose.txt
 }
 
-alias gobldr='cd /home/ppatel/git/example/sapphire/build/'
+alias gobldr='cd /home/ppatel/git/sapphire/build/'
 function bldr {
    export E7_BUILD_TYPE=Release
-   mkdir -p /home/ppatel/git/example/sapphire/build/
-   cd /home/ppatel/git/example/sapphire/
+   mkdir -p /home/ppatel/git/sapphire/build/
+   cd /home/ppatel/git/sapphire/
    /opt/eagleseven/build/scripts/e7_cmake.sh
-   cd /home/ppatel/git/example/sapphire/build/Release-g++-10-generic/
-   cmake ../.. &> /home/ppatel/git/example/sapphire/build/Release-g++-10-generic/cmake_out.txt
-   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/example/sapphire/build/Release-g++-10-generic/build_out_verbose.txt
+   cd /home/ppatel/git/sapphire/build/Release-g++-10-generic/
+   cmake ../.. &> /home/ppatel/git/sapphire/build/Release-g++-10-generic/cmake_out.txt
+   make -j3 -f CMakeFiles/Makefile2  &> /home/ppatel/git/sapphire/build/Release-g++-10-generic/build_out_verbose.txt
 }
 
 function build {
-	cd /home/ppatel/git/example/sapphire/build/debug/
+	cd /home/ppatel/git/sapphire/build/debug/
 	make -j3 CMakeFiles/Makefile2 $1
 }
 
@@ -331,13 +336,14 @@ alias gitsubpullmast='git submodule foreach git pull origin master'
 alias gitsubcheckoutmast='git submodule foreach git checkout master'
 alias gitdiff_f='git diff --name-only $*'
 alias gitdiff_fm='git diff --name-only master'
-alias dffos='git d /home/ppatel/git/example/sapphire/sapphire/'
+#alias gitconflict='git diff --name-only --diff-filter=U'
+alias dffos='git d /home/ppatel/git/sapphire/sapphire/'
 alias dffm='git d master .'
 ##----------------------------- ## 
 
-alias gosaph='cd /home/ppatel/git/example/sapphire/sapphire'
-alias gorouter='cd /home/ppatel/git/example/sapphire/sapphire/gateways/router'
-alias tbd='tail -f /home/ppatel/git/example/sapphire/debug/build_debug_allout.txt'
+alias gosaph='cd /home/ppatel/git/sapphire/lib/sapphire'
+alias gorouter='cd /home/ppatel/git/sapphire/lib/sapphire/gateways/router'
+alias tbd='tail -f /home/ppatel/git/sapphire/debug/build_debug_allout.txt'
 alias goqaextra='ssh -YC ch0qslss001 -l qa'
 alias goqa1='ssh -YC ch0dslqa001 -l qa'
 alias goqa2='ssh -YC ch0dslqa002 -l qa'
@@ -354,14 +360,15 @@ alias go196='ssh -YC ch0dsldv196 -l ppatel'
 alias go183='ssh -YC ch0dsldv183 -l ppatel'
 alias go229='ssh -YC ch0dsldv229 -l ppatel'
 alias go230='ssh -YC ch0dsldv230 -l ppatel'
+alias go231='ssh -YC ch0dsldv231 -l ppatel'
 #alias gograntqa='ssh -YC ch1qwwqa001 -l eagleseven\\qa'
 #alias gorickqa='ssh -YC ch1qwwqa002 -l eagleseven\\qa'
 
 alias goperf6='ssh -YC ch1dslpf006 -l ppatel'
 alias goperf4='ssh -YC ch1dslpf004 -l ppatel'
 export TERM=xterm-256color
-alias gohawk_eurex='cd /home/ppatel/git/example/sapphire/hawk/hawk/feeder/exchanges/eurex/eobi/'
-alias gofeeder_eurex='cd /home/ppatel/git/example/sapphire/sapphire/gateways/feeder/eurex/'
+alias gohawk_eurex='cd /home/ppatel/git/sapphire/lib/hawk/hawk/feeder/exchanges/eurex/eobi/'
+alias gofeeder_eurex='cd /home/ppatel/git/sapphire/lib/sapphire/gateways/feeder/eurex/'
 alias goepf='ssh -YC ssvcs@ch0dsldv125'
 
 function debugw {
@@ -385,7 +392,7 @@ function display_assem() {
 function gcheckout_common()   
 {
 	echo "In gcheckout_common"
-	cd sapphire; git checkout $1; git pull; 
+	cd lib/sapphire; git checkout $1; git pull; 
 	git submodule update --init --recursive
 	git submodule foreach --recursive git checkout $1
 	git submodule foreach --recursive git pull --all
@@ -394,7 +401,7 @@ function gcheckout_common()
 
 function gcheckout() 
 {
-	cd /home/ppatel/git/example/sapphire/; git checkout $1; git pull; 
+	cd /home/ppatel/git/sapphire/; git checkout $1; git pull; 
 	gcheckout_common $1;
 }
 
@@ -404,9 +411,15 @@ function gcheckoutrelnrc()
 	gcheckout_common $1;
 }
 
+function gcheckoutrelnrcnew() 
+{
+	cd /home/ppatel/git/release_nrc_repo_new/sapphire/; git checkout $1; git pull;
+	gcheckout_common $1;
+}
+
 function gcheckoutmaster() 
 {
-	cd /home/ppatel/git/master_repo/example/sapphire/; git checkout $1; git pull;
+	cd /home/ppatel/git/master_repo/sapphire/; git checkout $1; git pull;
 	gcheckout_common $1;
 }
 
@@ -432,14 +445,16 @@ function renameBranch()
 	git push origin --delete $1
 }
 
-function cloneExampleDesk()
-{
-	git clone ssh://git@bitbucket:7999/desk/example.git
-	cd example
-	git submodule update --init --recursive
-	git submodule foreach --recursive git checkout master
-	git submodule foreach git pull --all
-}
+### UNUSED
+#function cloneExampleDesk()
+#{
+#	git clone ssh://git@bitbucket:7999/desk/example.git
+#	cd example
+#	git submodule update --init --recursive
+#	git submodule foreach --recursive git checkout master
+#	git submodule foreach git pull --all
+#}
+### UNUSED
 
 function syncToBranch()
 {
@@ -477,30 +492,25 @@ alias cpy='~/bin/cleanpycores.sh'
 
 alias jasonMachine='ssh -YC ch0dsldv104'
 
-export DBG_DIR='/home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/bin/'
-export REL_DIR='/home/ppatel/git/example/sapphire/build/Release-g++-10-generic/bin/'
-export SAN_DIR='/home/ppatel/git/example/sapphire/build/Sanitize-g++-10-generic/bin/'
-export PROFILE_DIR='/home/ppatel/git/example/sapphire/build/Profile-g++-10-generic/bin/'
+export DBG_DIR='/home/ppatel/git/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_DIR='/home/ppatel/git/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_DIR='/home/ppatel/git/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_DIR='/home/ppatel/git/sapphire/build/Profile-g++-10-generic/bin/'
 
-export DBG_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-10-generic/bin/'
-export REL_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Release-g++-10-generic/bin/'
-export SAN_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Sanitize-g++-10-generic/bin/'
-export PROFILE_MASTER_DIR='/home/ppatel/git/master_repo/example/sapphire/build/Profile-g++-10-generic/bin/'
+export DBG_MASTER_DIR='/home/ppatel/git/master_repo/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_MASTER_DIR='/home/ppatel/git/master_repo/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_MASTER_DIR='/home/ppatel/git/master_repo/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_MASTER_DIR='/home/ppatel/git/master_repo/sapphire/build/Profile-g++-10-generic/bin/'
 
-export DBG_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Debug-g++-10-generic/bin/'
-export REL_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Release-g++-10-generic/bin/'
-export SAN_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Sanitize-g++-10-generic/bin/'
-export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/example/sapphire/build/Profile-g++-10-generic/bin/'
-
-export DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Debug-g++-10-generic/bin/'
-export REL_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Release-g++-10-generic/bin/'
-export SAN_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Sanitize-g++-10-generic/bin/'
-export PROFILE_DEV_DIR='/home/ppatel/git/dev_work/example/sapphire/build/Profile-g++-10-generic/bin/'
+export DBG_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/sapphire/build/Debug-g++-10-generic/bin/'
+export REL_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/sapphire/build/Release-g++-10-generic/bin/'
+export SAN_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/sapphire/build/Sanitize-g++-10-generic/bin/'
+export PROFILE_RELNRC_DIR='/home/ppatel/git/release_nrc_repo/sapphire/build/Profile-g++-10-generic/bin/'
 
 export QA_MACHINE=172.16.0.42
-alias gomasterrepo='cd /home/ppatel/git/master_repo/example/sapphire/sapphire/'
-alias godevrepo='cd /home/ppatel/git/dev_work/example/sapphire/sapphire/'
+alias gomasterrepo='cd /home/ppatel/git/master_repo/sapphire/'
 alias gorelnrcrepo='cd /home/ppatel/git/release_nrc_repo/example/sapphire/'
+alias gorelnrcreponew='cd /home/ppatel/git/release_nrc_repo_new/sapphire'
 alias goglass='cd /mnt/ppatel/GLASS'
 
 alias gomyvm='ssh -YC ppatel@ch0dsldv035'
@@ -522,18 +532,22 @@ alias gohw3='ssh -YC ppatel@ch1dslhw003'
 alias gocapture='ssh -YC ppatel@ch1dslss066'
 alias topTen='ls -laShR'
 alias viml='vim --noplugin $1'
-alias copyFromMaster='cp /home/ppatel/git/master_repo/example/sapphire/build/Debug-g++-10-generic/bin/*_d /home/ppatel/git/example/sapphire/build/Debug-g++-10-generic/bin/'
+alias copyFromMaster='cp /home/ppatel/git/master_repo/sapphire/build/Debug-g++-10-generic/bin/*_d /home/ppatel/git/sapphire/build/Debug-g++-10-generic/bin/'
 export SAPPHIRE_PCAP_PATH=/mnt/intraday_pcaps/
 alias notes='vim ~/extra_git/mydotfiles/dotfiles/TechNotes.txt'
 export MANPAGER="vim -M +MANPAGER --not-a-term -"
 alias checkICC='systemctl status icecc_no_remote.service'
-alias printTemplates='clang++ -I ~/git/example/sapphire/hawk/ -Xclang -ast-print -fsyntax-only -ferror-limit=1000 $1'
+alias printTemplates='clang++ -I ~/git/sapphire/hawk/ -Xclang -ast-print -fsyntax-only -ferror-limit=1000 $1'
 alias gou20dev='ssh -YC ppatel@ch0dsldv139.eagleseven.com'
 alias goextragit='cd /home/ppatel/extra_git/mydotfiles/dotfiles/'
 alias gosachin='ssh -YC ppatel@ch0dsldv120'
 alias goch0dsldv147='ssh -YC ppatel@ch0dsldv147'
 alias ..='cd ..'
-alias goccs2devcopy='ssh -YC ssvcs@ccs2admin-devcopy'
+#alias goccs2devcopy='ssh -YC ssvcs@ccs2admin-devcopy'
+alias goccs2devcopy='ssh -YC ssvcs@ch0dsldv124'
+
+alias finde='find . -name $1 -not -path $2'
+alias gobugs='cd ~/OAK/BUGS/'
 
 export E7_IMPLIED_CONFIG_DIR=/opt/eagleseven/implied_calibration/configs
 export E7_IMPLIED_SYMBOL=GLBX.CL

@@ -1196,10 +1196,13 @@ std::string removeLeadingZeros(string str)
 
 int main(int argc, char **argv)
 {
-
 	for (std::string line; std::getline(std::cin, line);) {
 		std::vector<string> results; 
-		split(results, line, is_any_of("\001,|"));
+		split(results, line, is_any_of("|,\001"));
+		/**std::cout << results[0] << '|';
+		results.clear();
+		split(results, results[1], is_any_of("\001"));*/
+		std::cout << line << std::endl;
 		for (const auto& i : results)
 		{
 			std::vector<string> key_value; 

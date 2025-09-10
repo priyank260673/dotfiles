@@ -6,5 +6,11 @@
     cmd = vimdiff "$LOCAL" "$REMOTE"
 [alias]
 	d = difftool
+	conflicts = diff --name-only --diff-filter=U
 [core]
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
+[user]
+	email = ppatel@eagleseven.com
+	name = Priyank Patel
+[merge]
+	renamelimit = 20000

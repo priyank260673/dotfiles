@@ -2,7 +2,8 @@
 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
 
 QA Password: 
-Qu@|ity37
+===========
+Qu@|ity40
 
 AWK min, max, avg
 ================
@@ -349,5 +350,28 @@ for file in `cat ~/files.txt`; do vimdiff $RELDIR/$file ./$file; done
 
 // Simpleproxy 
 simpleproxy  -L 65000 -R 193.29.89.129:19543
+ https://eagleseven.atlassian.net/wiki/spaces/TUG/pages/68816761/Reserving+Lab+Environment
+
+ // Display mark of an instrument
+ ./epfclient_d -g 239.255.254.128:8095 -l 0 -e 3 -M -i 5011488342
+
+
+==================================================================================================
+/// CONDOR RELATED
+// Reserve condor lab
+alias reserve_lab='/opt/eagleseven/python/rc/fpga_utils/scripts/reserve_lab.py'
+reserve_lab -d 16h -i cme_app,Base,release,1.1.16,e7fpga,ul3524
+
+// Reserving image
+https://eagleseven.atlassian.net/wiki/spaces/TUG/pages/644382733/Condor+CME+1.3
+
+ /opt/eagleseven/condor/scripts/reserve_lab.py -d 2h -i cme_app,Base,1.3
+
+// Check with machine supports which exchanges
+https://eagleseven.atlassian.net/wiki/spaces/TUG/pages/68816761/Reserving+Lab+Environment
+
+
+// Probe all the HW hosts
+reserve_lab -p
 
 
